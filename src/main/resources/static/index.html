@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="images/favicon.ico">
+
+    <title>Hyperselenium</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Hyperselenium</h1>
+            <p class="lead text-muted">Create a new test, run some or edit existing ones.</p>
+            <p>
+                <label for="newUrl">Type the URL of the page you want to test</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">https://your-url.com</span>
+                    </div>
+                    <input type="text" class="form-control" id="newUrl" aria-describedby="basic-addon3">
+                </div>
+            </p>
+            <p>
+                <a id="buttonRun" href="#" class="btn btn-success my-2">New</a>
+                <!--<a href="#" class="btn btn-primary my-2">Run</a>-->
+                <a href="#" class="btn btn-secondary my-2">Edit</a>
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+        <p>Footer</p>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    $('#buttonRun').click(function () {
+        var data = { url : $('#newUrl').val() };
+        console.log(data);
+        console.log(JSON.stringify(data));
+        var request = $.ajax({
+            url: "openWebsite",
+            method: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType : 'application/json; charset=utf-8'
+        });
+
+        request.done(function( data ) {
+            console.log(data);
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+        });
+    });
+</script>
+</body>
+</html>
