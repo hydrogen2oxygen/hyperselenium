@@ -1,5 +1,6 @@
 package net.hydrogen2oxygen.hyperselenium.selenium;
 
+import lombok.Getter;
 import net.hydrogen2oxygen.hyperselenium.domain.WebSite;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -8,14 +9,19 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class HyperWebDriver {
 
+    @Getter
     private WebDriver driver;
 
     private HyperWebDriver() {
@@ -71,6 +77,27 @@ public class HyperWebDriver {
         return this;
     }
 
+    public HyperWebDriver selectOption(String id, String optionText) {
+
+        Select options = new Select(driver.findElement(By.id(id)));
+        options.selectByVisibleText(optionText);
+
+        return this;
+    }
+
+    public HyperWebDriver selectOption(String id, int index) {
+
+        Select options = new Select(driver.findElement(By.id(id)));
+        options.selectByIndex(index);
+
+        return this;
+    }
+
+    public HyperWebDriver switchToFrame(String id) {
+        driver.switchTo().frame(id);
+        return this;
+    }
+
     public HyperWebDriver injectEditor(WebSite webSite) throws IOException {
 
         try {
@@ -90,7 +117,24 @@ public class HyperWebDriver {
         driver.close();
     }
 
-    public void waitMillis(int millis) throws InterruptedException {
+    public HyperWebDriver waitMillis(int millis) throws InterruptedException {
         Thread.sleep(millis);
+        return this;
+    }
+
+    public HyperWebDriver waitForElement(String id, int seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, seconds);
+        wait.until(ExpectedConditions.visibilityOfElementLocated((By
+                .id(id))));
+
+        return this;
+    }
+
+    public HyperWebDriver waitForTag(String tagName, int seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, seconds);
+        wait.until(ExpectedConditions.visibilityOfElementLocated((By
+                .tagName(tagName))));
+
+        return this;
     }
 }

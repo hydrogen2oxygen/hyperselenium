@@ -1,3 +1,5 @@
+console.log('Initializing Hyperselenium Editor ...');
+
 var editor = {};
 var websiteId;
 var baseUrl;
@@ -7,7 +9,7 @@ var baseUrl;
 
 editor.init = function () {
 
-    var h = '<div id="hyperseleniumEditor">' +
+    var h = '<div id="hyperseleniumEditor" style="position: absolute; bottom: 100px; left: 10px">' +
         '<button id="buttonCloseWebsite" class="btn btn-danger">Close</button>' +
         '</div>';
     $('div').last().append(h);
@@ -45,9 +47,11 @@ editor.loadCss = function (url) {
 }
 
 editor.checkJquery();
-editor.loadJS('https://code.jquery.com/jquery-3.3.1.slim.min.js');
+//editor.loadJS('https://code.jquery.com/jquery-3.3.1.slim.min.js');
+//editor.loadJS('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js');
 editor.loadCss('https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css');
+//editor.loadCss('https://code.jquery.com/ui/1.12.1/themes/dot-luv/jquery-ui.css');
 
 setTimeout(function () {
     editor.init();
-}, 2000);
+}, 3000);
