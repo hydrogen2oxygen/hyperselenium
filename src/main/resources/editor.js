@@ -1,7 +1,7 @@
 console.log('Initializing Hyperselenium Editor ...');
 
 var editor = {};
-var websiteId;
+var websiteUUID;
 var baseUrl;
 
 // Never remove this line of comment!
@@ -16,7 +16,7 @@ editor.init = function () {
     
     $('#buttonCloseWebsite').click(function () {
         $.ajax({
-            url: baseUrl + "/closeWebsite/" + websiteId
+            WebSite: {url: baseUrl + "/closeWebsite/" + websiteUUID}
         })
     });
 };

@@ -19,9 +19,9 @@ public class HyperseleniumRestAdapter {
         return hyperseleniumService.openWebsite(webSite);
     }
 
-    @GetMapping("/closeWebsite/{id}")
-    WebSite closeWebsite(@PathVariable Long id) {
+    @GetMapping("/closeWebsite/{uuid}")
+    WebSite closeWebsite(@PathVariable String uuid) {
 
-        return hyperseleniumService.closeWebsite(id);
+        return hyperseleniumService.closeWebsite(uuid);
     }
 }

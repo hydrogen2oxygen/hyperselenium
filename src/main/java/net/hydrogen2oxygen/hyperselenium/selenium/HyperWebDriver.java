@@ -101,7 +101,7 @@ public class HyperWebDriver {
 
         try {
             String script = FileUtils.readFileToString(new ClassPathResource("editor.js").getFile(), "UTF-8");
-            script = script.replaceAll("//SETVARIABLES", "websiteId = " + webSite.getId() + ";\nbaseUrl = '" + webSite.getHyperseleniumOriginUrl() + "';");
+            script = script.replaceAll("//SETVARIABLES", "websiteUUID = " + webSite.getUuid() + ";\nbaseUrl = '" + webSite.getHyperseleniumOriginUrl() + "';");
 
             ((JavascriptExecutor) driver)
                     .executeScript(String.format("var s=window.document.createElement('script');s.innerHTML='%s';window.document.head.appendChild(s);", StringEscapeUtils.escapeJavaScript(script)));

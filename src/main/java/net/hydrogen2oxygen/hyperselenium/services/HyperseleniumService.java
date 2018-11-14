@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Component
 public class HyperseleniumService {
@@ -17,8 +18,7 @@ public class HyperseleniumService {
     @Value( "${selenium.driver.directory}" )
     private String seleniumDriverDirectory;
 
-    private Long idCount = 0L;
-    private Map<Long,WebSite> websites = new HashMap<>();
+    private Map<String,WebSite> websites = new HashMap<>();
 
     public WebSite openWebsite(WebSite webSite) throws IOException {
 
@@ -28,19 +28,19 @@ public class HyperseleniumService {
         ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
         URI newUri = builder.build().toUri();
 
+        String uuid = UUID.randomUUID().toString();
         webSite.setHyperseleniumOriginUrl(newUri.toString().replaceAll("openWebsite",""));
-        webSite.setId(idCount);
+        webSite.setUuid(uuid);
         webSite.setWebDriver(HyperWebDriver.build());
-        websites.put(idCount,webSite);
-
         webSite.getWebDriver().openPage(webSite.getUrl()).injectEditor(webSite);
+        websites.put(uuid,webSite);
 
         return webSite;
     }
 
-    public WebSite closeWebsite(Long id) {
+    public WebSite closeWebsite(String uuid) {
 
-        WebSite webSite = websites.get(id);
+        WebSite webSite = websites.get(uuid);
 
         if (webSite.getWebDriver() != null) {
             webSite.getWebDriver().close();

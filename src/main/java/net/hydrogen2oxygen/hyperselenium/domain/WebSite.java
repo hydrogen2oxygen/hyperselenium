@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class WebSite {
 
-    private Long id;
+    private String uuid;
     private String url;
     private String hyperseleniumOriginUrl;
 

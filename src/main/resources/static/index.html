@@ -60,7 +60,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script>
     $('#buttonRun').click(function () {
-        var data = { url : $('#newUrl').val() };
+        var data = {  WebSite: {url : $('#newUrl').val() }};
         console.log(data);
         console.log(JSON.stringify(data));
         var request = $.ajax({
