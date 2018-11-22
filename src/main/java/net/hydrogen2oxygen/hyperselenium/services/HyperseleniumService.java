@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +19,7 @@ public class HyperseleniumService {
 
     private Map<String,WebSite> websites = new HashMap<>();
 
-    public WebSite openWebsite(WebSite webSite) throws IOException {
+    public WebSite openWebsite(WebSite webSite) throws Exception {
 
         // TODO make this dynamic for different OS
         System.setProperty("webdriver.chrome.driver", seleniumDriverDirectory + "chromedriver.exe");
@@ -32,7 +31,7 @@ public class HyperseleniumService {
         webSite.setHyperseleniumOriginUrl(newUri.toString().replaceAll("openWebsite",""));
         webSite.setUuid(uuid);
         webSite.setWebDriver(HyperWebDriver.build());
-        webSite.getWebDriver().openPage(webSite.getUrl()).injectEditor(webSite);
+        webSite.getWebDriver().openPage(webSite.getUrl()).waitMillis(500).injectEditor(webSite);
         websites.put(uuid,webSite);
 
         return webSite;
@@ -48,5 +47,19 @@ public class HyperseleniumService {
         }
 
         return webSite;
+    }
+
+    public void closeAllDrivers() {
+
+        for(String uuid : websites.keySet()) {
+            WebSite webSite = websites.get(uuid);
+
+            try {
+                webSite.getWebDriver().close();
+                webSite.getWebDriver().getDriver().close();
+            } catch (Exception e) {
+
+            }
+        }
     }
 }

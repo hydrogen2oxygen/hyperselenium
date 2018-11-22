@@ -97,11 +97,16 @@ public class HyperWebDriver {
         return this;
     }
 
+    public HyperWebDriver switchToParentFrame() {
+        driver.switchTo().parentFrame();
+        return this;
+    }
+
     public HyperWebDriver injectEditor(WebSite webSite) throws IOException {
 
         try {
             String script = FileUtils.readFileToString(new ClassPathResource("editor.js").getFile(), "UTF-8");
-            script = script.replaceAll("//SETVARIABLES", "websiteUUID = " + webSite.getUuid() + ";\nbaseUrl = '" + webSite.getHyperseleniumOriginUrl() + "';");
+            script = script.replaceAll("//SETVARIABLES", "websiteUUID = '" + webSite.getUuid() + "';\nbaseUrl = '" + webSite.getHyperseleniumOriginUrl() + "';");
 
             ((JavascriptExecutor) driver)
                     .executeScript(String.format("var s=window.document.createElement('script');s.innerHTML='%s';window.document.head.appendChild(s);", StringEscapeUtils.escapeJavaScript(script)));

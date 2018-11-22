@@ -3,9 +3,10 @@ package net.hydrogen2oxygen.hyperselenium.adapter;
 import net.hydrogen2oxygen.hyperselenium.domain.WebSite;
 import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HyperseleniumRestAdapter {
@@ -14,14 +15,23 @@ public class HyperseleniumRestAdapter {
     private HyperseleniumService hyperseleniumService;
 
     @PostMapping("/openWebsite")
-    WebSite openWebsite(@RequestBody WebSite webSite) throws IOException {
+    WebSite openWebsite(@RequestBody WebSite webSite) throws Exception {
 
         return hyperseleniumService.openWebsite(webSite);
     }
 
-    @GetMapping("/closeWebsite/{uuid}")
-    WebSite closeWebsite(@PathVariable String uuid) {
+    @CrossOrigin("*")
+    @PostMapping("/closeWebsite")
+    WebSite closeWebsite(@RequestBody WebSite webSite) {
 
-        return hyperseleniumService.closeWebsite(uuid);
+        return hyperseleniumService.closeWebsite(webSite.getUuid());
+    }
+
+    @PostMapping("/closeAllDrivers")
+    String closeAllDrivers() {
+
+        hyperseleniumService.closeAllDrivers();
+        return "OK";
     }
 }
+

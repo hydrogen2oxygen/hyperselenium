@@ -35,6 +35,7 @@
                 <a id="buttonRun" href="#" class="btn btn-success my-2">New</a>
                 <!--<a href="#" class="btn btn-primary my-2">Run</a>-->
                 <a href="#" class="btn btn-secondary my-2">Edit</a>
+                <a id="buttonCloseAllDrivers" href="#" class="btn btn-danger my-2">Close all drivers</a>
             </p>
         </div>
     </section>
@@ -60,15 +61,30 @@
 <script src="js/bootstrap.min.js"></script>
 <script>
     $('#buttonRun').click(function () {
-        var data = {  WebSite: {url : $('#newUrl').val() }};
+        let data = {  WebSite: {url : $('#newUrl').val() }};
         console.log(data);
         console.log(JSON.stringify(data));
-        var request = $.ajax({
+        let request = $.ajax({
             url: "openWebsite",
             method: "POST",
             data: JSON.stringify(data),
             dataType: "json",
             contentType : 'application/json; charset=utf-8'
+        });
+
+        request.done(function( data ) {
+            console.log(data);
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+        });
+    });
+
+    $('#buttonCloseAllDrivers').click(function () {
+        let request = $.ajax({
+            url: "closeAllDrivers",
+            method: "POST"
         });
 
         request.done(function( data ) {

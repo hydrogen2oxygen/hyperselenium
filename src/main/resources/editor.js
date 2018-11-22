@@ -4,20 +4,38 @@ var editor = {};
 var websiteUUID;
 var baseUrl;
 
+
 // Never remove this line of comment!
 //SETVARIABLES
 
 editor.init = function () {
 
-    var h = '<div id="hyperseleniumEditor" style="position: absolute; bottom: 100px; left: 10px">' +
-        '<button id="buttonCloseWebsite" class="btn btn-danger">Close</button>' +
-        '</div>';
-    $('div').last().append(h);
-    
+    let h = '<div id="editorBar">HELLO</div><header style="color:white"><navbar class="navbar navbar-expand-md navbar-dark fixed-bottom bg-dark" id="hyperseleniumEditor">'+
+        '<a class="navbar-brand">HyperSelenium Editor</a> ' +
+        '<div class="navbar-collapse">' +
+        '<ul class="navbar-nav mr-auto">' +
+        '<li class="nav-item active"><a id="buttonCloseWebsite" class="nav-link" href="#">Close</a></li>' +
+        '</ul></div></navbar></header>';
+    $('body').append(h);
+
     $('#buttonCloseWebsite').click(function () {
-        $.ajax({
-            WebSite: {url: baseUrl + "/closeWebsite/" + websiteUUID}
-        })
+
+        let request = $.ajax({
+            url: baseUrl + "closeWebsite",
+            type: 'POST',
+            data: '{"WebSite":{"uuid":"' + websiteUUID + '"}}',
+            dataType: "json",
+            processData: false,
+            contentType : 'application/json'
+        });
+
+        request.done(function( data ) {
+            console.log(data);
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+        });
     });
 };
 
@@ -26,32 +44,40 @@ editor.checkJquery = function () {
     if (!window.jQuery) {
         console.log('No jquery found. I will load my own into the page!');
         editor.loadJS('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js');
+
+        for (let i = 0; i<100; i++) {
+            if (window.jQuery) break;
+            editor.sleep(100);
+        }
     }
-}
+};
+
+editor.sleep = function(milliseconds) {
+    let start = new Date().getTime();
+    for (let i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+            break;
+        }
+    }
+};
 
 editor.loadJS = function (url) {
-    var script = document.createElement('script');
+    let script = document.createElement('script');
     script.type = "text/javascript";
     script.src = url;
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('script')[0]).appendChild(script);
-}
+};
 
 editor.loadCss = function (url) {
-    var head = document.getElementsByTagName('head')[0];
-    var link = document.createElement('link');
+    let head = document.getElementsByTagName('head')[0];
+    let link = document.createElement('link');
     link.rel = 'stylesheet';
     link.type = 'text/css';
     link.href = url;
     link.media = 'all';
     head.appendChild(link);
-}
+};
 
-editor.checkJquery();
-//editor.loadJS('https://code.jquery.com/jquery-3.3.1.slim.min.js');
-//editor.loadJS('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js');
 editor.loadCss('https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css');
-//editor.loadCss('https://code.jquery.com/ui/1.12.1/themes/dot-luv/jquery-ui.css');
-
-setTimeout(function () {
-    editor.init();
-}, 3000);
+editor.checkJquery();
+editor.init();
