@@ -10,7 +10,8 @@ var baseUrl;
 
 editor.init = function () {
 
-    let h = '<div id="editorBar">HELLO</div><header style="color:white"><navbar class="navbar navbar-expand-md navbar-dark fixed-bottom bg-dark" id="hyperseleniumEditor">'+
+    let h = '<div id="editorBar" style="position: absolute; width: 100%; bottom: 100px; color: white; background-color: #4e555b"><b>EDITOR</b><p><button>TEST</button></p></div>' +
+        '<header style="color:white"><navbar class="navbar navbar-expand-md navbar-dark fixed-bottom bg-dark" id="hyperseleniumEditor">'+
         '<a class="navbar-brand">HyperSelenium Editor</a> ' +
         '<div class="navbar-collapse">' +
         '<ul class="navbar-nav mr-auto">' +
@@ -20,10 +21,13 @@ editor.init = function () {
 
     $('#buttonCloseWebsite').click(function () {
 
+        let website = { WebSite:{uuid: websiteUUID}};
+        let websiteData = JSON.stringify(website);
+
         let request = $.ajax({
             url: baseUrl + "closeWebsite",
             type: 'POST',
-            data: '{"WebSite":{"uuid":"' + websiteUUID + '"}}',
+            data: websiteData,
             dataType: "json",
             processData: false,
             contentType : 'application/json'
@@ -37,6 +41,8 @@ editor.init = function () {
             alert( "Request failed: " + textStatus );
         });
     });
+
+
 };
 
 editor.checkJquery = function () {
