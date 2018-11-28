@@ -4,4 +4,7 @@ import lombok.Data;
 
 @Data
 public class CommandResult {
+
+    private Boolean success = false;
+    private String message;
 }

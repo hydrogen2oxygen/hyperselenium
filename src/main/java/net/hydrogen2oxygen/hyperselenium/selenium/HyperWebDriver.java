@@ -41,8 +41,18 @@ public class HyperWebDriver {
         return this;
     }
 
+    public HyperWebDriver insertTextByName(String id, String text) {
+        driver.findElement(By.name(id)).sendKeys(text);
+        return this;
+    }
+
     public HyperWebDriver click(String id) {
         driver.findElement(By.id(id)).click();
+        return this;
+    }
+
+    public HyperWebDriver clickName(String id) {
+        driver.findElement(By.name(id)).click();
         return this;
     }
 
@@ -68,7 +78,7 @@ public class HyperWebDriver {
         }
 
         if (clickPerformed) {
-            System.out.println(String.format("Click on hyperlink with text [%s] performed!", text));
+            System.out.println(String.format("Click on tag [%s] with text [%s] performed!", tag,text));
         } else {
             System.err.println(String.format("Unable to click on hyperlink with text [%s] performed!", text));
         }

@@ -7,16 +7,16 @@ import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 
 @Data
 @HyperseleniumCommand
-public class InsertTextCommand extends BaseCommand {
+public class InsertTextByNameCommand extends BaseCommand {
 
     @Override
     public CommandResult executeCommand(HyperWebDriver driver, String[] params) {
-        driver.insertText(params[0],params[1]);
+        driver.insertTextByName(params[0],params[1]);
         return null;
     }
 
     @Override
     public String getCommandName() {
-        return "text";
+        return "textByName";
     }
 }

@@ -11,5 +11,6 @@ import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
         @JsonSubTypes.Type(value = InsertTextCommand.class, name = "InsertTextCommand")})
 public interface ICommand {
 
-    CommandResult executeCommand(HyperWebDriver driver);
+    CommandResult executeCommand(HyperWebDriver driver, String [] params);
+    String getCommandName();
 }

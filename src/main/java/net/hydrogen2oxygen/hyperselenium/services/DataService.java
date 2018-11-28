@@ -8,11 +8,12 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import net.hydrogen2oxygen.hyperselenium.domain.WebSite;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
 
-@Component
+@Service
 public class DataService {
 
     public WebSite saveOrUpdateWebSite(WebSite webSite) throws IOException {

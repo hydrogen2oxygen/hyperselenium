@@ -8,7 +8,7 @@ import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 
 @Data
 @HyperseleniumCommand
-public class ClickCommand extends BaseCommand {
+public class ClickNameCommand extends BaseCommand {
 
     @JsonIgnore
     @Override
@@ -17,9 +17,9 @@ public class ClickCommand extends BaseCommand {
         CommandResult commandResult = new CommandResult();
 
         try {
-            driver.click(params[0]);
+            driver.clickName(params[0]);
             commandResult.setSuccess(true);
-            commandResult.setMessage(String.format("Click on id %s successful",params[0]));
+            commandResult.setMessage(String.format("Click on element with name %s successful",params[0]));
         } catch (Exception e) {
             commandResult.setMessage(e.getMessage());
         }
@@ -29,6 +29,6 @@ public class ClickCommand extends BaseCommand {
 
     @Override
     public String getCommandName() {
-        return "click";
+        return "clickName";
     }
 }

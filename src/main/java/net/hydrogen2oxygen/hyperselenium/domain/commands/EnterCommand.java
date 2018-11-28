@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import net.hydrogen2oxygen.hyperselenium.domain.CommandResult;
 import net.hydrogen2oxygen.hyperselenium.domain.HyperseleniumCommand;
+import net.hydrogen2oxygen.hyperselenium.domain.WebSite;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
+import org.openqa.selenium.Keys;
 
 @Data
 @HyperseleniumCommand
-public class ClickCommand extends BaseCommand {
+public class EnterCommand extends BaseCommand {
 
     @JsonIgnore
     @Override
@@ -17,7 +19,8 @@ public class ClickCommand extends BaseCommand {
         CommandResult commandResult = new CommandResult();
 
         try {
-            driver.click(params[0]);
+            // FIXME WebSite weiterreichen und auch das zuletzt angeklickte Element
+            // driver.getDriver().sendKeys(Keys.RETURN);
             commandResult.setSuccess(true);
             commandResult.setMessage(String.format("Click on id %s successful",params[0]));
         } catch (Exception e) {
@@ -29,6 +32,6 @@ public class ClickCommand extends BaseCommand {
 
     @Override
     public String getCommandName() {
-        return "click";
+        return "enter";
     }
 }

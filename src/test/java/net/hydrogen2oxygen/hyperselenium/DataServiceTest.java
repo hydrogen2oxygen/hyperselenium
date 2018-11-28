@@ -18,7 +18,6 @@ public class DataServiceTest {
         DataService dataService = new DataService();
 
         ClickCommand click = new ClickCommand();
-        click.setId("testId");
         ICommand insertText = new InsertTextCommand();
 
         ActionAndAssert actionAndAssert1 = new ActionAndAssert();
