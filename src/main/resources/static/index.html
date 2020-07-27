@@ -32,11 +32,25 @@
                 </div>
             </p>
             <p>
-                <a id="buttonRun" href="#" class="btn btn-success my-2">New</a>
+                <a id="buttonNew" href="#" class="btn btn-success my-2">New</a>
                 <!--<a href="#" class="btn btn-primary my-2">Run</a>-->
                 <a href="#" class="btn btn-secondary my-2">Edit</a>
                 <a id="buttonCloseAllDrivers" href="#" class="btn btn-danger my-2">Close all drivers</a>
             </p>
+        </div>
+    </section>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <table>
+                <thead>
+                    <th>Row</th>
+                    <th>Action</th>
+                    <th>Command</th>
+                </thead>
+                <tbody>
+                    <tr></tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
@@ -60,7 +74,7 @@
         crossorigin="anonymous"></script>
 <script src="js/bootstrap.min.js"></script>
 <script>
-    $('#buttonRun').click(function () {
+    $('#buttonNew').click(function () {
         let data = {  WebSite: {url : $('#newUrl').val() }};
         console.log(data);
         console.log(JSON.stringify(data));

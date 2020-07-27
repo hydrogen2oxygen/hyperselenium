@@ -8,19 +8,18 @@ import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 
 @Data
 @HyperseleniumCommand
-public class EnterCommand extends BaseCommand {
+public class OpenCommand extends BaseCommand {
 
     @JsonIgnore
     @Override
-    public CommandResult executeCommand(HyperWebDriver driver, String [] params) {
+    public CommandResult executeCommand(HyperWebDriver driver, String[] params) {
 
         CommandResult commandResult = new CommandResult();
-
+        String url = params[0];
         try {
-            // FIXME WebSite weiterreichen und auch das zuletzt angeklickte Element
-            // driver.getDriver().sendKeys(Keys.RETURN);
+            driver.openPage(url).waitMillis(500);
             commandResult.setSuccess(true);
-            commandResult.setMessage(String.format("Click on id %s successful",params[0]));
+            commandResult.setMessage(String.format("Open website %s successful",params[0]));
         } catch (Exception e) {
             commandResult.setMessage(e.getMessage());
         }
@@ -30,6 +29,6 @@ public class EnterCommand extends BaseCommand {
 
     @Override
     public String getCommandName() {
-        return "enter";
+        return "open";
     }
 }

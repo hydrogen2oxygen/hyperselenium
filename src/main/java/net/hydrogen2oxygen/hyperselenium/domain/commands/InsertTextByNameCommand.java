@@ -11,7 +11,9 @@ public class InsertTextByNameCommand extends BaseCommand {
 
     @Override
     public CommandResult executeCommand(HyperWebDriver driver, String[] params) {
-        driver.insertTextByName(params[0],params[1]);
+        String id = params[0];
+        String text = params[1];
+        driver.insertTextByName(id, text);
         return null;
     }
 
