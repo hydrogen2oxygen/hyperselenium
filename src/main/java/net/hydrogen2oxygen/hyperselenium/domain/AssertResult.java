@@ -1,9 +1,14 @@
 package net.hydrogen2oxygen.hyperselenium.domain;
 
-import lombok.Data;
-
-@Data
 public class AssertResult {
 
     private Boolean passed;
+
+    public Boolean getPassed() {
+        return passed;
+    }
+
+    public void setPassed(Boolean passed) {
+        this.passed = passed;
+    }
 }

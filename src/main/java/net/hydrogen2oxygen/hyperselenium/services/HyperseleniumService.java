@@ -27,7 +27,7 @@ public class HyperseleniumService {
     @PostConstruct
     public void initService() throws Exception{
 
-        try (ScanResult scanResult = new ClassGraph().enableAllInfo().whitelistPackages("net.hydrogen2oxygen")
+        try (ScanResult scanResult = new ClassGraph().enableAllInfo().acceptPackages("net.hydrogen2oxygen")
                 .scan()) {
             ClassInfoList checked = scanResult.getClassesWithAnnotation(HyperseleniumCommand.class.getCanonicalName());
 

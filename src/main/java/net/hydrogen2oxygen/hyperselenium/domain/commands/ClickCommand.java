@@ -1,12 +1,10 @@
 package net.hydrogen2oxygen.hyperselenium.domain.commands;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import net.hydrogen2oxygen.hyperselenium.domain.CommandResult;
 import net.hydrogen2oxygen.hyperselenium.domain.HyperseleniumCommand;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 
-@Data
 @HyperseleniumCommand
 public class ClickCommand extends BaseCommand {
 

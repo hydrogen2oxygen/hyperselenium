@@ -1,6 +1,5 @@
 package net.hydrogen2oxygen.hyperselenium.selenium;
 
-import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,7 +13,6 @@ import java.util.List;
 
 public class HyperWebDriver {
 
-    @Getter
     private WebDriver driver;
 
     private HyperWebDriver() {
