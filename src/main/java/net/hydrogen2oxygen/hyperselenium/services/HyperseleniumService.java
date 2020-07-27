@@ -3,9 +3,7 @@ package net.hydrogen2oxygen.hyperselenium.services;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
-import net.hydrogen2oxygen.hyperselenium.domain.CommandResult;
-import net.hydrogen2oxygen.hyperselenium.domain.HyperseleniumCommand;
-import net.hydrogen2oxygen.hyperselenium.domain.ICommand;
+import net.hydrogen2oxygen.hyperselenium.domain.*;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -59,28 +56,46 @@ public class HyperseleniumService {
             parameters = line.substring(line.indexOf(" ")).trim().split(" ");
         }
 
-        return command.executeCommand(driver, parameters);
+        try {
+            return command.executeCommand(driver, parameters);
+        } catch (Exception e) {
+            CommandResult result = new CommandResult();
+            result.setSuccess(false);
+            result.setMessage(e.getMessage());
+            return result;
+        }
     }
 
-    public void executeScenario() {
+    public void executeScenario(Scenario scenario) {
 
+        if (scenario.getDriver() == null) {
+            scenario.setDriver(getNewHyperWebDriver());
+        }
+
+        // Execute the main script
+        executeScript(scenario.getScript(), scenario.getDriver());
     }
 
-    public void executeScript(List<String> lines) {
+    public HyperWebDriver getNewHyperWebDriver() {
 
         System.setProperty("webdriver.chrome.driver", seleniumDriverDirectory + "chromedriver.exe");
 
-        HyperWebDriver driver = HyperWebDriver.build();
+        return HyperWebDriver.build();
+    }
 
-        for (String line : lines) {
+    public void executeScript(Script script, HyperWebDriver driver) {
 
-            System.out.println(line);
+        for (String line : script.getLines()) {
 
             if (line.trim().isEmpty()) continue;
 
             if (line.startsWith("    ")) {
                 String[] parts = line.trim().split(" ");
+                System.out.print(line + " - ");
                 CommandResult result = executeCommandLine(driver, line.trim());
+                System.out.println(result.getMessage());
+            } else {
+                System.out.println(line);
             }
         }
     }

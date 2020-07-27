@@ -1,6 +1,8 @@
 package net.hydrogen2oxygen.hyperselenium;
 
 import net.hydrogen2oxygen.hyperselenium.domain.CommandResult;
+import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
+import net.hydrogen2oxygen.hyperselenium.domain.Script;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;
 import org.apache.commons.io.FileUtils;
@@ -28,8 +30,11 @@ public class HyperseleniumApplicationTests {
 	public void loadAndExecuteScript() throws Exception {
 
 		List<String> lines = FileUtils.readLines(new File("src/test/resources/google_search_test.md"),"UTF-8");
+		Scenario scenario = new Scenario();
+		Script script = new Script("hyperselenium test", lines);
+		scenario.setScript(script);
 
-		service.executeScript(lines);
+		service.executeScenario(scenario);
 	}
 
 }

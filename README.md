@@ -2,6 +2,8 @@
 A selenium enhancer for a better and easier browser automation.
 
 ## Intention
+Why Hyperselenium? Selenium is just a library, but Hyperselenium is a library and server for entire scenarios.
+
 - SNIPPET, every action of multiple actions can be reused as snippets
 - HTML / PDF WRAPPER, every test case result can be transformed into a readable protocol with screenshots
 - PARAMETERS are automatically detected and you can use different sets of them for different environments
@@ -24,3 +26,6 @@ A protocol of a scenario saves the result of each step and some additional notes
 
 ### SCENARIO
 A scenario is a test case or a use case. Selenium is not just used to test something, but it is also a tool to prepare something. If you scenario acts as a test case, then it will contain a series of asserts.
+
+### JGIT
+Deploy hyperselenium inside a docker or on a server, then let it load a git repository with the tests. You can use multiple instances for performance tests.

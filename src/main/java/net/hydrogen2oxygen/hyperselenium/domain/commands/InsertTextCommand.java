@@ -9,8 +9,12 @@ public class InsertTextCommand extends BaseCommand {
 
     @Override
     public CommandResult executeCommand(HyperWebDriver driver, String[] params) {
+
+        CommandResult commandResult = new CommandResult();
+
         driver.insertText(params[0],params[1]);
-        return null;
+
+        return commandResult;
     }
 
     @Override
