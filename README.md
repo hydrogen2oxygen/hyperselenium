@@ -1,7 +1,7 @@
-# hyperselenium
-A selenium tool for a better and easier testing of web applications
+# Hyperselenium
+A selenium enhancer for a better and easier browser automation.
 
-### Intention
+## Intention
 - SNIPPET, every action of multiple actions can be reused as snippets
 - HTML / PDF WRAPPER, every test case result can be transformed into a readable protocol with screenshots
 - PARAMETERS are automatically detected and you can use different sets of them for different environments
@@ -12,3 +12,15 @@ A selenium tool for a better and easier testing of web applications
 - PREPARATION and REPEATABLE, some environments require some sort of preparation for repeatable tests (JDBC, SFTP)
 - STOP, EDIT and CONTINUE, stop the test run whenever you need and adjust the script, then just continue the test
 - SERVER, manage your tests and environments from a server application, trigger the tests, observe the results
+
+### ACTION
+During a "scenario" we have different actions. Not all actions interacts with the browser. Some actions save data, 
+runs SQL scripts, push data on a SFTP folder, delete stuff, asserts variables, or just print notes into the HTML/PDF protocol.
+
+The interactions with the browser are simple Selenium commands.
+
+### PROTOCOL
+A protocol of a scenario saves the result of each step and some additional notes and screenshots. They can be rendered into HTML/PDF.
+
+### SCENARIO
+A scenario is a test case or a use case. Selenium is not just used to test something, but it is also a tool to prepare something. If you scenario acts as a test case, then it will contain a series of asserts.
