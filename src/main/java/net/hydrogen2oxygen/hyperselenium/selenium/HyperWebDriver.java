@@ -71,12 +71,6 @@ public class HyperWebDriver {
             }
         }
 
-        if (clickPerformed) {
-            System.out.println(String.format("Click on tag [%s] with text [%s] performed!", tag,text));
-        } else {
-            System.err.println(String.format("Unable to click on hyperlink with text [%s] performed!", text));
-        }
-
         return this;
     }
 

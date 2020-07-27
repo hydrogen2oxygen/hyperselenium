@@ -1,5 +1,6 @@
 package net.hydrogen2oxygen.hyperselenium;
 
+import net.hydrogen2oxygen.hyperselenium.domain.CommandResult;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;
 import org.apache.commons.io.FileUtils;
@@ -26,19 +27,9 @@ public class HyperseleniumApplicationTests {
 	@Test
 	public void loadAndExecuteScript() throws Exception {
 
-		System.setProperty("webdriver.chrome.driver", seleniumDriverDirectory + "chromedriver.exe");
+		List<String> lines = FileUtils.readLines(new File("src/test/resources/google_search_test.md"),"UTF-8");
 
-		List<String> lines = FileUtils.readLines(new File("src/test/resources/google_search_test.txt"),"UTF-8");
-
-		HyperWebDriver driver = HyperWebDriver.build();
-
-		for (String line : lines) {
-
-			System.out.println(line);
-			String [] parts = line.split(" ");
-
-			service.executeCommandLine(driver,line);
-		}
+		service.executeScript(lines);
 	}
 
 }

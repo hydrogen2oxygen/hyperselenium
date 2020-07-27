@@ -9,14 +9,12 @@ import net.hydrogen2oxygen.hyperselenium.domain.ICommand;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Constructor;
-import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class HyperseleniumService {
@@ -55,7 +53,36 @@ public class HyperseleniumService {
 
         String [] parts = line.split(" ");
         ICommand command = commands.get(parts[0]);
-        return command.executeCommand(driver, line.substring(line.indexOf(" ")).trim().split(" "));
+        String [] parameters = {};
+
+        if (line.contains(" ")) {
+            parameters = line.substring(line.indexOf(" ")).trim().split(" ");
+        }
+
+        return command.executeCommand(driver, parameters);
+    }
+
+    public void executeScenario() {
+
+    }
+
+    public void executeScript(List<String> lines) {
+
+        System.setProperty("webdriver.chrome.driver", seleniumDriverDirectory + "chromedriver.exe");
+
+        HyperWebDriver driver = HyperWebDriver.build();
+
+        for (String line : lines) {
+
+            System.out.println(line);
+
+            if (line.trim().isEmpty()) continue;
+
+            if (line.startsWith("    ")) {
+                String[] parts = line.trim().split(" ");
+                CommandResult result = executeCommandLine(driver, line.trim());
+            }
+        }
     }
 
 
