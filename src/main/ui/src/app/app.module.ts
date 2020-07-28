@@ -4,10 +4,12 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ScenarioOverviewComponent } from './components/scenario/scenario-overview/scenario-overview.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ScenarioOverviewComponent
   ],
   imports: [
     BrowserModule,
