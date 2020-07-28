@@ -8,7 +8,6 @@ import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 @HyperseleniumCommand
 public class EnterCommand extends BaseCommand {
 
-    @JsonIgnore
     @Override
     public CommandResult executeCommand(HyperWebDriver driver, String [] params) {
 

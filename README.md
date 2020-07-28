@@ -4,7 +4,7 @@ A selenium enhancer for a better and easier browser automation.
 ## Intention
 Why Hyperselenium? Selenium is just a library, but Hyperselenium is a library and server for entire scenarios.
 
-- SNIPPET, every action of multiple actions can be reused as snippets
+- SNIPPET, every script with multiple actions can be reused as a snippets
 - HTML / PDF WRAPPER, every test case result can be transformed into a readable protocol with screenshots
 - PARAMETERS are automatically detected and you can use different sets of them for different environments
 - SCRIPT or plain JAVA, whatever you need (Script uses simple actions and snippets)
@@ -29,3 +29,18 @@ A scenario is a test case or a use case. Selenium is not just used to test somet
 
 ### JGIT
 Deploy hyperselenium inside a docker or on a server, then let it load a git repository with the tests. You can use multiple instances for performance tests.
+
+## Plugins
+Evaluating different plugin architecture / frameworks:
+
+- https://stackoverflow.com/questions/32901188/implementing-plugin-architecture-in-annotation-based-spring-boot-application
+- https://github.com/spring-projects/spring-plugin
+- https://pf4j.org/
+
+Commands could be implemented just by loading an external library with commands inside the "net.hydrogen2oxygen" package. They will be automatically discovered.
+
+https://stackoverflow.com/questions/41148353/dynamically-add-jars-to-springboot-at-runtime
+
+## Database
+Nitrite Database (NoSQL) looks very nice: https://www.dizitart.org/nitrite-database.html
+
