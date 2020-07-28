@@ -1,4 +1,5 @@
 src/main/resources/static/
+src/main/ui/node_modules/
 target/
 pom.xml.tag
 pom.xml.releaseBackup
