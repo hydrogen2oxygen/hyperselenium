@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Scenario} from "../../../domain/Scenario";
+import { faEdit, faTrash, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-scenario-overview',
@@ -8,6 +9,10 @@ import {Scenario} from "../../../domain/Scenario";
 })
 export class ScenarioOverviewComponent implements OnInit {
   scenarios: Scenario[] = [];
+  faEdit = faEdit;
+  faTrash = faTrash;
+  faPlay = faPlay;
+  faStop = faStop;
 
   constructor() { }
 
