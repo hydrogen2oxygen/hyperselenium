@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,13 @@ export class NavbarComponent implements OnInit {
 
   collapsed = true;
 
-  constructor() { }
+  links = [
+    { title: 'Home', link: '', fragment: 'home' },
+    { title: 'New Scenario', link: 'scenario', fragment: 'scenario' },
+  ];
+
+  constructor(public route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
   }

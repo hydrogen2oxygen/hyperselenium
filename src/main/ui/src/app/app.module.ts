@@ -7,12 +7,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ScenarioOverviewComponent } from './components/scenario/scenario-overview/scenario-overview.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ScenarioEditComponent } from './components/scenario/scenario-edit/scenario-edit.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { DocumentationComponent } from './components/documentation/documentation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ScenarioOverviewComponent,
-    NavbarComponent
+    NavbarComponent,
+    ScenarioEditComponent,
+    PageNotFoundComponent,
+    DocumentationComponent
   ],
   imports: [
     BrowserModule,
