@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ScenarioOverviewComponent } from './components/scenario/scenario-overview/scenario-overview.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ScenarioOverviewComponent
+    ScenarioOverviewComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
