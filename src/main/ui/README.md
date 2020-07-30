@@ -30,7 +30,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 https://fontawesome.com/icons?d=gallery&q=start&s=solid&m=free
 
 # WebSocket
-Tutorial: https://www.stackextend.com/angular/websocket-with-spring-boot-and-angular/
-
-    npm install --save sockjs-client stompjs
+Tutorial: https://tutorialedge.net/typescript/angular/angular-websockets-tutorial/
 
