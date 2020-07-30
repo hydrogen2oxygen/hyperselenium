@@ -26,7 +26,10 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.hyperSeleniumService.getServiceStatus().subscribe(result => this.serviceStatus = result);
+    this.hyperSeleniumService.getServiceStatus().subscribe(result => {
+      this.serviceStatus = result;
+      this.hyperSeleniumService.setTitle(`HyperSelenium v${result.buildVersion}`)
+    });
   }
 
 }

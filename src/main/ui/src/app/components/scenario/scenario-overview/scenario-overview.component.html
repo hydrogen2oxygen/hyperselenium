@@ -11,10 +11,10 @@
   <tbody>
   <tr *ngFor="let scenario of scenarios; index as i">
     <th scope="row">{{ i + 1 }}&nbsp;
-      <fa-icon [icon]="faEdit"></fa-icon>&nbsp;
-      <fa-icon [icon]="faPlay"></fa-icon>&nbsp;
-      <fa-icon [icon]="faStop"></fa-icon>&nbsp;
-      <fa-icon [icon]="faTrash"></fa-icon>
+      <fa-icon [icon]="faEdit" (click)="edit(scenario)"></fa-icon>&nbsp;
+      <fa-icon [icon]="faPlay" (click)="play(scenario)"></fa-icon>&nbsp;
+      <fa-icon [icon]="faStop" (click)="stop(scenario)"></fa-icon>&nbsp;
+      <fa-icon [icon]="faTrash" (click)="delete(scenario)"></fa-icon>
     </th>
     <td>{{ scenario.name }}</td>
     <td>{{ scenario.description }}</td>

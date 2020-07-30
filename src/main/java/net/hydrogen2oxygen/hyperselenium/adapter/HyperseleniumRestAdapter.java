@@ -8,6 +8,7 @@ import org.apache.logging.log4j.message.EntryMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,11 +18,14 @@ public class HyperseleniumRestAdapter {
 
     private static final Logger logger = LogManager.getLogger(HyperseleniumRestAdapter.class);
 
+    @Value("${build.version}")
+    private String buildVersion;
+
     @Autowired
     private HyperseleniumService hyperseleniumService;
 
-    @Value("${build.version}")
-    private String buildVersion;
+    @Autowired
+    private SimpMessagingTemplate template;
 
     @GetMapping("serviceStatus")
     ResponseEntity<ServiceStatus> getBuildVersion() {
@@ -30,6 +34,9 @@ public class HyperseleniumRestAdapter {
 
         ServiceStatus status = new ServiceStatus();
         status.setBuildVersion(buildVersion);
+
+        template.convertAndSend("/websocket/status", status);
+
         return logger.traceExit(entryMessage, ResponseEntity.ok(status));
     }
 
