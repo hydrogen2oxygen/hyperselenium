@@ -1,21 +1,36 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import {Observable, Observer, Subject} from 'rxjs';
 
-let SockJs = require("sockjs-client");
-let Stomp = require("stompjs");
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class WebSocketService {
+  constructor() {}
 
-  constructor() { }
+  private subject: Subject<MessageEvent>;
 
-  // Open connection with the back-end socket
-  public connect() {
-    let socket = new SockJs(`http://localhost/socket`);
+  public connect(url): Subject<MessageEvent> {
+    if (!this.subject) {
+      this.subject = this.create(url);
+      console.log("Successfully connected: " + url);
+    }
+    return this.subject;
+  }
 
-    let stompClient = Stomp.over(socket);
+  private create(url): Subject<MessageEvent> {
+    let ws = new WebSocket(url);
 
-    return stompClient;
+    let observable = Observable.create((obs: Observer<MessageEvent>) => {
+      ws.onmessage = obs.next.bind(obs);
+      ws.onerror = obs.error.bind(obs);
+      ws.onclose = obs.complete.bind(obs);
+      return ws.close.bind(ws);
+    });
+    let observer = {
+      next: (data: Object) => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify(data));
+        }
+      }
+    };
+    return Subject.create(observer, observable);
   }
 }
