@@ -11,6 +11,7 @@ import { ScenarioEditComponent } from './components/scenario/scenario-edit/scena
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
 import {HttpClientModule} from "@angular/common/http";
+import {WebSocketService} from "./services/web-socket.service";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import {HttpClientModule} from "@angular/common/http";
     FontAwesomeModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
