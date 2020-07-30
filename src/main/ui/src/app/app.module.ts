@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ScenarioEditComponent } from './components/scenario/scenario-edit/scenario-edit.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DocumentationComponent } from './components/documentation/documentation
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

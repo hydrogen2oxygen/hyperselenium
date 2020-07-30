@@ -27,7 +27,8 @@ A protocol of a scenario saves the result of each step and some additional notes
 ### SCENARIO
 A scenario is a test case or a use case. Selenium is not just used to test something, but it is also a tool to prepare something. If you scenario acts as a test case, then it will contain a series of asserts.
 
-### JGIT
+# TODOs
+## JGIT
 Deploy hyperselenium inside a docker or on a server, then let it load a git repository with the tests. You can use multiple instances for performance tests.
 
 ## Plugins
@@ -44,3 +45,5 @@ https://stackoverflow.com/questions/41148353/dynamically-add-jars-to-springboot-
 ## Database
 Nitrite Database (NoSQL) looks very nice: https://www.dizitart.org/nitrite-database.html
 
+## Read Maven Version Number
+https://stackoverflow.com/questions/38983934/cannot-get-maven-project-version-property-in-a-spring-application-with-value

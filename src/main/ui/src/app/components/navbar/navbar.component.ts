@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {HyperSeleniumService} from "../../services/hyper-selenium.service";
+import {ServiceStatus} from "../../domain/ServiceStatus";
 
 @Component({
   selector: 'app-navbar',
@@ -9,16 +11,22 @@ import {ActivatedRoute} from "@angular/router";
 export class NavbarComponent implements OnInit {
 
   collapsed = true;
+  serviceStatus: ServiceStatus;
 
   links = [
-    { title: 'Home', link: '', fragment: 'home' },
-    { title: 'New Scenario', link: 'scenario', fragment: 'scenario' },
+    {title: 'Home', link: '', fragment: 'home'},
+    {title: 'New Scenario', link: 'scenario', fragment: 'scenario'},
+    {title: 'Environments', link: 'environments', fragment: 'environments'},
   ];
 
-  constructor(public route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private hyperSeleniumService: HyperSeleniumService
+  ) {
   }
 
   ngOnInit(): void {
+    this.hyperSeleniumService.getServiceStatus().subscribe(result => this.serviceStatus = result);
   }
 
 }
