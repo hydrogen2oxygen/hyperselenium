@@ -1,3 +1,3 @@
-export class ServiceStatus {
+export interface ServiceStatus {
   buildVersion:string;
 }

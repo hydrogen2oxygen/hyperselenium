@@ -35,7 +35,7 @@ public class HyperseleniumRestAdapter {
         ServiceStatus status = new ServiceStatus();
         status.setBuildVersion(buildVersion);
 
-        template.convertAndSend("/websocket/status", status);
+        template.convertAndSend("/status", status);
 
         return logger.traceExit(entryMessage, ResponseEntity.ok(status));
     }
