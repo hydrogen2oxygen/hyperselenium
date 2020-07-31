@@ -1,31 +1,36 @@
 import {Injectable} from "@angular/core";
-import {Observable} from 'rxjs';
-import * as io from 'socket.io-client';
-import {environment} from "../../environments/environment";
+import {ServiceStatus} from "../domain/ServiceStatus";
+
+declare var SockJS;
+declare var Stomp;
 
 @Injectable()
 export class WebSocketService {
 
-  socket: any;
-
   constructor() {
-    this.socket = io(environment.websocketUrl);
+    this.initializeWebSocketConnection();
   }
 
-  listen(eventName: string) {
-    return new Observable(subscriber => {
-      console.log("listen event triggered");
-      this.socket.on(eventName, data => {
-        console.log("on socket");
-        console.log(data);
-        subscriber.next(data)
-      })
-    })
-  }
+  public stompClient;
+  serviceStatus:ServiceStatus;
 
-  emit(eventName: string, data: any) {
-    console.log("emit triggered");
-    this.socket.emit(eventName, data);
+  initializeWebSocketConnection() {
+
+    const serverUrl = 'http://localhost:80/socket';
+    const ws = new SockJS(serverUrl);
+    this.stompClient = Stomp.over(ws);
+    const that = this;
+
+    this.stompClient.connect({}, function(frame) {
+      that.stompClient.subscribe('/status', (message) => {
+        if (message.body) {
+          console.log("Received a websocket message");
+          console.log(message.body);
+          that.serviceStatus = message.body;
+          console.log(that.serviceStatus)
+        }
+      });
+    });
   }
 
 }

@@ -8,15 +8,11 @@ import {WebSocketService} from "./services/web-socket.service";
 })
 export class AppComponent implements OnInit {
   title = 'ui';
-
+  input;
   constructor(private webSocketService:WebSocketService){}
 
   ngOnInit(): void {
-    this.webSocketService.listen('status').subscribe(data => {
-      console.log("Data from websocket!");
-      console.log(data);
-    });
-
-    console.log("websocket registered");
   }
+
+
 }
