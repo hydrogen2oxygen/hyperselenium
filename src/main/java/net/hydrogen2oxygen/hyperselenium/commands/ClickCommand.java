@@ -1,11 +1,11 @@
-package net.hydrogen2oxygen.hyperselenium.domain.commands;
+package net.hydrogen2oxygen.hyperselenium.commands;
 
 import net.hydrogen2oxygen.hyperselenium.domain.CommandResult;
 import net.hydrogen2oxygen.hyperselenium.domain.HyperseleniumCommand;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 
 @HyperseleniumCommand
-public class ClickNameCommand extends BaseCommand {
+public class ClickCommand extends BaseCommand {
 
     @Override
     public CommandResult executeCommand(HyperWebDriver driver, String [] params) {
@@ -13,9 +13,9 @@ public class ClickNameCommand extends BaseCommand {
         CommandResult commandResult = new CommandResult();
 
         try {
-            driver.clickName(params[0]);
+            driver.click(params[0]);
             commandResult.setSuccess(true);
-            commandResult.setMessage(String.format("Click on element with name %s successful",params[0]));
+            commandResult.setMessage(String.format("Click on id %s successful",params[0]));
         } catch (Exception e) {
             commandResult.setMessage(e.getMessage());
         }
@@ -25,6 +25,6 @@ public class ClickNameCommand extends BaseCommand {
 
     @Override
     public String getCommandName() {
-        return "clickName";
+        return "click";
     }
 }

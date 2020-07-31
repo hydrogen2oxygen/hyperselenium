@@ -1,4 +1,4 @@
-package net.hydrogen2oxygen.hyperselenium.domain.commands;
+package net.hydrogen2oxygen.hyperselenium.commands;
 
 import net.hydrogen2oxygen.hyperselenium.domain.ICommand;
 

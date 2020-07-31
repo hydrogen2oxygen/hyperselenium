@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {ServiceStatus} from "../domain/ServiceStatus";
+import {environment} from "../../environments/environment";
 
 declare var SockJS;
 declare var Stomp;
@@ -16,7 +17,7 @@ export class WebSocketService {
 
   initializeWebSocketConnection() {
 
-    const serverUrl = 'http://localhost:80/socket';
+    const serverUrl = `${environment.websocketUrl}`;
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
     const that = this;

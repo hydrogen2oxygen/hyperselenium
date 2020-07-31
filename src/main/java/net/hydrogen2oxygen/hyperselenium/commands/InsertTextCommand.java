@@ -1,31 +1,24 @@
-package net.hydrogen2oxygen.hyperselenium.domain.commands;
+package net.hydrogen2oxygen.hyperselenium.commands;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.hydrogen2oxygen.hyperselenium.domain.CommandResult;
 import net.hydrogen2oxygen.hyperselenium.domain.HyperseleniumCommand;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 
 @HyperseleniumCommand
-public class CloseCommand extends BaseCommand {
+public class InsertTextCommand extends BaseCommand {
 
     @Override
     public CommandResult executeCommand(HyperWebDriver driver, String[] params) {
 
         CommandResult commandResult = new CommandResult();
 
-        try {
-            driver.close();
-            commandResult.setSuccess(true);
-            commandResult.setMessage("Selenium driver closed!");
-        } catch (Exception e) {
-            commandResult.setMessage(e.getMessage());
-        }
+        driver.insertText(params[0],params[1]);
 
         return commandResult;
     }
 
     @Override
     public String getCommandName() {
-        return "close";
+        return "text";
     }
 }

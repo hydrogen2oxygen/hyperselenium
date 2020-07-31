@@ -1,22 +1,21 @@
-package net.hydrogen2oxygen.hyperselenium.domain.commands;
+package net.hydrogen2oxygen.hyperselenium.commands;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.hydrogen2oxygen.hyperselenium.domain.CommandResult;
 import net.hydrogen2oxygen.hyperselenium.domain.HyperseleniumCommand;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 
 @HyperseleniumCommand
-public class OpenCommand extends BaseCommand {
+public class CloseCommand extends BaseCommand {
 
     @Override
     public CommandResult executeCommand(HyperWebDriver driver, String[] params) {
 
         CommandResult commandResult = new CommandResult();
-        String url = params[0];
+
         try {
-            driver.openPage(url).waitMillis(500);
+            driver.close();
             commandResult.setSuccess(true);
-            commandResult.setMessage(String.format("Open website %s successful",params[0]));
+            commandResult.setMessage("Selenium driver closed!");
         } catch (Exception e) {
             commandResult.setMessage(e.getMessage());
         }
@@ -26,6 +25,6 @@ public class OpenCommand extends BaseCommand {
 
     @Override
     public String getCommandName() {
-        return "open";
+        return "close";
     }
 }

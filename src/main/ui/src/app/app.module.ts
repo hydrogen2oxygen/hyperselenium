@@ -12,6 +12,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { DocumentationComponent } from './components/documentation/documentation.component';
 import {HttpClientModule} from "@angular/common/http";
 import {WebSocketService} from "./services/web-socket.service";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,13 +23,14 @@ import {WebSocketService} from "./services/web-socket.service";
     PageNotFoundComponent,
     DocumentationComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    FontAwesomeModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        FontAwesomeModule,
+        HttpClientModule,
+        ReactiveFormsModule
+    ],
   providers: [WebSocketService],
   bootstrap: [AppComponent]
 })

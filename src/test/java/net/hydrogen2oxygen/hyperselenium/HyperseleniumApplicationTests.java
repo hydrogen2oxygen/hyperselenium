@@ -1,9 +1,7 @@
 package net.hydrogen2oxygen.hyperselenium;
 
-import net.hydrogen2oxygen.hyperselenium.domain.CommandResult;
 import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.domain.Script;
-import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
@@ -19,9 +17,6 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class HyperseleniumApplicationTests {
-
-	@Value("${selenium.driver.directory}")
-	private String seleniumDriverDirectory;
 
 	@Autowired
 	private HyperseleniumService service;

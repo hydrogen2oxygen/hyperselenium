@@ -16,15 +16,29 @@ import java.util.Map;
 @Service
 public class HyperseleniumService {
 
+    @Value("${build.version}")
+    private String buildVersion;
+
     @Value("${selenium.driver.directory}")
     private String seleniumDriverDirectory;
 
     private Map<String, ICommand> commands = new HashMap<>();
+    private ServiceStatus status = new ServiceStatus();
 
     @PostConstruct
     public void initService() throws Exception{
 
-        try (ScanResult scanResult = new ClassGraph().enableAllInfo().acceptPackages("net.hydrogen2oxygen")
+        status.setBuildVersion(buildVersion);
+
+        scanForCommands("net.hydrogen2oxygen");
+    }
+
+    /**
+     * Scans for HyperseleniumCommand annotated commands. Be careful, you can override an existing command with this method.
+     * @param packages
+     */
+    public void scanForCommands(String packages) {
+        try (ScanResult scanResult = new ClassGraph().enableAllInfo().acceptPackages(packages)
                 .scan()) {
             ClassInfoList checked = scanResult.getClassesWithAnnotation(HyperseleniumCommand.class.getCanonicalName());
 
@@ -114,5 +128,9 @@ public class HyperseleniumService {
 
             }
         }*/
+    }
+
+    public ServiceStatus getServiceStatus() {
+        return status;
     }
 }
