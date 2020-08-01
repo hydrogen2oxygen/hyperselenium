@@ -10,7 +10,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 })
 export class ScenarioEditComponent implements OnInit {
 
-  scenarioForm:FormGroup;
+  scenarioForm:FormGroup = new FormGroup({});
 
   constructor(
     private hyperSeleniumService:HyperSeleniumService
@@ -31,6 +31,7 @@ export class ScenarioEditComponent implements OnInit {
     scenario.description = this.scenarioForm.getRawValue().description;
 
     this.hyperSeleniumService.saveScenario(scenario).subscribe( result => {
+      console.log("scenario saved!");
       console.log(result);
       // TODO Toast
     })

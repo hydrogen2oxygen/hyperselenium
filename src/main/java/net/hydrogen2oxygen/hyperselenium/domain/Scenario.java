@@ -1,12 +1,10 @@
 package net.hydrogen2oxygen.hyperselenium.domain;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 
 /**
  * A scenario is an automation of a browser, the execution of one or more scripts, which results in a protocol object.
  */
-@JsonRootName(value = "scenario")
 public class Scenario {
 
     /**
@@ -33,6 +31,8 @@ public class Scenario {
      * Protocol with details of the execution
      */
     private Protocol protocol;
+
+    public Scenario() {}
 
     public HyperWebDriver getDriver() {
         return driver;

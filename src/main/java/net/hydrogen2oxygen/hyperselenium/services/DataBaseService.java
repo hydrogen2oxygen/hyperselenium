@@ -107,6 +107,13 @@ public class DataBaseService {
 
         Script script = scenario.getScript();
 
+        if (script == null) {
+            // create new main script
+            script = new Script();
+            script.setName("mainScript-" + scenario.getName());
+            scenario.setScript(script);
+        }
+
         return Document.createDocument("name",scenario.getName())
                     .put("description", scenario.getDescription())
                     .put("script", script.getName());

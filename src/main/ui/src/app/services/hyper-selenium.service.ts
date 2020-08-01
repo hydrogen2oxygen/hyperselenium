@@ -26,10 +26,11 @@ export class HyperSeleniumService {
   }
 
   saveScenario(scenario:Scenario):Observable<Scenario> {
+    console.log(scenario);
     return this.http.post<Scenario>(`${HyperSeleniumService.url}/scenario`, scenario);
   }
 
-  getAllScenarios():Observable<Scenario[]> {
+  getAllScenarios() {
     return this.http.get<Scenario[]>(`${HyperSeleniumService.url}/scenario`)
   }
 

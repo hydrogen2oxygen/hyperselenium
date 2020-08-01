@@ -22,6 +22,8 @@ public class Script {
      */
     private List<Integer> breakpoint = new ArrayList<>();
 
+    public Script(){}
+
     public Script(String name, List<String> lines) {
         this.name = name;
         this.lines = lines;
