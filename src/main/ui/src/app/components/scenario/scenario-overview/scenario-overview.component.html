@@ -11,7 +11,7 @@
   <tbody>
   <tr *ngFor="let scenario of scenarios; index as i">
     <th scope="row">{{ i + 1 }}&nbsp;
-      <fa-icon [icon]="faEdit" (click)="edit(scenario)"></fa-icon>&nbsp;
+      <fa-icon [icon]="faEdit" routerLink="/scenario/{{scenario.name}}"></fa-icon>&nbsp;
       <fa-icon [icon]="faPlay" (click)="play(scenario)"></fa-icon>&nbsp;
       <fa-icon [icon]="faStop" (click)="stop(scenario)"></fa-icon>&nbsp;
       <fa-icon [icon]="faTrash" (click)="delete(scenario)"></fa-icon>

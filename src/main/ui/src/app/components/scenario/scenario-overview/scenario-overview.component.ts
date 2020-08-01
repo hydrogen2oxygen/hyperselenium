@@ -24,10 +24,6 @@ export class ScenarioOverviewComponent implements OnInit {
     });
   }
 
-  edit(scenario: Scenario) {
-
-  }
-
   play(scenario: Scenario) {
 
   }

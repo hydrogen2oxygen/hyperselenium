@@ -1,3 +1,4 @@
+<p *ngIf="editMode">Edit scenario</p>
 <form *ngIf="scenarioForm" [formGroup]="scenarioForm">
   <div class="form-group">
     <label for="scenarioName">Name</label>
@@ -11,7 +12,7 @@
   </div>
   <div class="form-group">
     <label for="scenarioScript">Script</label>
-    <textarea type="text" rows="10" class="form-control form-control-sm" id="scenarioScript" aria-describedby="scenarioScriptHelp">
+    <textarea formControlName="script" type="text" rows="10" class="form-control form-control-sm" id="scenarioScript" aria-describedby="scenarioScriptHelp">
 # Title
 Some text in markdown syntax.
 
@@ -24,9 +25,7 @@ End notes.</textarea>
     You can edit the script later in interactive mode.<br>
     Read the documentation <a routerLink="/documentation" target="documentation">here</a>.</small>
   </div>
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="draft">
-    <label class="form-check-label" for="draft">Draft</label>
-  </div>
-  <button class="btn btn-primary" (click)="save()">Save</button>
+
+  <button *ngIf="!editMode" class="btn btn-primary" (click)="save()">Save</button>
+  <button *ngIf="editMode" class="btn btn-success" (click)="udate()">Update</button>
 </form>

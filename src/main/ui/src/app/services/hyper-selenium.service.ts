@@ -42,4 +42,8 @@ export class HyperSeleniumService {
     console.log(title);
     this.titleService.setTitle(title);
   }
+
+  loadScenario(name: string):Observable<Scenario> {
+    return this.http.get<Scenario>(`${HyperSeleniumService.url}/scenario/${name}`);
+  }
 }

@@ -83,7 +83,15 @@ public class DataBaseService {
         return list;
     }
 
+    public Scenario getScenarioByName(String name) throws IOException {
+
+        Cursor cursor = scenariosCollection.find(eq("name",name));
+        return createScenarioFromDocument(cursor.firstOrDefault());
+    }
+
     private Scenario createScenarioFromDocument(Document document) throws IOException {
+
+        if (document == null) return null;
 
         Scenario scenario = new Scenario();
         scenario.setName((String) document.get("name"));
@@ -126,6 +134,5 @@ public class DataBaseService {
 
         return scriptDoc;
     }
-
 
 }

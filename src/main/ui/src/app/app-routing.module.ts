@@ -10,6 +10,7 @@ const routes: Routes = [
   {path:'home', redirectTo: '', pathMatch: 'full'},
   {path:'documentation', component: DocumentationComponent},
   {path:'scenario', component: ScenarioEditComponent},
+  {path:'scenario/:name', component: ScenarioEditComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 

@@ -1,5 +1,6 @@
 package net.hydrogen2oxygen.hyperselenium.adapter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.services.DataBaseService;
@@ -45,7 +46,17 @@ public class ScenarioRestAdapter {
         return ResponseEntity.ok(dataBaseService.getAllScenarios());
     }
 
-    // TODO Find scenario by name
+    @GetMapping("{name}")
+    ResponseEntity<Scenario> getScenarioByName(@PathVariable String name) throws IOException {
+
+        Scenario scenario = dataBaseService.getScenarioByName(name);
+
+        if (scenario != null) {
+            return ResponseEntity.ok(scenario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     // TODO Update scenarios
 
