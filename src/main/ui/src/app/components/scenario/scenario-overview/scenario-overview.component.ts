@@ -25,7 +25,9 @@ export class ScenarioOverviewComponent implements OnInit {
   }
 
   play(scenario: Scenario) {
-
+    this.hyperSeleniumService.play(scenario.name).subscribe( data => {
+      console.log(data)
+    });
   }
 
   stop(scenario: Scenario) {

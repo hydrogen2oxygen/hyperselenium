@@ -50,4 +50,8 @@ export class HyperSeleniumService {
   updateScenario(scenario: Scenario):Observable<Scenario> {
     return this.http.put<Scenario>(`${HyperSeleniumService.url}/scenario`, scenario);
   }
+
+  play(name: string):Observable<Scenario> {
+    return this.http.post<Scenario>(`${HyperSeleniumService.url}/play/${name}`, null);
+  }
 }
