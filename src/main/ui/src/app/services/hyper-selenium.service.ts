@@ -46,4 +46,8 @@ export class HyperSeleniumService {
   loadScenario(name: string):Observable<Scenario> {
     return this.http.get<Scenario>(`${HyperSeleniumService.url}/scenario/${name}`);
   }
+
+  updateScenario(scenario: Scenario):Observable<Scenario> {
+    return this.http.put<Scenario>(`${HyperSeleniumService.url}/scenario`, scenario);
+  }
 }

@@ -58,7 +58,12 @@ public class ScenarioRestAdapter {
         }
     }
 
-    // TODO Update scenarios
+    @PutMapping
+    Scenario updateScenario(@RequestBody Scenario scenario) throws JsonProcessingException {
+
+        dataBaseService.updateScenario(scenario);
+        return scenario;
+    }
 
     // TODO Delete scenarios
 

@@ -64,6 +64,26 @@ public class DataBaseService {
         return doc;
     }
 
+    public Document updateScenario(Scenario scenario) throws JsonProcessingException {
+        Document doc = createDocumentFromScenario(scenario);
+
+        WriteResult resultScenario = scenariosCollection.update(eq("name", scenario.getName()), doc);
+
+        if (resultScenario.getAffectedCount() == 1) {
+            // ...
+        }
+
+        updateScript(scenario.getScript());
+
+        return doc;
+    }
+
+    private Document updateScript(Script script) throws JsonProcessingException {
+        Document scriptDocument = createDocumentFromScript(script);
+        scriptCollection.update(eq("name", script.getName()), scriptDocument);
+        return scriptDocument;
+    }
+
     public Document saveScript(Script script) throws JsonProcessingException {
         Document scriptDocument = createDocumentFromScript(script);
         scriptCollection.insert(scriptDocument);
@@ -134,5 +154,4 @@ public class DataBaseService {
 
         return scriptDoc;
     }
-
 }
