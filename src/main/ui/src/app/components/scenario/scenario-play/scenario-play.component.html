@@ -1,12 +1,19 @@
-<div *ngFor="let line of scenario.script.lines; index as i">
-  <div *ngIf="line.startsWith('#') || !line.startsWith('    '); else codeLine">
-    <h1 *ngIf="line.startsWith('# ')">{{line.replace('# ', '')}}</h1>
-    <h2 *ngIf="line.startsWith('## ')">{{line.replace('# ', '')}}</h2>
-    <h3 *ngIf="line.startsWith('### ')">{{line.replace('# ', '')}}</h3>
-    <h4 *ngIf="line.startsWith('#### ')">{{line.replace('# ', '')}}</h4>
+<div *ngIf="scenario">
+<div *ngFor="let line of scenario?.protocol?.lines; index as i">
+  <div [ngSwitch]="line.type">
+    <div *ngSwitchCase="HEADER">
+      <h1 *ngIf="line.line.startsWith('# ')">{{line.line.replace('# ', '')}}</h1>
+      <h2 *ngIf="line.line.startsWith('## ')">{{line.line.replace('# ', '')}}</h2>
+      <h3 *ngIf="line.line.startsWith('### ')">{{line.line.replace('# ', '')}}</h3>
+      <h4 *ngIf="line.line.startsWith('#### ')">{{line.line.replace('# ', '')}}</h4>
+    </div>
+    <div *ngSwitchCase="CODE">
+      <pre>{{line.line}}</pre>
+    </div>
+    <div *ngSwitchDefault>
+      {{line.line}}
+    </div>
   </div>
-  <ng-template #codeLine>
-    <pre>{{line}}</pre>
-  </ng-template>
 </div>
 <div *ngIf="!scenario">... loading scenario ...</div>
+</div>

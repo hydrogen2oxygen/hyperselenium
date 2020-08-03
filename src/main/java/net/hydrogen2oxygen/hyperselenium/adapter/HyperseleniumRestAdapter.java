@@ -45,7 +45,6 @@ public class HyperseleniumRestAdapter {
 
         final EntryMessage entryMessage = logger.traceEntry("give me the service status");
 
-
         ServiceStatus serviceStatus = statusService.getServiceStatus();
 
         return logger.traceExit(entryMessage, ResponseEntity.ok(serviceStatus));

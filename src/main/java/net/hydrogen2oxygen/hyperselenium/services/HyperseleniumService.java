@@ -111,7 +111,7 @@ public class HyperseleniumService {
             protocolLine.setLineNumber(lineCounter+1);
 
             if (line.startsWith("    ")) {
-                protocolLine.setType("COMMAND");
+                protocolLine.setType("CODE");
             } else {
                 if (line.startsWith("#")) {
                     protocolLine.setType("HEADER");

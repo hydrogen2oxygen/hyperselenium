@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {ServiceStatus} from "../domain/ServiceStatus";
 import {environment} from "../../environments/environment";
+import {Subject} from "rxjs";
 
 declare var SockJS;
 declare var Stomp;
@@ -13,7 +14,7 @@ export class WebSocketService {
   }
 
   public stompClient;
-  serviceStatus:ServiceStatus;
+  serviceStatus:Subject<ServiceStatus> = new Subject<ServiceStatus>();
 
   initializeWebSocketConnection() {
 
@@ -27,8 +28,7 @@ export class WebSocketService {
         if (message.body) {
           console.log("Received a websocket message");
           console.log(message.body);
-          that.serviceStatus = message.body;
-          console.log(that.serviceStatus)
+          that.serviceStatus.next(message.body);
         }
       });
     });

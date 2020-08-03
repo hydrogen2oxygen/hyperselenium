@@ -13,8 +13,6 @@ export class HyperSeleniumService {
 
   public static url = `${environment.serverUrl}/api`;
 
-  public status: Subject<ServiceStatus>;
-
   constructor(
     private http:HttpClient,
     private titleService: Title
