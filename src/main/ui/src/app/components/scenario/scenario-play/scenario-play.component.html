@@ -1,4 +1,4 @@
-<div *ngIf="scenario">
+<div *ngIf="!scenario">... loading scenario ...</div>
 <div *ngFor="let line of scenario?.protocol?.lines; index as i">
   <div [ngSwitch]="line.type">
     <div *ngSwitchCase="HEADER">
@@ -15,5 +15,4 @@
     </div>
   </div>
 </div>
-<div *ngIf="!scenario">... loading scenario ...</div>
-</div>
+

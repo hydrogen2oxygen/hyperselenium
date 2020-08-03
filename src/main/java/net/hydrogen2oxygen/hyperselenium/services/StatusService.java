@@ -45,6 +45,13 @@ public class StatusService {
         checkUpdate();
     }
 
+    /**
+     * Force the send status
+     */
+    public void sendStatus() {
+        sendStatusViaWebsocket();
+    }
+
     private void checkUpdate() {
 
         if (Calendar.getInstance().getTimeInMillis() > lastUpdate + minUpdateMillis) {

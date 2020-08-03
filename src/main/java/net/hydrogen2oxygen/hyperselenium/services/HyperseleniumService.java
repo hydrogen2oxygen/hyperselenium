@@ -170,6 +170,7 @@ public class HyperseleniumService {
         protocol.setStatus("FINISHED");
 
         statusService.addScenarioUpdate(scenario);
+        statusService.sendStatus();
     }
 
 

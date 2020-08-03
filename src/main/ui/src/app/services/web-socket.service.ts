@@ -27,8 +27,8 @@ export class WebSocketService {
       that.stompClient.subscribe('/status', (message) => {
         if (message.body) {
           console.log("Received a websocket message");
-          console.log(message.body);
-          that.serviceStatus.next(message.body);
+          console.log(JSON.parse(message.body).scenarioMap.test1);
+          //that.serviceStatus.next(message.body);
         }
       });
     });
