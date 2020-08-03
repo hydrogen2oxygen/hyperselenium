@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Scenario} from "../../../domain/Scenario";
 import { faEdit, faTrash, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
 import {HyperSeleniumService} from "../../../services/hyper-selenium.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-scenario-overview',
@@ -15,7 +16,11 @@ export class ScenarioOverviewComponent implements OnInit {
   faPlay = faPlay;
   faStop = faStop;
 
-  constructor(private hyperSeleniumService:HyperSeleniumService) { }
+  constructor(
+    private hyperSeleniumService:HyperSeleniumService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
 
@@ -26,7 +31,7 @@ export class ScenarioOverviewComponent implements OnInit {
 
   play(scenario: Scenario) {
     this.hyperSeleniumService.play(scenario.name).subscribe( data => {
-      console.log(data)
+      this.router.navigate([`/play/${scenario.name}`]);
     });
   }
 

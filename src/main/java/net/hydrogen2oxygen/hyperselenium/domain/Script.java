@@ -1,5 +1,7 @@
 package net.hydrogen2oxygen.hyperselenium.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +15,9 @@ public class Script {
     private List<String> lines;
 
     /**
-     * The current line of the script not yet executed. Begins with 1.
-     */
-    private Integer currentLine = 1;
-
-    /**
      * A list of breakpoints
      */
-    private List<Integer> breakpoint = new ArrayList<>();
+    private List<Integer> breakpoints = new ArrayList<>();
 
     public Script(){}
 
@@ -45,19 +42,20 @@ public class Script {
         this.lines = lines;
     }
 
-    public Integer getCurrentLine() {
-        return currentLine;
+    public List<Integer> getBreakpoints() {
+        return breakpoints;
     }
 
-    public void setCurrentLine(Integer currentLine) {
-        this.currentLine = currentLine;
+    public void setBreakpoints(List<Integer> breakpoints) {
+        this.breakpoints = breakpoints;
     }
 
-    public List<Integer> getBreakpoint() {
-        return breakpoint;
-    }
-
-    public void setBreakpoint(List<Integer> breakpoint) {
-        this.breakpoint = breakpoint;
+    @Override
+    public String toString() {
+        return "Script{" +
+                "name='" + name + '\'' +
+                ", lines=" + lines +
+                ", breakpoints=" + breakpoints +
+                '}';
     }
 }

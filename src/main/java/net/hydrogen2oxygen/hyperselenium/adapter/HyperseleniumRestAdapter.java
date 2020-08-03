@@ -4,6 +4,7 @@ import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.domain.ServiceStatus;
 import net.hydrogen2oxygen.hyperselenium.services.DataBaseService;
 import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;
+import net.hydrogen2oxygen.hyperselenium.services.StatusService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.EntryMessage;
@@ -30,7 +31,7 @@ public class HyperseleniumRestAdapter {
     private HyperseleniumService hyperseleniumService;
 
     @Autowired
-    private SimpMessagingTemplate template;
+    private StatusService statusService;
 
     @Qualifier("taskExecutor")
     @Autowired
@@ -45,8 +46,7 @@ public class HyperseleniumRestAdapter {
         final EntryMessage entryMessage = logger.traceEntry("give me the service status");
 
 
-        ServiceStatus serviceStatus = hyperseleniumService.getServiceStatus();
-        template.convertAndSend("/status", serviceStatus);
+        ServiceStatus serviceStatus = statusService.getServiceStatus();
 
         return logger.traceExit(entryMessage, ResponseEntity.ok(serviceStatus));
     }

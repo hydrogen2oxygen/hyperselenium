@@ -1,5 +1,6 @@
 package net.hydrogen2oxygen.hyperselenium.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 
 /**
@@ -10,6 +11,7 @@ public class Scenario {
     /**
      * The driver which is used during the entire execution of the scenario
      */
+    @JsonIgnore
     private HyperWebDriver driver;
 
     /**
@@ -72,5 +74,17 @@ public class Scenario {
 
     public void setProtocol(Protocol protocol) {
         this.protocol = protocol;
+    }
+
+    @Override
+    public String toString() {
+        String txt = "Scenario{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", script=" + script +
+                ", protocol=" + protocol +
+                "}";
+        return txt.replaceAll("\\{","\n\t{")
+                .replaceAll("\\}","\n\t}").trim();
     }
 }

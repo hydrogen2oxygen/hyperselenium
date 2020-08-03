@@ -5,30 +5,29 @@ import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
 import net.hydrogen2oxygen.hyperselenium.domain.*;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Constructor;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class HyperseleniumService {
 
-    @Value("${build.version}")
-    private String buildVersion;
-
     @Value("${selenium.driver.directory}")
     private String seleniumDriverDirectory;
 
     private Map<String, ICommand> commands = new HashMap<>();
-    private ServiceStatus status = new ServiceStatus();
+
+    @Autowired
+    private StatusService statusService;
 
     @PostConstruct
     public void initService() throws Exception{
-
-        status.setBuildVersion(buildVersion);
 
         scanForCommands("net.hydrogen2oxygen");
     }
@@ -60,7 +59,7 @@ public class HyperseleniumService {
         }
     }
 
-    public CommandResult executeCommandLine(HyperWebDriver driver, String line) {
+    public CommandResult executeCommandLine(final HyperWebDriver driver, String line, final ProtocolLine protocolLine) {
 
         String [] parts = line.split(" ");
         ICommand command = commands.get(parts[0]);
@@ -71,11 +70,14 @@ public class HyperseleniumService {
         }
 
         try {
-            return command.executeCommand(driver, parameters);
+            CommandResult result = command.executeCommand(driver, parameters);
+            protocolLine.setStatus("SUCCESS");
+            return result;
         } catch (Exception e) {
             CommandResult result = new CommandResult();
             result.setSuccess(false);
             result.setMessage(e.getMessage());
+            protocolLine.setStatus("ERROR");
             return result;
         }
     }
@@ -86,8 +88,40 @@ public class HyperseleniumService {
             scenario.setDriver(getNewHyperWebDriver());
         }
 
+        addNewProtocol(scenario);
+
         // Execute the main script
-        executeScript(scenario.getScript(), scenario.getDriver());
+        executeScript(scenario);
+    }
+
+    private void addNewProtocol(Scenario scenario) {
+
+        Protocol protocol = new Protocol();
+        scenario.setProtocol(protocol);
+
+        Script script = scenario.getScript();
+
+        int lineCounter = -1;
+
+        for (String line : script.getLines()) {
+
+            lineCounter++;
+            ProtocolLine protocolLine = new ProtocolLine();
+            protocolLine.setLine(line);
+            protocolLine.setLineNumber(lineCounter+1);
+
+            if (line.startsWith("    ")) {
+                protocolLine.setType("COMMAND");
+            } else {
+                if (line.startsWith("#")) {
+                    protocolLine.setType("HEADER");
+                } else {
+                    protocolLine.setType("TEXT");
+                }
+            }
+
+            protocol.getLines().add(protocolLine);
+        }
     }
 
     public HyperWebDriver getNewHyperWebDriver() {
@@ -97,21 +131,45 @@ public class HyperseleniumService {
         return HyperWebDriver.build();
     }
 
-    public void executeScript(Script script, HyperWebDriver driver) {
+    public void executeScript(Scenario scenario) {
+
+        Script script = scenario.getScript();
+        HyperWebDriver driver = scenario.getDriver();
+        Protocol protocol = scenario.getProtocol();
+        protocol.setStatus("RUNNING");
+        statusService.addScenarioUpdate(scenario);
+
+        int lineCount = -1;
 
         for (String line : script.getLines()) {
 
-            if (line.trim().isEmpty()) continue;
+            lineCount++;
+
+            ProtocolLine protocolLine = protocol.getLines().get(lineCount);
+
+            if (line.trim().isEmpty()) {
+                protocolLine.setStatus("PASS");
+                continue;
+            }
 
             if (line.startsWith("    ")) {
-                String[] parts = line.trim().split(" ");
-                System.out.print(line + " - ");
-                CommandResult result = executeCommandLine(driver, line.trim());
-                System.out.println(result.getMessage());
+                protocolLine.setStatus("RUNNING");
+
+                statusService.addScenarioUpdate(scenario);
+
+                CommandResult result = executeCommandLine(driver, line.trim(), protocolLine);
+
+                protocolLine.setResult(result.getMessage());
+
+                statusService.addScenarioUpdate(scenario);
             } else {
-                System.out.println(line);
+                protocolLine.setStatus("PASS");
             }
         }
+
+        protocol.setStatus("FINISHED");
+
+        statusService.addScenarioUpdate(scenario);
     }
 
 
@@ -130,7 +188,4 @@ public class HyperseleniumService {
         }*/
     }
 
-    public ServiceStatus getServiceStatus() {
-        return status;
-    }
 }

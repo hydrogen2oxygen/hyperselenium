@@ -13,6 +13,7 @@ import { DocumentationComponent } from './components/documentation/documentation
 import {HttpClientModule} from "@angular/common/http";
 import {WebSocketService} from "./services/web-socket.service";
 import {ReactiveFormsModule} from "@angular/forms";
+import { ScenarioPlayComponent } from './components/scenario/scenario-play/scenario-play.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     NavbarComponent,
     ScenarioEditComponent,
     PageNotFoundComponent,
-    DocumentationComponent
+    DocumentationComponent,
+    ScenarioPlayComponent
   ],
     imports: [
         BrowserModule,

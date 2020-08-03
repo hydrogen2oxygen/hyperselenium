@@ -4,6 +4,7 @@ public class CommandResult {
 
     private Boolean success = false;
     private String message;
+    private Object value;
 
     public Boolean getSuccess() {
         return success;
@@ -19,5 +20,13 @@ public class CommandResult {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
     }
 }
