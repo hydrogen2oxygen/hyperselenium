@@ -41,7 +41,20 @@ public class StatusService {
 
     public void addScenarioUpdate(Scenario scenario) {
 
-        serviceStatus.getScenarioMap().put(scenario.getName(), scenario);
+        Scenario oldScenario = null;
+
+        for (Scenario s : serviceStatus.getScenarios()) {
+           if (s.getName().equals(scenario.getName())) {
+               oldScenario = s;
+               break;
+           }
+        }
+
+        if (oldScenario != null) {
+            serviceStatus.getScenarios().remove(oldScenario);
+        }
+
+        serviceStatus.getScenarios().add(scenario);
         checkUpdate();
     }
 

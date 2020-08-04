@@ -46,15 +46,17 @@ export class ScenarioPlayComponent implements OnInit {
 
         let serviceStatus:ServiceStatus = <ServiceStatus> status;
 
-        console.log(serviceStatus.scenarioMap);
-        console.log(typeof serviceStatus.scenarioMap);
-        if (serviceStatus.scenarioMap == null) {
-          console.log("serviceStatus.scenarioMap is empty");
-          return;
+        console.log(serviceStatus);
+
+        for (let i:number = 0; i<serviceStatus.scenarios.length; i++) {
+          let scenario:Scenario = serviceStatus.scenarios[i];
+          if (scenario.name == this.scenarioName) {
+            this.scenario = scenario;
+            console.log("READING SUCCESS");
+            break;
+          }
         }
-        let scenario: Scenario = serviceStatus.scenarioMap.get(this.scenarioName);
-        if (scenario != null) this.scenario = scenario;
-        console.log("READING SUCCESS")
+
       })
     });
   }

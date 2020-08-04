@@ -1,13 +1,13 @@
 package net.hydrogen2oxygen.hyperselenium.domain;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceStatus {
 
     private String buildVersion;
 
-    private Map<String,Scenario> scenarioMap = new HashMap<>();
+    private List<Scenario> scenarios = new ArrayList<>();
 
     public String getBuildVersion() {
         return buildVersion;
@@ -17,11 +17,11 @@ public class ServiceStatus {
         this.buildVersion = buildVersion;
     }
 
-    public Map<String, Scenario> getScenarioMap() {
-        return scenarioMap;
+    public List<Scenario> getScenarios() {
+        return scenarios;
     }
 
-    public void setScenarioMap(Map<String, Scenario> scenarioMap) {
-        this.scenarioMap = scenarioMap;
+    public void setScenarios(List<Scenario> scenarios) {
+        this.scenarios = scenarios;
     }
 }

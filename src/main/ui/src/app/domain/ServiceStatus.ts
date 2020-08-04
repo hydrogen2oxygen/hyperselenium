@@ -1,6 +1,6 @@
 import {Scenario} from "./Scenario";
 
-export interface ServiceStatus {
+export class ServiceStatus {
   buildVersion:string;
-  scenarioMap:Map<string,Scenario>;
+  scenarios:Scenario[];
 }
