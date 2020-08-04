@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {HyperSeleniumService} from "../../../services/hyper-selenium.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Scenario} from "../../../domain/Scenario";
 import {WebSocketService} from "../../../services/web-socket.service";
-import {Subject} from "rxjs";
 import {ServiceStatus} from "../../../domain/ServiceStatus";
+import {faEdit, faPlay, faStop} from "@fortawesome/free-solid-svg-icons";
+import {ProtocolLine} from "../../../domain/Protocol";
 
 @Component({
   selector: 'app-scenario-play',
@@ -16,10 +17,15 @@ export class ScenarioPlayComponent implements OnInit {
   scenarioName: string;
   scenario: Scenario;
 
+  faEdit = faEdit;
+  faPlay = faPlay;
+  faStop = faStop;
+
   constructor(
     private hyperSeleniumService: HyperSeleniumService,
     private webSocket: WebSocketService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
   }
 
@@ -28,7 +34,8 @@ export class ScenarioPlayComponent implements OnInit {
   }
 
   /**
-   * Load the scenario to be shown
+   * Load the scenario to be shown.
+   * The source is a webSocket event
    * @param name
    */
   private loadScenario(name: string) {
@@ -42,22 +49,32 @@ export class ScenarioPlayComponent implements OnInit {
       this.scenario = s;
 
       this.webSocket.serviceStatus.subscribe(status => {
-        console.log("status changed");
 
         let serviceStatus:ServiceStatus = <ServiceStatus> status;
-
-        console.log(serviceStatus);
 
         for (let i:number = 0; i<serviceStatus.scenarios.length; i++) {
           let scenario:Scenario = serviceStatus.scenarios[i];
           if (scenario.name == this.scenarioName) {
             this.scenario = scenario;
-            console.log("READING SUCCESS");
             break;
           }
         }
 
       })
     });
+  }
+
+  play(scenario: Scenario) {
+    this.hyperSeleniumService.play(this.scenarioName).subscribe( data => {
+      this.router.navigate([`/play/${this.scenarioName}`]);
+    });
+  }
+
+  stop(scenario: Scenario) {
+    // TODO
+  }
+
+  editLine(line: ProtocolLine) {
+    console.log(line);
   }
 }

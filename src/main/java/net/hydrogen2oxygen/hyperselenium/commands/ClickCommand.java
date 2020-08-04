@@ -8,17 +8,13 @@ import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 public class ClickCommand extends BaseCommand {
 
     @Override
-    public CommandResult executeCommand(HyperWebDriver driver, String [] params) {
+    public CommandResult executeCommand(HyperWebDriver driver, String[] params) {
 
         CommandResult commandResult = new CommandResult();
 
-        try {
-            driver.click(params[0]);
-            commandResult.setSuccess(true);
-            commandResult.setMessage(String.format("Click on id %s successful",params[0]));
-        } catch (Exception e) {
-            commandResult.setMessage(e.getMessage());
-        }
+        driver.click(params[0]);
+        commandResult.setSuccess(true);
+        commandResult.setMessage(String.format("Click on id %s successful", params[0]));
 
         return commandResult;
     }

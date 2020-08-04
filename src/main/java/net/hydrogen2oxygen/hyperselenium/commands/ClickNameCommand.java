@@ -8,17 +8,13 @@ import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 public class ClickNameCommand extends BaseCommand {
 
     @Override
-    public CommandResult executeCommand(HyperWebDriver driver, String [] params) {
+    public CommandResult executeCommand(HyperWebDriver driver, String[] params) {
 
         CommandResult commandResult = new CommandResult();
 
-        try {
-            driver.clickName(params[0]);
-            commandResult.setSuccess(true);
-            commandResult.setMessage(String.format("Click on element with name %s successful",params[0]));
-        } catch (Exception e) {
-            commandResult.setMessage(e.getMessage());
-        }
+        driver.clickName(params[0]);
+        commandResult.setSuccess(true);
+        commandResult.setMessage(String.format("Click on element with name %s successful", params[0]));
 
         return commandResult;
     }

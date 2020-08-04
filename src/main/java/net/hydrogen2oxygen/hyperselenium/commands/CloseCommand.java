@@ -12,13 +12,9 @@ public class CloseCommand extends BaseCommand {
 
         CommandResult commandResult = new CommandResult();
 
-        try {
-            driver.close();
-            commandResult.setSuccess(true);
-            commandResult.setMessage("Selenium driver closed!");
-        } catch (Exception e) {
-            commandResult.setMessage(e.getMessage());
-        }
+        driver.close();
+        commandResult.setSuccess(true);
+        commandResult.setMessage("Selenium driver closed!");
 
         return commandResult;
     }

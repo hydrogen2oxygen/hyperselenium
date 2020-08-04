@@ -1,21 +1,47 @@
-<div *ngIf="!scenario">... loading scenario ...</div>
-<div *ngFor="let line of scenario?.protocol?.lines; index as i">
-  <div [ngSwitch]="line.type">
-    <div class="hsHeader" *ngSwitchCase="'HEADER'">
-      <h1 *ngIf="line.line.startsWith('# ')">{{line.line.replace('# ', '')}}</h1>
-      <h2 *ngIf="line.line.startsWith('## ')">{{line.line.replace('## ', '')}}</h2>
-      <h3 *ngIf="line.line.startsWith('### ')">{{line.line.replace('### ', '')}}</h3>
-      <h4 *ngIf="line.line.startsWith('#### ')">{{line.line.replace('#### ', '')}}</h4>
-    </div>
-    <div class="hsCode{{line.status}}" *ngSwitchCase="'CODE'">
-      <span *ngIf="line.status == 'RUNNING'" class="badge badge-primary">{{line.status}}</span>
-      <span *ngIf="line.status == 'SUCCESS'" class="badge badge-success">{{line.status}}</span>
-      <span *ngIf="line.status == 'ERROR'" class="badge badge-danger">{{line.status}}</span>
-      {{line.line}}
-    </div>
-    <div *ngSwitchDefault>
-      {{line.line}} {{line.type}}
-    </div>
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+      <div class="sidebar-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <fa-icon [icon]="faEdit" routerLink="/scenario/{{scenario.name}}"></fa-icon>&nbsp;EDIT
+          </li>
+          <li class="nav-item">
+            <fa-icon [icon]="faPlay" (click)="play(scenario)"></fa-icon>&nbsp;PLAY
+          </li>
+          <li class="nav-item">
+            <fa-icon [icon]="faStop" (click)="stop(scenario)"></fa-icon> STOP
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div *ngIf="!scenario">... loading scenario ...</div>
+      <div *ngFor="let line of scenario?.protocol?.lines; index as i">
+        <div [ngSwitch]="line.type">
+          <div class="hsHeader" *ngSwitchCase="'HEADER'">
+            <h1 *ngIf="line.line.startsWith('# ')">{{line.line.replace('# ', '')}}</h1>
+            <h2 *ngIf="line.line.startsWith('## ')">{{line.line.replace('## ', '')}}</h2>
+            <h3 *ngIf="line.line.startsWith('### ')">{{line.line.replace('### ', '')}}</h3>
+            <h4 *ngIf="line.line.startsWith('#### ')">{{line.line.replace('#### ', '')}}</h4>
+          </div>
+          <div class="hsCode hsCode{{line.status}}" *ngSwitchCase="'CODE'">
+            <span class="badge badge-secondary" style="margin-right: 1rem">
+              <fa-icon [icon]="faEdit" (click)="editLine(line)"></fa-icon>
+              {{line.lineNumber}}
+            </span>
+            <span *ngIf="line.status == 'RUNNING'" class="badge badge-primary">{{line.status}}</span>
+            <span *ngIf="line.status == 'SUCCESS'" class="badge badge-success">{{line.status}}</span>
+            <span *ngIf="line.status == 'ERROR'" class="badge badge-danger">{{line.status}}</span>
+            {{line.line}}
+          </div>
+          <div *ngSwitchDefault>
+            {{line.line}} {{line.type}}
+          </div>
+        </div>
+      </div>
+
+    </main>
   </div>
 </div>
-

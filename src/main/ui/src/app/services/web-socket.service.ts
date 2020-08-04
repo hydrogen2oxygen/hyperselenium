@@ -6,6 +6,10 @@ import {Subject} from "rxjs";
 declare var SockJS;
 declare var Stomp;
 
+/**
+ * WebSocket connection to the server.
+ * It receives a ServiceStatus object with various information.
+ */
 @Injectable()
 export class WebSocketService {
 
@@ -23,14 +27,16 @@ export class WebSocketService {
     this.stompClient = Stomp.over(ws);
     const that = this;
 
-    this.stompClient.connect({}, function(frame) {
+    this.stompClient.connect(function(w){
+      console.log(w);
+    }, function(frame) {
       that.stompClient.subscribe('/status', (message) => {
         if (message.body) {
           console.log("Received a websocket message");
           that.serviceStatus.next(JSON.parse(message.body));
         }
       });
-    });
+    },() => { console.log("reconnect?"); this.initializeWebSocketConnection() });
   }
 
 }

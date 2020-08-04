@@ -1,5 +1,6 @@
 package net.hydrogen2oxygen.hyperselenium.selenium;
 
+import net.hydrogen2oxygen.hyperselenium.exceptions.CommandExecutionException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -48,7 +49,7 @@ public class HyperWebDriver {
         return this;
     }
 
-    public HyperWebDriver clickTagContainingText(String tag, String text) {
+    public HyperWebDriver clickTagContainingText(String tag, String text) throws CommandExecutionException {
 
         List<WebElement> list = driver.findElements(By.tagName(tag));
 
@@ -67,6 +68,10 @@ public class HyperWebDriver {
                 clickPerformed = true;
                 break;
             }
+        }
+
+        if (!clickPerformed) {
+            throw new CommandExecutionException(String.format("clickTagContainingText with tag = [%s] and text = [%s] was not successful!", tag, text));
         }
 
         return this;
