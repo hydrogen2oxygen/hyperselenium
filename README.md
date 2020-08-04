@@ -4,7 +4,20 @@ A [selenium](https://www.selenium.dev) enhancer for a better and easier browser 
 ![Hyperselenium play a script](docs/HyperSelenium.gif "Gif Animation")
 
 ## Intention
-Why Hyperselenium? Selenium is just a library, but Hyperselenium is a library and server for entire scenarios.
+Why Hyperselenium? It uses Selenium for automation of the browser, but with an easy script language.
+Indeed so easy, that you don't need to be a pro in software development for writing a script.
+
+The format of a script is a simple MarkDown format.
+
+You write text, descriptions and commands in a markdown code block.
+
+Example:
+
+    open https://github.com
+    clickLink Explore
+    assertText "Here's what we found based on your interests"
+    screenshot
+    close
 
 - SNIPPET, every script with multiple actions can be reused as a snippets
 - HTML / PDF WRAPPER, every test case result can be transformed into a readable protocol with screenshots
