@@ -13,13 +13,9 @@ import java.util.Calendar;
 @Service
 public class StatusService {
 
-    @Value("${status.service.min.update.millis:500}")
-    private Long minUpdateMillis;
-
     @Value("${build.version}")
     private String buildVersion;
 
-    private Long lastUpdate;
     private ServiceStatus serviceStatus;
 
     @Autowired
@@ -29,10 +25,7 @@ public class StatusService {
     public void initService() throws Exception{
 
         serviceStatus = new ServiceStatus();
-        lastUpdate = Calendar.getInstance().getTimeInMillis();
         serviceStatus.setBuildVersion(buildVersion);
-
-        if (minUpdateMillis == null) minUpdateMillis = 500L;
     }
 
     public ServiceStatus getServiceStatus() {
@@ -55,7 +48,7 @@ public class StatusService {
         }
 
         serviceStatus.getScenarios().add(scenario);
-        checkUpdate();
+        sendStatus();
     }
 
     /**
@@ -63,13 +56,6 @@ public class StatusService {
      */
     public void sendStatus() {
         sendStatusViaWebsocket();
-    }
-
-    private void checkUpdate() {
-
-        if (Calendar.getInstance().getTimeInMillis() > lastUpdate + minUpdateMillis) {
-            sendStatusViaWebsocket();
-        }
     }
 
     private void sendStatusViaWebsocket() {

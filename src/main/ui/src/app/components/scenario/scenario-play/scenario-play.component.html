@@ -18,6 +18,10 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div *ngIf="!scenario">... loading scenario ...</div>
+      <div *ngIf="scenario">
+        <span *ngIf="scenario.protocol.status == 'RUNNING'" class="badge badge-primary">RUNNING</span>
+        <span *ngIf="scenario.protocol.status == 'FINISHED'" class="badge badge-success">FINISHED</span>
+      </div>
       <div *ngFor="let line of scenario?.protocol?.lines; index as i">
         <div [ngSwitch]="line.type">
           <div class="hsHeader" *ngSwitchCase="'HEADER'">

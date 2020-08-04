@@ -1,10 +1,11 @@
 package net.hydrogen2oxygen.hyperselenium.adapter;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import net.hydrogen2oxygen.hyperselenium.domain.ProtocolLine;
 import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.services.DataBaseService;
 import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;
+import net.hydrogen2oxygen.hyperselenium.services.StatusService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,11 @@ public class ScenarioRestAdapter {
 
     private static final Logger logger = LogManager.getLogger(ScenarioRestAdapter.class);
 
-
     @Autowired
     private HyperseleniumService hyperseleniumService;
+
+    @Autowired
+    private StatusService statusService;
 
     private DataBaseService dataBaseService;
 
@@ -67,6 +70,8 @@ public class ScenarioRestAdapter {
     Scenario updateScenario(@RequestBody Scenario scenario) throws JsonProcessingException {
 
         dataBaseService.updateScenario(scenario);
+        statusService.addScenarioUpdate(scenario);
+        statusService.sendStatus();
         return scenario;
     }
 
