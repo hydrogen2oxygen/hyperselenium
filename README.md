@@ -1,6 +1,8 @@
 # Hyperselenium
 A selenium enhancer for a better and easier browser automation.
 
+![Hyperselenium play a script](docs/HyperSelenium.gif "Gif Animation")
+
 ## Intention
 Why Hyperselenium? Selenium is just a library, but Hyperselenium is a library and server for entire scenarios.
 

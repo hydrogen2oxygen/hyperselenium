@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.services.DataBaseService;
+import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class ScenarioRestAdapter {
 
     private static final Logger logger = LogManager.getLogger(ScenarioRestAdapter.class);
 
+
+    @Autowired
+    private HyperseleniumService hyperseleniumService;
 
     private DataBaseService dataBaseService;
 
@@ -52,6 +56,7 @@ public class ScenarioRestAdapter {
         Scenario scenario = dataBaseService.getScenarioByName(name);
 
         if (scenario != null) {
+            hyperseleniumService.addNewProtocol(scenario);
             return ResponseEntity.ok(scenario);
         } else {
             return ResponseEntity.notFound().build();

@@ -26,9 +26,13 @@
             <h3 *ngIf="line.line.startsWith('### ')">{{line.line.replace('### ', '')}}</h3>
             <h4 *ngIf="line.line.startsWith('#### ')">{{line.line.replace('#### ', '')}}</h4>
           </div>
+          <div class="hsHeader" *ngSwitchCase="'TEXT'">
+            {{line.line}}
+          </div>
           <div class="hsCode hsCode{{line.status}}" *ngSwitchCase="'CODE'">
             <span class="badge badge-secondary" style="margin-right: 1rem">
               <fa-icon [icon]="faEdit" (click)="editLine(line)"></fa-icon>
+              <fa-icon [icon]="faPlay" (click)="playFromLine(line)" style="margin-left: 1rem"></fa-icon>
               {{line.lineNumber}}
             </span>
             <span *ngIf="line.status == 'RUNNING'" class="badge badge-primary">{{line.status}}</span>

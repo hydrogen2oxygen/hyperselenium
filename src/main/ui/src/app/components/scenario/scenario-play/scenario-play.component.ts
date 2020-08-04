@@ -72,9 +72,14 @@ export class ScenarioPlayComponent implements OnInit {
 
   stop(scenario: Scenario) {
     // TODO
+    console.log(scenario);
   }
 
   editLine(line: ProtocolLine) {
+    console.log(line);
+  }
+
+  playFromLine(line: ProtocolLine) {
     console.log(line);
   }
 }

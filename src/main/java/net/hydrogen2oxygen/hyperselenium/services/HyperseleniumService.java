@@ -94,7 +94,7 @@ public class HyperseleniumService {
         executeScript(scenario);
     }
 
-    private void addNewProtocol(Scenario scenario) {
+    public void addNewProtocol(final Scenario scenario) {
 
         Protocol protocol = new Protocol();
         scenario.setProtocol(protocol);
