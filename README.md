@@ -1,5 +1,5 @@
 # Hyperselenium
-A selenium enhancer for a better and easier browser automation.
+A [selenium](https://www.selenium.dev) enhancer for a better and easier browser automation.
 
 ![Hyperselenium play a script](docs/HyperSelenium.gif "Gif Animation")
 
@@ -17,9 +17,11 @@ Why Hyperselenium? Selenium is just a library, but Hyperselenium is a library an
 - STOP, EDIT and CONTINUE, stop the test run whenever you need and adjust the script, then just continue the test
 - SERVER, manage your tests and environments from a server application, trigger the tests, observe the results
 
-### ACTION
-During a "scenario" we have different actions. Not all actions interacts with the browser. Some actions save data, 
-runs SQL scripts, push data on a SFTP folder, delete stuff, asserts variables, or just print notes into the HTML/PDF protocol.
+### COMMAND
+During a "scenario" we have different [commands](src/main/java/net/hydrogen2oxygen/hyperselenium/commands/).
+Not all commands interacts with the browser.
+Some actions save data, runs SQL scripts, push data on a SFTP folder, delete stuff, asserts variables,
+or just print notes into the HTML/PDF protocol.
 
 The interactions with the browser are simple Selenium commands.
 
