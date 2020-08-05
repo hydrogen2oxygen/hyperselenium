@@ -1,7 +1,6 @@
 package net.hydrogen2oxygen.hyperselenium.adapter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import net.hydrogen2oxygen.hyperselenium.domain.ProtocolLine;
 import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.services.DataBaseService;
 import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;

@@ -44,6 +44,12 @@ console.log(settings);
 
   save() {
 
+    for (let ob in this.settings.settings) {
+
+      let keyValue:KeyValue = this.settings.settings[ob];
+      keyValue.value = this.reactiveForm.controls[keyValue.key].value;
+    }
+
     this.hyperSeleniumService.updateSettings(this.settings).subscribe( s => {
       console.log(s);
     })

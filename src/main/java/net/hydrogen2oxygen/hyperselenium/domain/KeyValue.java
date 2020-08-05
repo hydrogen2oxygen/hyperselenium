@@ -4,6 +4,7 @@ public class KeyValue {
 
     private String key;
     private String value;
+    private String type = "string";
 
     public KeyValue() {}
 
@@ -26,5 +27,13 @@ public class KeyValue {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
