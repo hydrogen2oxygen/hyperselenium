@@ -2,6 +2,7 @@ package net.hydrogen2oxygen.hyperselenium.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.hydrogen2oxygen.hyperselenium.domain.KeyValue;
 import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.domain.Script;
 import net.hydrogen2oxygen.hyperselenium.domain.Settings;
@@ -64,7 +65,7 @@ public class DataBaseService {
         }
 
         Settings settings = new Settings();
-        settings.getSettings().put("test","123");
+        settings.getSettings().add(new KeyValue("test","123"));
         return settings;
     }
 

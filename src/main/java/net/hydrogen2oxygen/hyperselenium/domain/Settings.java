@@ -4,8 +4,8 @@ import org.dizitart.no2.IndexType;
 import org.dizitart.no2.objects.Index;
 import org.dizitart.no2.objects.Indices;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Indices({
         @Index(value = "name", type = IndexType.Unique)
@@ -14,7 +14,7 @@ public class Settings {
 
     private String name = "hyperSeleniumSettings";
 
-    private Map<String, String> settings = new HashMap<>();
+    private List<KeyValue> settings = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -24,11 +24,11 @@ public class Settings {
         this.name = name;
     }
 
-    public Map<String, String> getSettings() {
+    public List<KeyValue> getSettings() {
         return settings;
     }
 
-    public void setSettings(Map<String, String> settings) {
+    public void setSettings(List<KeyValue> settings) {
         this.settings = settings;
     }
 }

@@ -29,8 +29,8 @@ export class HyperSeleniumService {
     return this.http.post<Scenario>(`${HyperSeleniumService.url}/scenario`, scenario);
   }
 
-  getSettings():Observable<any> {
-    return this.http.get<any>(`${HyperSeleniumService.url}/settings`);
+  getSettings():Observable<Settings> {
+    return this.http.get<Settings>(`${HyperSeleniumService.url}/settings`);
   }
 
   getAllScenarios() {
@@ -52,6 +52,10 @@ export class HyperSeleniumService {
 
   updateScenario(scenario: Scenario):Observable<Scenario> {
     return this.http.put<Scenario>(`${HyperSeleniumService.url}/scenario`, scenario);
+  }
+
+  updateSettings(settings:Settings):Observable<Settings> {
+    return this.http.put<Settings>(`${HyperSeleniumService.url}/settings`, settings);
   }
 
   play(name: string):Observable<Scenario> {

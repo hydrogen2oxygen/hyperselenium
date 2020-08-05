@@ -19,23 +19,21 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.hyperSeleniumService.getSettings().subscribe( settings => {
 
+console.log(settings);
 
-      let array = Object.keys(settings.settings);
-
-      this.settings = new Settings();
+      this.settings = settings;
 
       this.reactiveForm = new FormGroup({});
       const group: any = {};
 
-      for (let ob in array) {
-        let key:string = array[ob];
-        let value:string = <string> Object.values(settings.settings)[ob];
-        this.settings.settings.set(key,value);
-        this.settings.settingsArray.push(new KeyValue(key, value));
+      for (let ob in this.settings.settings) {
+
+        let keyValue:KeyValue = this.settings.settings[ob];
+        console.log(keyValue);
 
         let keyValueControl:FormControl = new FormControl();
-        keyValueControl.setValue(value);
-        group[key] = keyValueControl;
+        keyValueControl.setValue(keyValue.value);
+        group[keyValue.key] = keyValueControl;
       }
 
       this.reactiveForm = new FormGroup(group);
@@ -45,10 +43,9 @@ export class SettingsComponent implements OnInit {
   }
 
   save() {
-    for (let index in this.settings.settingsArray) {
-      let key:string = this.settings.settingsArray[index].key;
-      let value:string = this.reactiveForm.get(key).value;
-      console.log(value)
-    }
+
+    this.hyperSeleniumService.updateSettings(this.settings).subscribe( s => {
+      console.log(s);
+    })
   }
 }
