@@ -1,0 +1,9 @@
+<div *ngIf="settings">
+  <form [formGroup]="reactiveForm">
+    <div class="form-group" *ngFor="let setting of settings.settingsArray">
+      <label>{{setting.key}}</label>
+      <input [formControlName]="setting.key" type="text" class="form-control">
+    </div>
+    <button class="btn btn-primary" (click)="save()">SAVE</button>
+  </form>
+</div>

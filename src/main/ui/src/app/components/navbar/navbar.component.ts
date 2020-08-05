@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
     {title: 'Home', link: '', fragment: 'home'},
     {title: 'New Scenario', link: 'scenario', fragment: 'scenario'},
     {title: 'Environments', link: 'environments', fragment: 'environments'},
+    {title: 'Settings', link: 'settings', fragment: 'settings'},
   ];
 
   constructor(

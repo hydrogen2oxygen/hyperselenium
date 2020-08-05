@@ -4,7 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.domain.Script;
+import net.hydrogen2oxygen.hyperselenium.domain.Settings;
 import org.dizitart.no2.*;
+import org.dizitart.no2.objects.ObjectFilter;
+import org.dizitart.no2.objects.ObjectRepository;
+import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -21,6 +25,7 @@ public class DataBaseService {
     private Nitrite db;
     private NitriteCollection scenariosCollection;
     private NitriteCollection scriptCollection;
+    private ObjectRepository<Settings> settingsObjectRepository;
     private ObjectMapper objectMapper;
 
     @PostConstruct
@@ -33,6 +38,7 @@ public class DataBaseService {
 
         scenariosCollection = db.getCollection("scenarios");
         scriptCollection = db.getCollection("scripts");
+        settingsObjectRepository = db.getRepository(Settings.class);
 
         createIndexes();
 
@@ -47,6 +53,30 @@ public class DataBaseService {
         if (!scriptCollection.hasIndex("name")) {
             scriptCollection.createIndex("name", indexOptions(IndexType.Unique));
         }
+    }
+
+    public Settings getSettings() {
+
+        org.dizitart.no2.objects.Cursor<Settings> cursor = settingsObjectRepository.find(ObjectFilters.eq("name", "hyperSeleniumSettings"));
+
+        for (Settings s : cursor) {
+            return s;
+        }
+
+        Settings settings = new Settings();
+        settings.getSettings().put("test","123");
+        return settings;
+    }
+
+    public void saveSettings(Settings settings) {
+
+        settingsObjectRepository.insert(settings);
+
+        /*org.dizitart.no2.objects.Cursor<Settings> cursor = settingsObjectRepository.find(ObjectFilters.eq("name", "hyperSeleniumSettings"));
+
+        for (Settings s : cursor) {
+            settingsObjectRepository.update()
+        }*/
     }
 
     public Document saveScenario(Scenario scenario) throws JsonProcessingException {

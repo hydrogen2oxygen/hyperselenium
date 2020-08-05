@@ -5,11 +5,13 @@ import {ScenarioEditComponent} from "./components/scenario/scenario-edit/scenari
 import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
 import {DocumentationComponent} from "./components/documentation/documentation.component";
 import {ScenarioPlayComponent} from "./components/scenario/scenario-play/scenario-play.component";
+import {SettingsComponent} from "./components/settings/settings.component";
 
 const routes: Routes = [
   {path:'', component: ScenarioOverviewComponent},
   {path:'home', redirectTo: '', pathMatch: 'full'},
   {path:'documentation', component: DocumentationComponent},
+  {path:'settings', component: SettingsComponent},
   {path:'scenario', component: ScenarioEditComponent},
   {path:'scenario/:name', component: ScenarioEditComponent},
   {path:'play/:name', component: ScenarioPlayComponent},

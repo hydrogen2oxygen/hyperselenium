@@ -5,6 +5,7 @@ import {environment} from "../../environments/environment";
 import {ServiceStatus} from "../domain/ServiceStatus";
 import {Title} from "@angular/platform-browser";
 import {Scenario} from "../domain/Scenario";
+import {Settings} from "../domain/Settings";
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class HyperSeleniumService {
   saveScenario(scenario:Scenario):Observable<Scenario> {
     console.log(scenario);
     return this.http.post<Scenario>(`${HyperSeleniumService.url}/scenario`, scenario);
+  }
+
+  getSettings():Observable<any> {
+    return this.http.get<any>(`${HyperSeleniumService.url}/settings`);
   }
 
   getAllScenarios() {

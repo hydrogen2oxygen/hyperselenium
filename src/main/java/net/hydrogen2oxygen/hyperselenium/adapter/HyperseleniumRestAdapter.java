@@ -2,6 +2,7 @@ package net.hydrogen2oxygen.hyperselenium.adapter;
 
 import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.domain.ServiceStatus;
+import net.hydrogen2oxygen.hyperselenium.domain.Settings;
 import net.hydrogen2oxygen.hyperselenium.services.DataBaseService;
 import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;
 import net.hydrogen2oxygen.hyperselenium.services.StatusService;
@@ -39,6 +40,19 @@ public class HyperseleniumRestAdapter {
 
     @Autowired
     private DataBaseService dataBaseService;
+
+    @GetMapping("settings")
+    ResponseEntity<Settings> getSettings() {
+
+        return ResponseEntity.ok(dataBaseService.getSettings());
+    }
+
+    @PutMapping("settings")
+    ResponseEntity<Settings> setSettings(@RequestBody Settings settings) {
+
+        dataBaseService.saveSettings(settings);
+        return ResponseEntity.ok(dataBaseService.getSettings());
+    }
 
     @GetMapping("serviceStatus")
     ResponseEntity<ServiceStatus> getServiceStatus() {
