@@ -10,11 +10,14 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ScenarioEditComponent } from './components/scenario/scenario-edit/scenario-edit.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {WebSocketService} from "./services/web-socket.service";
 import {ReactiveFormsModule} from "@angular/forms";
 import { ScenarioPlayComponent } from './components/scenario/scenario-play/scenario-play.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import {ToastrModule} from "ngx-toastr";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HttpErrorInterceptor} from "./services/http-error.interceptor";
 
 @NgModule({
   declarations: [
@@ -33,9 +36,18 @@ import { SettingsComponent } from './components/settings/settings.component';
         NgbModule,
         FontAwesomeModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ToastrModule.forRoot(),
+        BrowserAnimationsModule
     ],
-  providers: [WebSocketService],
+  providers: [
+    WebSocketService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

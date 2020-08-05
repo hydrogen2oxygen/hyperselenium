@@ -6,6 +6,8 @@ import {ServiceStatus} from "../domain/ServiceStatus";
 import {Title} from "@angular/platform-browser";
 import {Scenario} from "../domain/Scenario";
 import {Settings} from "../domain/Settings";
+import {ToastrService} from "ngx-toastr";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class HyperSeleniumService {
 
   constructor(
     private http:HttpClient,
-    private titleService: Title
+    private titleService: Title,
+    private toastr: ToastrService
   ) {
   }
 
@@ -55,10 +58,21 @@ export class HyperSeleniumService {
   }
 
   updateSettings(settings:Settings):Observable<Settings> {
-    return this.http.put<Settings>(`${HyperSeleniumService.url}/settings`, settings);
+    // @ts-ignore
+    return this.http.put<Settings>(`${HyperSeleniumService.url}/settings`, settings)
+      .pipe(
+        catchError((error:any) => this.handleError(error))
+      );
   }
 
   play(name: string):Observable<Scenario> {
     return this.http.post<Scenario>(`${HyperSeleniumService.url}/play/${name}`, null);
+  }
+
+
+  private handleError(error: any) {
+    console.log(error);
+    this.toastr.error(error.message);
+    return undefined;
   }
 }
