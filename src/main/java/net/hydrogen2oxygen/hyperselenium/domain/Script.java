@@ -1,7 +1,5 @@
 package net.hydrogen2oxygen.hyperselenium.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.ArrayList;
 import java.util.List;
 

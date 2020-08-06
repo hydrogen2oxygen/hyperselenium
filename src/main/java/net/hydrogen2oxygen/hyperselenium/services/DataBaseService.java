@@ -7,7 +7,6 @@ import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.domain.Script;
 import net.hydrogen2oxygen.hyperselenium.domain.Settings;
 import org.dizitart.no2.*;
-import org.dizitart.no2.objects.ObjectFilter;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.springframework.stereotype.Service;

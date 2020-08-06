@@ -36,7 +36,7 @@ public class JGitTests {
 
         } else {
 
-            Git git = Git.cloneRepository()
+            Git.cloneRepository()
                     .setURI("https://github.com/hydrogen2oxygen/javaDiff.git")
                     .setDirectory(new File("target/javaDiff"))
                     .call();
