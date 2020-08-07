@@ -7,6 +7,7 @@ import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.domain.Script;
 import net.hydrogen2oxygen.hyperselenium.domain.Settings;
 import org.dizitart.no2.*;
+import org.dizitart.no2.objects.ObjectFilter;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.springframework.stereotype.Service;
@@ -70,13 +71,15 @@ public class DataBaseService {
 
     public void saveSettings(Settings settings) {
 
-        settingsObjectRepository.insert(settings);
-
-        /*org.dizitart.no2.objects.Cursor<Settings> cursor = settingsObjectRepository.find(ObjectFilters.eq("name", "hyperSeleniumSettings"));
+        org.dizitart.no2.objects.Cursor<Settings> cursor = settingsObjectRepository.find(ObjectFilters.eq("name", "hyperSeleniumSettings"));
 
         for (Settings s : cursor) {
-            settingsObjectRepository.update()
-        }*/
+            s.setSettings(settings.getSettings());
+            settingsObjectRepository.update(s);
+            return;
+        }
+
+        settingsObjectRepository.insert(settings);
     }
 
     public Document saveScenario(Scenario scenario) throws JsonProcessingException {

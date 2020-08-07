@@ -1,6 +1,7 @@
 package net.hydrogen2oxygen.hyperselenium.domain;
 
 import org.dizitart.no2.IndexType;
+import org.dizitart.no2.objects.Id;
 import org.dizitart.no2.objects.Index;
 import org.dizitart.no2.objects.Indices;
 
@@ -12,6 +13,7 @@ import java.util.List;
 })
 public class Settings {
 
+    @Id
     private String name = "hyperSeleniumSettings";
 
     private List<KeyValue> settings = new ArrayList<>();
