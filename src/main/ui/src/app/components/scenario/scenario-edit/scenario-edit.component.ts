@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HyperSeleniumService} from "../../../services/hyper-selenium.service";
 import {Scenario} from "../../../domain/Scenario";
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {FormControl, FormGroup} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Script} from "../../../domain/Script";
 
 @Component({
@@ -17,7 +17,8 @@ export class ScenarioEditComponent implements OnInit {
 
   constructor(
     private hyperSeleniumService:HyperSeleniumService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
   }
 
@@ -77,6 +78,13 @@ export class ScenarioEditComponent implements OnInit {
     let scenario = this.generateScenarioFromForm();
     this.hyperSeleniumService.updateScenario(scenario).subscribe( result => {
       console.log(result)
+    });
+  }
+
+  play() {
+    let scenario = this.generateScenarioFromForm();
+    this.hyperSeleniumService.play(scenario.name).subscribe( data => {
+      this.router.navigate([`/play/${scenario.name}`]);
     });
   }
 

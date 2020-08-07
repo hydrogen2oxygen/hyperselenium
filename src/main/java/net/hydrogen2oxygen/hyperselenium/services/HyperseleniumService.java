@@ -60,8 +60,17 @@ public class HyperseleniumService {
 
     public CommandResult executeCommandLine(final HyperWebDriver driver, String line, final ProtocolLine protocolLine) {
 
+        CommandResult result = new CommandResult();
+
         String [] parts = line.split(" ");
         ICommand command = commands.get(parts[0]);
+
+        if (command == null) {
+            result.setSuccess(false);
+            result.setMessage(String.format("Command %s not found!", parts[0]));
+            return result;
+        }
+
         String [] parameters = {};
 
         if (line.contains(" ")) {
@@ -69,11 +78,10 @@ public class HyperseleniumService {
         }
 
         try {
-            CommandResult result = command.executeCommand(driver, parameters);
+            result = command.executeCommand(driver, parameters);
             protocolLine.setStatus("SUCCESS");
             return result;
         } catch (Exception e) {
-            CommandResult result = new CommandResult();
             result.setSuccess(false);
             result.setMessage(e.getMessage());
             protocolLine.setStatus("ERROR");

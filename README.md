@@ -38,6 +38,9 @@ or just print notes into the HTML/PDF protocol.
 
 The interactions with the browser are simple Selenium commands.
 
+#### JavaScript
+Java is able to interpret JavaScript, so if necessary we can use JavaScript for more complex tasks without the need to write a dedicated command.
+
 ### PROTOCOL
 A protocol of a scenario saves the result of each step and some additional notes and screenshots. They can be rendered into HTML/PDF.
 
