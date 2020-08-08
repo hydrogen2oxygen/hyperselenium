@@ -141,7 +141,6 @@ public class HyperseleniumService {
     public void executeScript(Scenario scenario) {
 
         Script script = scenario.getScript();
-        HyperWebDriver driver = scenario.getDriver();
         Protocol protocol = scenario.getProtocol();
         protocol.setStatus("RUNNING");
         statusService.addScenarioUpdate(scenario);
@@ -164,7 +163,12 @@ public class HyperseleniumService {
 
                 statusService.addScenarioUpdate(scenario);
 
-                CommandResult result = executeCommandLine(driver, line.trim(), protocolLine);
+                if (line.contains("    open ") && scenario.getDriver().isClosed()) {
+                    // FIXME search for a better solution
+                    scenario.setDriver(getNewHyperWebDriver());
+                }
+
+                CommandResult result = executeCommandLine(scenario.getDriver(), line.trim(), protocolLine);
 
                 protocolLine.setResult(result.getMessage());
 

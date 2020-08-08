@@ -24,15 +24,18 @@
       </div>
       <div *ngFor="let line of scenario?.protocol?.lines; index as i">
         <div [ngSwitch]="line.type">
+
           <div class="hsHeader" *ngSwitchCase="'HEADER'">
             <h1 *ngIf="line.line.startsWith('# ')">{{line.line.replace('# ', '')}}</h1>
             <h2 *ngIf="line.line.startsWith('## ')">{{line.line.replace('## ', '')}}</h2>
             <h3 *ngIf="line.line.startsWith('### ')">{{line.line.replace('### ', '')}}</h3>
             <h4 *ngIf="line.line.startsWith('#### ')">{{line.line.replace('#### ', '')}}</h4>
           </div>
+
           <div class="hsHeader" *ngSwitchCase="'TEXT'">
             {{line.line}}
           </div>
+
           <div class="hsCode hsCode{{line.status}}" *ngSwitchCase="'CODE'">
             <span class="badge badge-secondary" style="margin-right: 1rem">
               <fa-icon [icon]="faEdit" (click)="editLine(line)"></fa-icon>
@@ -44,6 +47,11 @@
             <span *ngIf="line.status == 'ERROR'" class="badge badge-danger">{{line.status}}</span>
             {{line.line}}
           </div>
+
+          <div class="hsCode hsCode{{line.status}} errorMessage" *ngIf="line.status == 'ERROR' && line.result">
+              {{line.result.trim()}}
+          </div>
+
           <div *ngSwitchDefault>
             {{line.line}} {{line.type}}
           </div>

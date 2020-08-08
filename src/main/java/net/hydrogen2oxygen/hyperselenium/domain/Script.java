@@ -1,10 +1,19 @@
 package net.hydrogen2oxygen.hyperselenium.domain;
 
+import org.dizitart.no2.IndexType;
+import org.dizitart.no2.objects.Id;
+import org.dizitart.no2.objects.Index;
+import org.dizitart.no2.objects.Indices;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Indices({
+        @Index(value = "name", type = IndexType.Unique)
+})
 public class Script {
 
+    @Id
     private String name;
 
     /**

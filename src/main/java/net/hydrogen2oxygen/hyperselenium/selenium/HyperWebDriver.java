@@ -14,6 +14,7 @@ import java.util.List;
 
 public class HyperWebDriver {
 
+    private Boolean closed = false;
     private WebDriver driver;
 
     private HyperWebDriver() {
@@ -22,6 +23,10 @@ public class HyperWebDriver {
 
     public static HyperWebDriver build() {
         return new HyperWebDriver();
+    }
+
+    public boolean isClosed() {
+        return closed;
     }
 
     public HyperWebDriver openPage(String url) {
@@ -105,6 +110,7 @@ public class HyperWebDriver {
 
     public void close() {
         driver.close();
+        closed = true;
     }
 
     public HyperWebDriver waitMillis(int millis) throws InterruptedException {

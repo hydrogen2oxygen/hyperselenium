@@ -2,10 +2,17 @@ package net.hydrogen2oxygen.hyperselenium.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
+import org.dizitart.no2.IndexType;
+import org.dizitart.no2.objects.Id;
+import org.dizitart.no2.objects.Index;
+import org.dizitart.no2.objects.Indices;
 
 /**
  * A scenario is an automation of a browser, the execution of one or more scripts, which results in a protocol object.
  */
+@Indices({
+        @Index(value = "name", type = IndexType.Unique)
+})
 public class Scenario {
 
     /**
@@ -17,6 +24,7 @@ public class Scenario {
     /**
      * Unique name
      */
+    @Id
     private String name;
 
     /**
