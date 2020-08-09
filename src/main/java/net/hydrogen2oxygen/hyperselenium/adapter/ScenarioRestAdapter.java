@@ -5,12 +5,17 @@ import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.services.DataBaseService;
 import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;
 import net.hydrogen2oxygen.hyperselenium.services.StatusService;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -63,6 +68,20 @@ public class ScenarioRestAdapter {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @RequestMapping("/screenshot/{id}")
+    @ResponseBody
+    public HttpEntity<byte[]> getArticleImage(@PathVariable String id) throws IOException {
+
+        String filePath = String.format("%s/screenshot%s.png", dataBaseService.getSetting(DataBaseService.SCREENSHOTS_PATH), id);
+        byte[] imageData = FileUtils.readFileToByteArray(new File( filePath));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        headers.setContentLength(imageData.length);
+
+        return new HttpEntity<byte[]>(imageData, headers);
     }
 
     @PutMapping

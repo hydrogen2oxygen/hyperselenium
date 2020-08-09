@@ -6,6 +6,7 @@ import {WebSocketService} from "../../../services/web-socket.service";
 import {ServiceStatus} from "../../../domain/ServiceStatus";
 import {faEdit, faPlay, faStop} from "@fortawesome/free-solid-svg-icons";
 import {ProtocolLine} from "../../../domain/Protocol";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-scenario-play',
@@ -81,5 +82,10 @@ export class ScenarioPlayComponent implements OnInit {
 
   playFromLine(line: ProtocolLine) {
     console.log(line);
+  }
+
+  getScreenShotUrl(line: ProtocolLine) {
+    let id = line.result.replace('screenshot ','');
+    return `${environment.serverUrl}/api/scenario/screenshot/${id}`;
   }
 }

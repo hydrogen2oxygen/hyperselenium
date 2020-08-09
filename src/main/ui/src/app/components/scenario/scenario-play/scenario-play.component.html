@@ -4,7 +4,7 @@
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <fa-icon [icon]="faEdit" routerLink="/scenario/{{scenario.name}}"></fa-icon>&nbsp;EDIT
+            <fa-icon [icon]="faEdit" routerLink="/scenario/{{scenario?.name}}"></fa-icon>&nbsp;EDIT
           </li>
           <li class="nav-item">
             <fa-icon [icon]="faPlay" (click)="play(scenario)"></fa-icon>&nbsp;PLAY
@@ -36,8 +36,8 @@
             {{line.line}}
           </div>
 
-          <div class="hsCode hsCode{{line.status}}" *ngSwitchCase="'CODE'">
-            <span class="badge badge-secondary" style="margin-right: 1rem">
+          <div class="hsCode hsCode{{line.status}}" *ngSwitchCase="'CODE'" title="{{line.result}}">
+            <span class="btn badge badge-secondary " style="margin-right: 1rem">
               <fa-icon [icon]="faEdit" (click)="editLine(line)"></fa-icon>
               <fa-icon [icon]="faPlay" (click)="playFromLine(line)" style="margin-left: 1rem"></fa-icon>
               {{line.lineNumber}}
@@ -47,6 +47,8 @@
             <span *ngIf="line.status == 'ERROR'" class="badge badge-danger">{{line.status}}</span>
             {{line.line}}
           </div>
+
+          <img *ngIf="line?.result?.startsWith('screenshot ')" src="{{getScreenShotUrl(line)}}" style="width: 100%"/>
 
           <div class="hsCode hsCode{{line.status}} errorMessage" *ngIf="line.status == 'ERROR' && line.result">
               {{line.result.trim()}}

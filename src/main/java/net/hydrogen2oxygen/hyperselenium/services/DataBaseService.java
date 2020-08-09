@@ -23,6 +23,7 @@ import static org.dizitart.no2.filters.Filters.eq;
 @Service
 public class DataBaseService {
 
+    public static final String SCREENSHOTS_PATH = "screenshots-path";
     private Nitrite db;
     private NitriteCollection scenariosCollection;
     private NitriteCollection scriptCollection;
@@ -65,8 +66,20 @@ public class DataBaseService {
         }
 
         Settings settings = new Settings();
-        settings.getSettings().add(new KeyValue("test","123"));
+        settings.getSettings().add(new KeyValue(SCREENSHOTS_PATH,"screenshots/","string"));
+        settings.getSettings().add(new KeyValue("screenshots","true","boolean"));
         return settings;
+    }
+
+    public String getSetting(String key) {
+
+        Settings settings = getSettings();
+
+        for (KeyValue keyValue : settings.getSettings()) {
+            if (keyValue.getKey().equals(key)) return keyValue.getValue();
+        }
+
+        return null;
     }
 
     public void saveSettings(Settings settings) {

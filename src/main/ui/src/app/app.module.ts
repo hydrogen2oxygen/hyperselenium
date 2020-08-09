@@ -28,7 +28,7 @@ import {HttpErrorInterceptor} from "./services/http-error.interceptor";
     PageNotFoundComponent,
     DocumentationComponent,
     ScenarioPlayComponent,
-    SettingsComponent
+    SettingsComponent,
   ],
     imports: [
         BrowserModule,

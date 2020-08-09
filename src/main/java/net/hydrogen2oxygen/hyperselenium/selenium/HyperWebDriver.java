@@ -1,19 +1,21 @@
 package net.hydrogen2oxygen.hyperselenium.selenium;
 
 import net.hydrogen2oxygen.hyperselenium.exceptions.CommandExecutionException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class HyperWebDriver {
 
+    private String screenshotsPath;
     private Boolean closed = false;
     private WebDriver driver;
 
@@ -27,6 +29,14 @@ public class HyperWebDriver {
 
     public boolean isClosed() {
         return closed;
+    }
+
+    public String getScreenshotsPath() {
+        return screenshotsPath;
+    }
+
+    public void setScreenshotsPath(String screenshotsPath) {
+        this.screenshotsPath = screenshotsPath;
     }
 
     public HyperWebDriver openPage(String url) {
@@ -132,5 +142,24 @@ public class HyperWebDriver {
                 .tagName(tagName))));
 
         return this;
+    }
+
+    public File screenshot() throws IOException {
+
+        File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+        if (screenshotsPath != null) {
+            File folder = new File(screenshotsPath);
+
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            File newFile =  new File(screenshotsPath + file.getName());
+            FileCopyUtils.copy(file, newFile);
+            return newFile;
+        }
+
+        return file;
     }
 }

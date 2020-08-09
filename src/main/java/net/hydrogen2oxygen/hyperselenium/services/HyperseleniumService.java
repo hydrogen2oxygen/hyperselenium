@@ -23,6 +23,9 @@ public class HyperseleniumService {
     private Map<String, ICommand> commands = new HashMap<>();
 
     @Autowired
+    private DataBaseService dataBaseService;
+
+    @Autowired
     private StatusService statusService;
 
     @PostConstruct
@@ -135,7 +138,10 @@ public class HyperseleniumService {
 
         System.setProperty("webdriver.chrome.driver", seleniumDriverDirectory + "chromedriver.exe");
 
-        return HyperWebDriver.build();
+        HyperWebDriver driver = HyperWebDriver.build();
+        driver.setScreenshotsPath(dataBaseService.getSetting("screenshots-path"));
+
+        return driver;
     }
 
     public void executeScript(Scenario scenario) {
