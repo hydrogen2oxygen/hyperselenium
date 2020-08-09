@@ -19,6 +19,10 @@ Example:
     screenshot
     close
 
+The result is a protocol, which can be edited or enhanced line by line.
+
+![Protocol](docs/protocol.PNG "Protocol")
+
 - SNIPPET, every script with multiple actions can be reused as a snippets
 - HTML / PDF WRAPPER, every test case result can be transformed into a readable protocol with screenshots
 - PARAMETERS are automatically detected and you can use different sets of them for different environments
