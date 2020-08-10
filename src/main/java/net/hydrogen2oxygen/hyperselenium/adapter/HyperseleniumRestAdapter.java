@@ -78,6 +78,14 @@ public class HyperseleniumRestAdapter {
         return ResponseEntity.ok(scenario);
     }
 
+    @PutMapping("stop/{name}")
+    ResponseEntity<Scenario> stop(@PathVariable String name) throws IOException {
+
+        final Scenario scenario = dataBaseService.getScenarioByName(name);
+        hyperseleniumService.stopScenario(scenario);
+        return ResponseEntity.ok(scenario);
+    }
+
     @PostMapping("closeAllDrivers")
     String closeAllDrivers() {
 

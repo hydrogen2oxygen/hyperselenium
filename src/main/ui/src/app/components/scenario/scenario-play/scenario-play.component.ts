@@ -73,8 +73,9 @@ export class ScenarioPlayComponent implements OnInit {
   }
 
   stop(scenario: Scenario) {
-    // TODO
-    console.log(scenario);
+    this.hyperSeleniumService.stop(this.scenarioName).subscribe( data => {
+      console.log(data);
+    });
   }
 
   editLine(line: ProtocolLine) {

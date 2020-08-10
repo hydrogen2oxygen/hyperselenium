@@ -12,7 +12,9 @@ import org.springframework.web.servlet.tags.Param;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,6 +28,8 @@ public class HyperseleniumService {
 
     @Autowired
     private StatusService statusService;
+
+    private List<String> scenariosToStop = new ArrayList<>();
 
     private Map<String, ICommand> commands = new HashMap<>();
 
@@ -160,6 +164,13 @@ public class HyperseleniumService {
 
             lineCount++;
 
+            if (isStopScenario(scenario.getName())) {
+                protocol.setStatus("STOPPED");
+                statusService.addScenarioUpdate(scenario);
+                statusService.sendStatus();
+                return;
+            }
+
             ProtocolLine protocolLine = protocol.getLines().get(lineCount);
 
             if (line.trim().isEmpty()) {
@@ -202,6 +213,26 @@ public class HyperseleniumService {
         statusService.sendStatus();
     }
 
+    private boolean isStopScenario(String name) {
+
+        boolean found = false;
+
+        for (String scenarioName : scenariosToStop) {
+
+            if (name.equals(scenarioName)) {
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            scenariosToStop.remove(name);
+            return true;
+        }
+
+        return false;
+    }
+
 
     public void closeAllDrivers() {
 
@@ -218,4 +249,7 @@ public class HyperseleniumService {
         }*/
     }
 
+    public void stopScenario(Scenario scenario) {
+        scenariosToStop.add(scenario.getName());
+    }
 }

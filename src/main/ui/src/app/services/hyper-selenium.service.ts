@@ -69,10 +69,16 @@ export class HyperSeleniumService {
     return this.http.post<Scenario>(`${HyperSeleniumService.url}/play/${name}`, null);
   }
 
+  stop(name: string):Observable<Scenario> {
+    return this.http.put<Scenario>(`${HyperSeleniumService.url}/stop/${name}`, null);
+  }
+
 
   private handleError(error: any) {
     console.log(error);
     this.toastr.error(error.message);
     return undefined;
   }
+
+
 }
