@@ -17,6 +17,7 @@ public class InsertTextByNameCommand extends BaseCommand {
         driver.insertTextByName(id, text);
 
         commandResult.setMessage(String.format("Text '%s' inserted into element with id %s", text, id));
+        commandResult.setSuccess(true);
 
         return commandResult;
     }

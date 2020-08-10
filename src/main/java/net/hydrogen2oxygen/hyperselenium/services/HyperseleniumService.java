@@ -33,6 +33,8 @@ public class HyperseleniumService {
 
     private Map<String, ICommand> commands = new HashMap<>();
 
+    private List<Scenario> runningScenarios = new ArrayList<>();
+
     private ParamsUtility paramsUtility = new ParamsUtility();
 
     @PostConstruct
@@ -106,6 +108,7 @@ public class HyperseleniumService {
         }
 
         addNewProtocol(scenario);
+        runningScenarios.add(scenario);
 
         // Execute the main script
         executeScript(scenario);
@@ -211,6 +214,7 @@ public class HyperseleniumService {
 
         statusService.addScenarioUpdate(scenario);
         statusService.sendStatus();
+        runningScenarios.remove(scenario);
     }
 
     private boolean isStopScenario(String name) {
@@ -249,7 +253,24 @@ public class HyperseleniumService {
         }*/
     }
 
-    public void stopScenario(Scenario scenario) {
-        scenariosToStop.add(scenario.getName());
+    public void stopScenario(String name) {
+        scenariosToStop.add(name);
+    }
+
+    public void closeScenario(Scenario scenario) {
+
+        Scenario scenarioToClose = null;
+
+        for (Scenario s : runningScenarios) {
+            if (scenario.getName().equals(s.getName())) {
+                scenarioToClose = s;
+                break;
+            }
+        }
+
+        if (scenarioToClose != null) {
+            scenarioToClose.getDriver().close();
+            runningScenarios.remove(scenario);
+        }
     }
 }
