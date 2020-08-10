@@ -13,14 +13,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.File;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+// FIXME rewrite the test in order to test our own ui
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class HyperseleniumApplicationTests {
 
-	@Autowired
+	//@Autowired
 	private HyperseleniumService service;
 
-	@Test
+	//@Test
 	public void loadAndExecuteScript() throws Exception {
 
 		List<String> lines = FileUtils.readLines(new File("src/test/resources/google_search_test.md"),"UTF-8");
