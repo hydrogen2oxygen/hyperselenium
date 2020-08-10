@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Scenario} from "../../../domain/Scenario";
 import {WebSocketService} from "../../../services/web-socket.service";
 import {ServiceStatus} from "../../../domain/ServiceStatus";
-import {faEdit, faPlay, faStop} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faPlay, faStop, faCircle} from "@fortawesome/free-solid-svg-icons";
 import {ProtocolLine} from "../../../domain/Protocol";
 import {environment} from "../../../../environments/environment";
 
@@ -21,6 +21,7 @@ export class ScenarioPlayComponent implements OnInit {
   faEdit = faEdit;
   faPlay = faPlay;
   faStop = faStop;
+  faCircle = faCircle;
 
   constructor(
     private hyperSeleniumService: HyperSeleniumService,
@@ -89,4 +90,7 @@ export class ScenarioPlayComponent implements OnInit {
     return `${environment.serverUrl}/api/scenario/screenshot/${id}`;
   }
 
+  setBreakPoint(line: ProtocolLine) {
+
+  }
 }

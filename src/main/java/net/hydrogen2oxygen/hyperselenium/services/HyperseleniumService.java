@@ -8,6 +8,7 @@ import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.tags.Param;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Constructor;
@@ -20,13 +21,15 @@ public class HyperseleniumService {
     @Value("${selenium.driver.directory}")
     private String seleniumDriverDirectory;
 
-    private Map<String, ICommand> commands = new HashMap<>();
-
     @Autowired
     private DataBaseService dataBaseService;
 
     @Autowired
     private StatusService statusService;
+
+    private Map<String, ICommand> commands = new HashMap<>();
+
+    private ParamsUtility paramsUtility = new ParamsUtility();
 
     @PostConstruct
     public void initService() throws Exception{
@@ -77,7 +80,7 @@ public class HyperseleniumService {
         String [] parameters = {};
 
         if (line.contains(" ")) {
-            parameters = line.substring(line.indexOf(" ")).trim().split(" ");
+            parameters = paramsUtility.getParamsFromCommandLine(line);
         }
 
         try {

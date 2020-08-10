@@ -12,9 +12,6 @@
           <li class="nav-item">
             <fa-icon [icon]="faStop" (click)="stop(scenario)"></fa-icon> STOP
           </li>
-          <li class="nav-item">
-            <fa-icon [icon]="faStop" (click)="switchStopWhenError(scenario)"></fa-icon> STOP WHEN ERROR
-          </li>
         </ul>
       </div>
     </nav>
@@ -41,8 +38,9 @@
 
           <div class="hsCode hsCode{{line.status}}" *ngSwitchCase="'CODE'" title="{{line.result}}">
             <span class="btn badge badge-secondary " style="margin-right: 1rem">
-              <fa-icon [icon]="faEdit" (click)="editLine(line)"></fa-icon>
-              <fa-icon [icon]="faPlay" (click)="playFromLine(line)" style="margin-left: 1rem"></fa-icon>
+              <fa-icon [icon]="faCircle" (click)="setBreakPoint(line)"></fa-icon>
+              <fa-icon [icon]="faEdit" (click)="editLine(line)" style="margin-left: 0.5rem"></fa-icon>
+              <fa-icon [icon]="faPlay" (click)="playFromLine(line)" style="margin-left: 0.5rem"></fa-icon>
               {{line.lineNumber}}
             </span>
             <span *ngIf="line.status == 'RUNNING'" class="badge badge-primary">{{line.status}}</span>
