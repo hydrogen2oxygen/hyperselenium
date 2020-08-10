@@ -139,7 +139,7 @@ public class HyperseleniumService {
         System.setProperty("webdriver.chrome.driver", seleniumDriverDirectory + "chromedriver.exe");
 
         HyperWebDriver driver = HyperWebDriver.build();
-        driver.setScreenshotsPath(dataBaseService.getSetting("screenshots-path"));
+        driver.setScreenshotsPath(dataBaseService.getSetting(DataBaseService.SCREENSHOTS_PATH));
 
         return driver;
     }
@@ -178,7 +178,16 @@ public class HyperseleniumService {
 
                 protocolLine.setResult(result.getMessage());
 
-                statusService.addScenarioUpdate(scenario);
+                if ("true".equals(dataBaseService.getSetting(DataBaseService.STOP_WHEN_ERROR_OCCURS))
+                    && !result.getSuccess()) {
+
+                    protocol.setStatus("STOPPED");
+                    statusService.addScenarioUpdate(scenario);
+                    statusService.sendStatus();
+                    return;
+                } else {
+                    statusService.addScenarioUpdate(scenario);
+                }
             } else {
                 protocolLine.setStatus("PASS");
             }

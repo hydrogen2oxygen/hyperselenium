@@ -24,6 +24,8 @@ import static org.dizitart.no2.filters.Filters.eq;
 public class DataBaseService {
 
     public static final String SCREENSHOTS_PATH = "screenshots-path";
+    public static final String STOP_WHEN_ERROR_OCCURS = "stopWhenErrorOccurs";
+    public static final String SCREENSHOTS = "screenshots";
     private Nitrite db;
     private NitriteCollection scenariosCollection;
     private NitriteCollection scriptCollection;
@@ -67,7 +69,8 @@ public class DataBaseService {
 
         Settings settings = new Settings();
         settings.getSettings().add(new KeyValue(SCREENSHOTS_PATH,"screenshots/","string"));
-        settings.getSettings().add(new KeyValue("screenshots","true","boolean"));
+        settings.getSettings().add(new KeyValue(SCREENSHOTS,"true","boolean"));
+        settings.getSettings().add(new KeyValue(STOP_WHEN_ERROR_OCCURS,"false","boolean"));
         return settings;
     }
 

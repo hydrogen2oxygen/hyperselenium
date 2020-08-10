@@ -12,6 +12,9 @@
           <li class="nav-item">
             <fa-icon [icon]="faStop" (click)="stop(scenario)"></fa-icon> STOP
           </li>
+          <li class="nav-item">
+            <fa-icon [icon]="faStop" (click)="switchStopWhenError(scenario)"></fa-icon> STOP WHEN ERROR
+          </li>
         </ul>
       </div>
     </nav>
@@ -48,7 +51,9 @@
             {{line.line}}
           </div>
 
-          <img *ngIf="line?.result?.startsWith('screenshot ')" src="{{getScreenShotUrl(line)}}" style="width: 100%"/>
+          <a *ngIf="line?.result?.startsWith('screenshot ')" href="{{getScreenShotUrl(line)}}" target="screenshot">
+            <img src="{{getScreenShotUrl(line)}}" class="center"/>
+          </a>
 
           <div class="hsCode hsCode{{line.status}} errorMessage" *ngIf="line.status == 'ERROR' && line.result">
               {{line.result.trim()}}

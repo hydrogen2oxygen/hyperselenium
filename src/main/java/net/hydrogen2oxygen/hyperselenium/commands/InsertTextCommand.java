@@ -14,6 +14,8 @@ public class InsertTextCommand extends BaseCommand {
 
         driver.insertText(params[0],params[1]);
 
+        commandResult.setSuccess(true);
+
         return commandResult;
     }
 

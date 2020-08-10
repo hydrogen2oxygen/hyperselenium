@@ -88,4 +88,5 @@ export class ScenarioPlayComponent implements OnInit {
     let id = line.result.replace('screenshot ','');
     return `${environment.serverUrl}/api/scenario/screenshot/${id}`;
   }
+
 }
