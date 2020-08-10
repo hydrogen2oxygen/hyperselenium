@@ -78,7 +78,7 @@ public class HyperWebDriver {
                 continue;
             }
 
-            if (text.equals(elementText)) {
+            if (elementText.contains(text)) {
                 element.click();
                 clickPerformed = true;
                 break;
@@ -119,7 +119,7 @@ public class HyperWebDriver {
     }
 
     public void close() {
-        driver.close();
+        driver.quit();
         closed = true;
     }
 
