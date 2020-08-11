@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HyperSeleniumService} from "../../../services/hyper-selenium.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Scenario} from "../../../domain/Scenario";
@@ -14,6 +14,8 @@ import {environment} from "../../../../environments/environment";
   styleUrls: ['./scenario-play.component.less']
 })
 export class ScenarioPlayComponent implements OnInit {
+
+  @ViewChild('running') runningElement:ElementRef;
 
   scenarioName: string;
   scenario: Scenario;
@@ -58,7 +60,14 @@ export class ScenarioPlayComponent implements OnInit {
         for (let i:number = 0; i<serviceStatus.scenarios.length; i++) {
           let scenario:Scenario = serviceStatus.scenarios[i];
           if (scenario.name == this.scenarioName) {
+
             this.scenario = scenario;
+
+            if (this.runningElement) {
+              this.runningElement.nativeElement
+                .scrollIntoView({behavior: "smooth", block: "start"});
+            }
+
             break;
           }
         }

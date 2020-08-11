@@ -47,7 +47,7 @@
               <fa-icon [icon]="faPlay" (click)="playFromLine(line)" style="margin-left: 0.5rem"></fa-icon>
               {{line.lineNumber}}
             </span>
-            <span *ngIf="line.status == 'RUNNING'" class="badge badge-primary">{{line.status}}</span>
+            <span *ngIf="line.status == 'RUNNING'" class="badge badge-primary" #running>{{line.status}}</span>
             <span *ngIf="line.status == 'SUCCESS'" class="badge badge-success">{{line.status}}</span>
             <span *ngIf="line.status == 'ERROR'" class="badge badge-danger">{{line.status}}</span>
             {{line.line}}
