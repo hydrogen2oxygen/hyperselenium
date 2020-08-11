@@ -5,6 +5,8 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Script} from "../../../domain/Script";
 import {Command} from "../../../domain/Command";
+import {ToastrService} from "ngx-toastr";
+import {tokenReference} from "@angular/compiler";
 
 @Component({
   selector: 'app-scenario-edit',
@@ -20,7 +22,8 @@ export class ScenarioEditComponent implements OnInit {
   constructor(
     private hyperSeleniumService:HyperSeleniumService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
   }
 
@@ -37,7 +40,8 @@ export class ScenarioEditComponent implements OnInit {
     this.hyperSeleniumService.saveScenario(scenario).subscribe( result => {
       console.log("scenario saved!");
       console.log(result);
-      // TODO Toast
+      this.toastr.success("Saved successfully",`Scenario: ${scenario.name}`);
+      this.editMode = true;
     })
   }
 
@@ -80,7 +84,8 @@ export class ScenarioEditComponent implements OnInit {
     console.log("update");
     let scenario = this.generateScenarioFromForm();
     this.hyperSeleniumService.updateScenario(scenario).subscribe( result => {
-      console.log(result)
+      console.log(result);
+      this.toastr.success("Saved successfully",`Scenario: ${scenario.name}`);
     });
   }
 
