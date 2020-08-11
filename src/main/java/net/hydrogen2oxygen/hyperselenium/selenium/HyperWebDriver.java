@@ -162,4 +162,9 @@ public class HyperWebDriver {
 
         return file;
     }
+
+    public String getHtml() {
+
+        return driver.getPageSource();
+    }
 }
