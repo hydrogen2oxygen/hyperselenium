@@ -1,5 +1,6 @@
 package net.hydrogen2oxygen.hyperselenium.adapter;
 
+import net.hydrogen2oxygen.hyperselenium.domain.Command;
 import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.domain.ServiceStatus;
 import net.hydrogen2oxygen.hyperselenium.domain.Settings;
@@ -19,6 +20,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/")
@@ -61,6 +63,11 @@ public class HyperseleniumRestAdapter {
         ServiceStatus serviceStatus = statusService.getServiceStatus();
 
         return logger.traceExit(entryMessage, ResponseEntity.ok(serviceStatus));
+    }
+
+    @GetMapping("commands")
+    ResponseEntity<List<Command>> getCommands() {
+        return ResponseEntity.ok(hyperseleniumService.getCommands());
     }
 
     @PostMapping("play/{name}")

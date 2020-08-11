@@ -8,6 +8,7 @@ import {Scenario} from "../domain/Scenario";
 import {Settings} from "../domain/Settings";
 import {ToastrService} from "ngx-toastr";
 import {catchError} from "rxjs/operators";
+import {Command} from "../domain/Command";
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,10 @@ export class HyperSeleniumService {
 
   getAllScenarios() {
     return this.http.get<Scenario[]>(`${HyperSeleniumService.url}/scenario`)
+  }
+
+  loadCommands() {
+    return this.http.get<Command[]>(`${HyperSeleniumService.url}/commands`)
   }
 
   /**

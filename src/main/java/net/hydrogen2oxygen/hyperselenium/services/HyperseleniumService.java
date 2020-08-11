@@ -273,4 +273,16 @@ public class HyperseleniumService {
             runningScenarios.remove(scenario);
         }
     }
+
+    public List<Command> getCommands() {
+
+        List<Command> commandList = new ArrayList<>();
+
+        for (String name : commands.keySet()) {
+
+            commandList.add(new Command(name, null));
+        }
+
+        return commandList;
+    }
 }

@@ -4,6 +4,7 @@ import {Scenario} from "../../../domain/Scenario";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Script} from "../../../domain/Script";
+import {Command} from "../../../domain/Command";
 
 @Component({
   selector: 'app-scenario-edit',
@@ -14,6 +15,7 @@ export class ScenarioEditComponent implements OnInit {
 
   scenarioForm:FormGroup = new FormGroup({});
   editMode:boolean = false;
+  commands:Command[];
 
   constructor(
     private hyperSeleniumService:HyperSeleniumService,
@@ -25,6 +27,7 @@ export class ScenarioEditComponent implements OnInit {
   ngOnInit(): void {
     this.createForm.call(this);
     this.route.params.subscribe( params => this.load(params['name']));
+    this.hyperSeleniumService.loadCommands().subscribe( commands => this.commands = commands);
   }
 
   save() {
@@ -94,5 +97,28 @@ export class ScenarioEditComponent implements OnInit {
       description: new FormControl(''),
       script: new FormControl('')
     });
+  }
+
+  copyCommandToClipBoard(command: Command) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = command.name;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+  }
+
+  insertTab() {
+    // TODO crazy javascript stuff
+    //const textarea:any = document.getElementById('#scenarioScript');
+    //console.log(textarea);
+    //let currentposition = textarea.selectionStart;
+    //console.log(currentposition);
+
   }
 }
