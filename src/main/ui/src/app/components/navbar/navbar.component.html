@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
   <span class="navbar-brand" routerLink="/home"><img src="assets/logo.png"/> </span>
   <span class="navbar-brand badge badge-primary" *ngIf="serviceStatus">{{serviceStatus.buildVersion}}</span>
   <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
