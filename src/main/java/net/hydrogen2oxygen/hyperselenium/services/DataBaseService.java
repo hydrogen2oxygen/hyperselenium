@@ -13,6 +13,7 @@ import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,11 @@ public class DataBaseService {
         createIndexes();
 
         objectMapper = new ObjectMapper();
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        db.close();
     }
 
     private void createIndexes() {

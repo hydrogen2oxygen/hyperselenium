@@ -31,8 +31,9 @@ End notes.</textarea>
   <button *ngIf="editMode" class="btn btn-success" (click)="udate()">Update</button>
   <button *ngIf="editMode" class="btn btn-primary" (click)="play()" style="margin-left: 1rem">Play</button>
 </form>
-
-<h1>Commands</h1>
-<div *ngIf="commands">
-  <button *ngFor="let command of commands" title="{{command.description}}" style="margin-right: 0.5rem" class="btn btn-success" (click)="copyCommandToClipBoard(command)">{{command.name}}</button>
+<hr/>
+<div *ngIf="commands" class="jumbotron">
+  <h1>Commands</h1>
+  <p>Here is a complete list of available commands.</p>
+  <button *ngFor="let command of commands" title="{{command.description}}" style="margin-right: 0.5rem;margin-bottom: 0.5rem" class="btn btn-success" (click)="copyCommandToClipBoard(command)">{{command.name}}</button>
 </div>

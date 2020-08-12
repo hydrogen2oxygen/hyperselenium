@@ -9,6 +9,7 @@ import {Settings} from "../domain/Settings";
 import {ToastrService} from "ngx-toastr";
 import {catchError} from "rxjs/operators";
 import {Command} from "../domain/Command";
+import {CommandResult} from "../domain/CommandResult";
 
 @Injectable({
   providedIn: 'root'
@@ -82,10 +83,13 @@ export class HyperSeleniumService {
     return this.http.put<Scenario>(`${HyperSeleniumService.url}/close/${name}`, null);
   }
 
+  closeAllDrivers():Observable<CommandResult> {
+    return this.http.put<CommandResult>(`${HyperSeleniumService.url}/closeAll`, null);
+  }
+
   private handleError(error: any) {
     console.log(error);
     this.toastr.error(error.message);
     return undefined;
   }
-
 }

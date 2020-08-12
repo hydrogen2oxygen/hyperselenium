@@ -3,6 +3,7 @@ import {HyperSeleniumService} from "../../services/hyper-selenium.service";
 import {Settings} from "../../domain/Settings";
 import {KeyValue} from "../../domain/KeyValue";
 import {FormControl, FormGroup} from "@angular/forms";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-settings',
@@ -14,7 +15,10 @@ export class SettingsComponent implements OnInit {
   settings:Settings;
   reactiveForm: FormGroup;
 
-  constructor(private hyperSeleniumService:HyperSeleniumService) { }
+  constructor(
+    private hyperSeleniumService:HyperSeleniumService,
+    private toastr:ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.hyperSeleniumService.getSettings().subscribe( settings => {
@@ -53,5 +57,13 @@ console.log(settings);
     this.hyperSeleniumService.updateSettings(this.settings).subscribe( s => {
       console.log(s);
     })
+  }
+
+  closeAllDrivers() {
+    this.hyperSeleniumService.closeAllDrivers().subscribe(commandResult => {
+      if (commandResult.success) {
+        this.toastr.info("All running drivers closed!","HyperSelenium Service")
+      }
+    });
   }
 }

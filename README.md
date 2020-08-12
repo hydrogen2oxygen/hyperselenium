@@ -71,3 +71,7 @@ Nitrite Database (NoSQL) looks very nice: https://www.dizitart.org/nitrite-datab
 
 ## Read Maven Version Number
 https://stackoverflow.com/questions/38983934/cannot-get-maven-project-version-property-in-a-spring-application-with-value
+
+## Docker Selenium Hub - HowTo
+
+    docker run --restart unless-stopped selenium/standalone-chrome

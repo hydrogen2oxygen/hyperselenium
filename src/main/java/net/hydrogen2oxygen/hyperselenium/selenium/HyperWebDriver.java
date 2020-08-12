@@ -167,4 +167,8 @@ public class HyperWebDriver {
 
         return driver.getPageSource();
     }
+
+    public void clear(String id) {
+        driver.findElement(By.id(id)).clear();
+    }
 }

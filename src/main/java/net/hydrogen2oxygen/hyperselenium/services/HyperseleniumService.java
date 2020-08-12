@@ -8,14 +8,11 @@ import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.tags.Param;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class HyperseleniumService {
@@ -41,6 +38,11 @@ public class HyperseleniumService {
     public void initService() throws Exception{
 
         scanForCommands("net.hydrogen2oxygen");
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        closeAllDrivers();
     }
 
     /**
@@ -240,21 +242,23 @@ public class HyperseleniumService {
 
     public void closeAllDrivers() {
 
-        // FIXME
-        /*for (String uuid : websites.keySet()) {
-            WebSite webSite = websites.get(uuid);
+        System.out.println("closeAllDrivers called");
 
-            try {
-                webSite.getWebDriver().close();
-                webSite.getWebDriver().getDriver().close();
-            } catch (Exception e) {
+        for (Scenario scenario : runningScenarios) {
 
-            }
-        }*/
+            scenario.getDriver().close();
+        }
+
+        try {
+            Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
+        } catch (Exception e) {}
     }
 
     public void stopScenario(String name) {
-        scenariosToStop.add(name);
+
+        if (!scenariosToStop.contains(name)) {
+            scenariosToStop.add(name);
+        }
     }
 
     public void closeScenario(Scenario scenario) {
@@ -282,6 +286,13 @@ public class HyperseleniumService {
 
             commandList.add(new Command(name, null));
         }
+
+        Collections.sort(commandList, new Comparator<Command>() {
+            @Override
+            public int compare(Command o1, Command o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
 
         return commandList;
     }

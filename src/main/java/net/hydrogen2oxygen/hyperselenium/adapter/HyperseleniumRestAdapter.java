@@ -1,9 +1,6 @@
 package net.hydrogen2oxygen.hyperselenium.adapter;
 
-import net.hydrogen2oxygen.hyperselenium.domain.Command;
-import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
-import net.hydrogen2oxygen.hyperselenium.domain.ServiceStatus;
-import net.hydrogen2oxygen.hyperselenium.domain.Settings;
+import net.hydrogen2oxygen.hyperselenium.domain.*;
 import net.hydrogen2oxygen.hyperselenium.services.DataBaseService;
 import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;
 import net.hydrogen2oxygen.hyperselenium.services.StatusService;
@@ -30,6 +27,9 @@ public class HyperseleniumRestAdapter {
     private static final Logger logger = LogManager.getLogger(HyperseleniumRestAdapter.class);
 
     @Autowired
+    private DataBaseService dataBaseService;
+
+    @Autowired
     private HyperseleniumService hyperseleniumService;
 
     @Autowired
@@ -38,9 +38,6 @@ public class HyperseleniumRestAdapter {
     @Qualifier("taskExecutor")
     @Autowired
     private TaskExecutor taskExecutor;
-
-    @Autowired
-    private DataBaseService dataBaseService;
 
     @GetMapping("settings")
     ResponseEntity<Settings> getSettings() {
@@ -99,6 +96,15 @@ public class HyperseleniumRestAdapter {
         final Scenario scenario = dataBaseService.getScenarioByName(name);
         hyperseleniumService.closeScenario(scenario);
         return ResponseEntity.ok(scenario);
+    }
+
+    @PutMapping("closeAll")
+    ResponseEntity<CommandResult> closeAll() throws IOException {
+
+        hyperseleniumService.closeAllDrivers();
+        CommandResult commandResult = new CommandResult();
+        commandResult.setSuccess(true);
+        return ResponseEntity.ok(commandResult);
     }
 
     @PostMapping("closeAllDrivers")

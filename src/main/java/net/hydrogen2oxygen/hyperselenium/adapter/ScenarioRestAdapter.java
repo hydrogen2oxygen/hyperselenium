@@ -27,12 +27,13 @@ public class ScenarioRestAdapter {
     private static final Logger logger = LogManager.getLogger(ScenarioRestAdapter.class);
 
     @Autowired
+    private DataBaseService dataBaseService;
+
+    @Autowired
     private HyperseleniumService hyperseleniumService;
 
     @Autowired
     private StatusService statusService;
-
-    private DataBaseService dataBaseService;
 
     /**
      * Create scenario
@@ -97,9 +98,5 @@ public class ScenarioRestAdapter {
 
     // TODO CRUD Scripts
 
-    @Autowired
-    public void setDataBaseService(DataBaseService dataBaseService){
-        this.dataBaseService = dataBaseService;
-    }
 }
 
