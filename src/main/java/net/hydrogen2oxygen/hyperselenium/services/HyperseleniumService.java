@@ -103,7 +103,7 @@ public class HyperseleniumService {
         }
     }
 
-    public void executeScenario(Scenario scenario) {
+    public void executeScenario(Scenario scenario, Integer lineNumber) {
 
         if (scenario.getDriver() == null) {
             scenario.setDriver(getNewHyperWebDriver());
@@ -113,7 +113,12 @@ public class HyperseleniumService {
         runningScenarios.add(scenario);
 
         // Execute the main script
-        executeScript(scenario);
+        executeScript(scenario, lineNumber);
+    }
+
+    public void executeScenario(Scenario scenario) {
+
+        executeScenario(scenario, null);
     }
 
     public void addNewProtocol(final Scenario scenario) {
@@ -156,18 +161,26 @@ public class HyperseleniumService {
         return driver;
     }
 
-    public void executeScript(Scenario scenario) {
+    public void executeScript(Scenario scenario, Integer lineNumber) {
 
         Script script = scenario.getScript();
         Protocol protocol = scenario.getProtocol();
         protocol.setStatus("RUNNING");
         statusService.addScenarioUpdate(scenario);
 
+        if (lineNumber != null) {
+            lineNumber--;
+        }
+
         int lineCount = -1;
 
         for (String line : script.getLines()) {
 
             lineCount++;
+
+            if (lineNumber != null && lineCount < lineNumber) {
+                continue;
+            }
 
             if (isStopScenario(scenario.getName())) {
                 protocol.setStatus("STOPPED");

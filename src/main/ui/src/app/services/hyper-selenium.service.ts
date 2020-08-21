@@ -75,6 +75,10 @@ export class HyperSeleniumService {
     return this.http.post<Scenario>(`${HyperSeleniumService.url}/play/${name}`, null);
   }
 
+  continue(name: string, lineNumber: number):Observable<Scenario> {
+    return this.http.post<Scenario>(`${HyperSeleniumService.url}/play/${name}/${lineNumber}`, null);
+  }
+
   stop(name: string):Observable<Scenario> {
     return this.http.put<Scenario>(`${HyperSeleniumService.url}/stop/${name}`, null);
   }
@@ -92,4 +96,5 @@ export class HyperSeleniumService {
     this.toastr.error(error.message);
     return undefined;
   }
+
 }

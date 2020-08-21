@@ -82,6 +82,21 @@ public class HyperseleniumRestAdapter {
         return ResponseEntity.ok(scenario);
     }
 
+    @PostMapping("play/{name}/{lineNumber}")
+    ResponseEntity<Scenario> continueAtLineNumber(@PathVariable String name, @PathVariable Integer lineNumber) throws IOException {
+
+        final Scenario scenario = statusService.getRunningScenario(name);
+
+        taskExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                hyperseleniumService.executeScenario(scenario, lineNumber);
+            }
+        });
+
+        return ResponseEntity.ok(scenario);
+    }
+
     @PutMapping("stop/{name}")
     ResponseEntity<Scenario> stop(@PathVariable String name) throws IOException {
 
