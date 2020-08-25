@@ -3,7 +3,9 @@ package net.hydrogen2oxygen.hyperselenium.selenium;
 import net.hydrogen2oxygen.hyperselenium.exceptions.CommandExecutionException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.util.FileCopyUtils;
@@ -12,6 +14,9 @@ import org.springframework.util.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class HyperWebDriver {
 
@@ -155,7 +160,7 @@ public class HyperWebDriver {
                 folder.mkdirs();
             }
 
-            File newFile =  new File(screenshotsPath + file.getName());
+            File newFile = new File(screenshotsPath + file.getName());
             FileCopyUtils.copy(file, newFile);
             return newFile;
         }
@@ -170,5 +175,39 @@ public class HyperWebDriver {
 
     public void clear(String id) {
         driver.findElement(By.id(id)).clear();
+    }
+
+    public void waitForJQuery() {
+
+        waitForJavascript((JavascriptExecutor) driver,"return jQuery.active");
+    }
+
+    public void waitForJavascript(final String script) {
+        waitForJavascript((JavascriptExecutor) driver, script);
+    }
+
+    private void waitForJavascript(final JavascriptExecutor executor, final String script) {
+        new FluentWait<JavascriptExecutor>(executor) {
+            protected RuntimeException timeoutException(
+                    String message, Throwable lastException) {
+                return new RuntimeException(message);
+            }
+        }.withTimeout(10, TimeUnit.SECONDS)
+                .until(new Function<JavascriptExecutor, Boolean>() {
+                    public Boolean apply(JavascriptExecutor e) {
+
+                        Object result = executor.executeScript(script);
+
+                        if (result instanceof Long) {
+                            return (Long)result == 0;
+                        }
+
+                        if (result instanceof Boolean) {
+                            return (Boolean)result;
+                        }
+
+                        return result != null;
+                    }
+                });
     }
 }

@@ -76,12 +76,12 @@ public class HyperseleniumService {
 
         CommandResult result = new CommandResult();
 
-        String [] parts = line.split(" ");
-        ICommand command = commands.get(parts[0]);
+        String commandName = line.split(" ")[0];
+        ICommand command = commands.get(commandName);
 
         if (command == null) {
             result.setSuccess(false);
-            result.setMessage(String.format("Command %s not found!", parts[0]));
+            result.setMessage(String.format("Command %s not found!", commandName));
             return result;
         }
 
