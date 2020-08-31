@@ -6,7 +6,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Script} from "../../../domain/Script";
 import {Command} from "../../../domain/Command";
 import {ToastrService} from "ngx-toastr";
-import {tokenReference} from "@angular/compiler";
 
 @Component({
   selector: 'app-scenario-edit',
