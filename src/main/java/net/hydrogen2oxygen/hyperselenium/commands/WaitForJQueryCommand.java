@@ -6,26 +6,22 @@ import net.hydrogen2oxygen.hyperselenium.exceptions.CommandExecutionException;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 
 @HyperseleniumCommand
-public class InsertTextCommand extends BaseCommand {
+public class WaitForJQueryCommand extends BaseCommand {
 
     @Override
     public CommandResult executeCommand(HyperWebDriver driver, String[] params) throws CommandExecutionException {
 
-        CommandResult commandResult = new CommandResult();
+        CommandResult result = new CommandResult();
 
-        if (params.length < 2) {
-            throw new CommandExecutionException("ERROR for 'text', not enough params!");
-        }
+        driver.waitForJQuery();
 
-        driver.insertText(params[0],params[1]);
-
-        commandResult.setSuccess(true);
-
-        return commandResult;
+        result.setSuccess(true);
+        result.setMessage("Waiting for JQuery initialization successful!");
+        return result;
     }
 
     @Override
     public String getCommandName() {
-        return "text";
+        return "waitForJQuery";
     }
 }

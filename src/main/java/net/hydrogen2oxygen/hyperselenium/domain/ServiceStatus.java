@@ -24,4 +24,15 @@ public class ServiceStatus {
     public void setScenarios(List<Scenario> scenarios) {
         this.scenarios = scenarios;
     }
+
+    public Scenario getScenario(String name) {
+
+        for (Scenario s : getScenarios()) {
+            if (s.getName().equals(name)) {
+                return s;
+            }
+        }
+
+        return null;
+    }
 }

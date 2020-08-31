@@ -6,26 +6,23 @@ import net.hydrogen2oxygen.hyperselenium.exceptions.CommandExecutionException;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 
 @HyperseleniumCommand
-public class InsertTextCommand extends BaseCommand {
+public class WaitForJavaScriptCommand extends BaseCommand {
+
 
     @Override
     public CommandResult executeCommand(HyperWebDriver driver, String[] params) throws CommandExecutionException {
 
-        CommandResult commandResult = new CommandResult();
+        CommandResult result = new CommandResult();
 
-        if (params.length < 2) {
-            throw new CommandExecutionException("ERROR for 'text', not enough params!");
-        }
+        driver.waitForJavascript(params[0]);
 
-        driver.insertText(params[0],params[1]);
-
-        commandResult.setSuccess(true);
-
-        return commandResult;
+        result.setSuccess(true);
+        result.setMessage("Waiting for script [" + params[0] + "] successful!");
+        return result;
     }
 
     @Override
     public String getCommandName() {
-        return "text";
+        return "waitForJavaScript";
     }
 }

@@ -49,7 +49,7 @@
             </span>
             <span *ngIf="line.status == 'RUNNING'" class="badge badge-primary" #running>{{line.status}}</span>
             <span *ngIf="line.status == 'SUCCESS'" class="badge badge-success">{{line.status}}</span>
-            <span *ngIf="line.status == 'ERROR'" class="badge badge-danger">{{line.status}}</span>
+            <span *ngIf="line.status == 'ERROR'" class="badge badge-danger" #error>{{line.status}}</span>
             {{line.line}}
           </div>
 

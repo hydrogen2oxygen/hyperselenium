@@ -16,6 +16,7 @@ import {environment} from "../../../../environments/environment";
 export class ScenarioPlayComponent implements OnInit {
 
   @ViewChild('running') runningElement:ElementRef;
+  @ViewChild('error') errorElement:ElementRef;
 
   scenarioName: string;
   scenario: Scenario;
@@ -68,6 +69,11 @@ export class ScenarioPlayComponent implements OnInit {
                 .scrollIntoView({behavior: "smooth", block: "start"});
             }
 
+            if (this.errorElement) {
+              this.errorElement.nativeElement
+                .scrollIntoView({behavior: "smooth", block: "start"});
+            }
+
             break;
           }
         }
@@ -99,7 +105,9 @@ export class ScenarioPlayComponent implements OnInit {
   }
 
   playFromLine(line: ProtocolLine) {
-    console.log(line);
+    this.hyperSeleniumService.continue(this.scenarioName, line.lineNumber).subscribe( data => {
+      console.log(data);
+    });
   }
 
   getScreenShotUrl(line: ProtocolLine) {

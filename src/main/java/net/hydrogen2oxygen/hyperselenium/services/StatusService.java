@@ -33,14 +33,7 @@ public class StatusService {
 
     public void addScenarioUpdate(Scenario scenario) {
 
-        Scenario oldScenario = null;
-
-        for (Scenario s : serviceStatus.getScenarios()) {
-           if (s.getName().equals(scenario.getName())) {
-               oldScenario = s;
-               break;
-           }
-        }
+        Scenario oldScenario = getServiceStatus().getScenario(scenario.getName());
 
         if (oldScenario != null) {
             serviceStatus.getScenarios().remove(oldScenario);
@@ -48,6 +41,10 @@ public class StatusService {
 
         serviceStatus.getScenarios().add(scenario);
         sendStatus();
+    }
+
+    public Scenario getRunningScenario(String name) {
+        return getServiceStatus().getScenario(name);
     }
 
     /**
