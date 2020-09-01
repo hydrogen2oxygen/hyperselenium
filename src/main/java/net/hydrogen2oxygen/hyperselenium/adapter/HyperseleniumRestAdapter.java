@@ -70,7 +70,11 @@ public class HyperseleniumRestAdapter {
     @PostMapping("play/{name}")
     ResponseEntity<Scenario> play(@PathVariable String name) throws IOException {
 
-        final Scenario scenario = dataBaseService.getScenarioByName(name);
+        if (statusService.getRunningScenario(name) != null) {
+            return continueAtLineNumber(name, 0);
+        }
+
+        Scenario scenario = dataBaseService.getScenarioByName(name);
 
         taskExecutor.execute(new Runnable() {
             @Override
