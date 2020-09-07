@@ -1,4 +1,5 @@
 export class Protocol {
+  scriptName:string;
   lines:ProtocolLine[];
   status:string;
   currentLine:number;
@@ -11,4 +12,5 @@ export class ProtocolLine {
   message:string;
   line:string;
   result:string;
+  subScriptProtocol:Protocol;
 }

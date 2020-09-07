@@ -64,6 +64,50 @@
           <div *ngSwitchDefault>
             {{line.line}} {{line.type}}
           </div>
+
+
+          <div *ngFor="let subLine of line?.subScriptProtocol?.lines; index as i2">
+            <div [ngSwitch]="subLine.type">
+
+              <div class="hsHeader" *ngSwitchCase="'HEADER'">
+                <h1 *ngIf="subLine.line.startsWith('# ')">{{subLine.line.replace('# ', '')}}</h1>
+                <h2 *ngIf="subLine.line.startsWith('## ')">{{subLine.line.replace('## ', '')}}</h2>
+                <h3 *ngIf="subLine.line.startsWith('### ')">{{subLine.line.replace('### ', '')}}</h3>
+                <h4 *ngIf="subLine.line.startsWith('#### ')">{{subLine.line.replace('#### ', '')}}</h4>
+              </div>
+
+              <div class="hsHeader" *ngSwitchCase="'TEXT'">
+                {{subLine.line}}
+              </div>
+
+              <div class="hsCode hsCode{{subLine.status}}" *ngSwitchCase="'CODE'" title="{{subLine.result}}">
+            <span class="btn badge badge-secondary " style="margin-right: 1rem">
+              <fa-icon [icon]="faCircle" (click)="setBreakPoint(subLine)"></fa-icon>
+              <fa-icon [icon]="faEdit" (click)="editLine(subLine)" style="margin-left: 0.5rem"></fa-icon>
+              <fa-icon [icon]="faPlay" (click)="playFromLine(subLine)" style="margin-left: 0.5rem"></fa-icon>
+              {{subLine.lineNumber}}
+            </span>
+                <span *ngIf="subLine.status == 'RUNNING'" class="badge badge-primary" #running>{{subLine.status}}</span>
+                <span *ngIf="subLine.status == 'SUCCESS'" class="badge badge-success">{{subLine.status}}</span>
+                <span *ngIf="subLine.status == 'ERROR'" class="badge badge-danger" #error>{{subLine.status}}</span>
+                {{subLine.line}}
+              </div>
+
+              <a *ngIf="subLine?.result?.startsWith('screenshot ')" href="{{getScreenShotUrl(subLine)}}" target="screenshot">
+                <img src="{{getScreenShotUrl(subLine)}}" class="center"/>
+              </a>
+
+              <div class="hsCode hsCode{{subLine.status}} errorMessage" *ngIf="subLine.status == 'ERROR' && subLine.result">
+                {{subLine.result.trim()}}
+              </div>
+
+              <div *ngSwitchDefault>
+                {{subLine.line}} {{subLine.type}}
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </div>
 
