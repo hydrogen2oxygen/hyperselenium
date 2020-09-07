@@ -35,7 +35,7 @@ public class HyperseleniumService {
     private ParamsUtility paramsUtility = new ParamsUtility();
 
     @PostConstruct
-    public void initService() throws Exception{
+    public void initService() throws Exception {
 
         scanForCommands("net.hydrogen2oxygen");
     }
@@ -47,6 +47,7 @@ public class HyperseleniumService {
 
     /**
      * Scans for HyperseleniumCommand annotated commands. Be careful, you can override an existing command with this method.
+     *
      * @param packages
      */
     public void scanForCommands(String packages) {
@@ -76,6 +77,8 @@ public class HyperseleniumService {
 
         CommandResult result = new CommandResult();
 
+        line = line.trim();
+
         String commandName = line.split(" ")[0];
         ICommand command = commands.get(commandName);
 
@@ -85,7 +88,7 @@ public class HyperseleniumService {
             return result;
         }
 
-        String [] parameters = {};
+        String[] parameters = {};
 
         if (line.contains(" ")) {
             parameters = paramsUtility.getParamsFromCommandLine(line);
@@ -109,11 +112,11 @@ public class HyperseleniumService {
             scenario.setDriver(getNewHyperWebDriver());
         }
 
-        addNewProtocol(scenario);
+        scenario.setProtocol(addNewProtocol(scenario.getScript()));
         runningScenarios.add(scenario);
 
         // Execute the main script
-        executeScript(scenario, lineNumber);
+        executeScript(scenario, null, null, lineNumber);
     }
 
     public void executeScenario(Scenario scenario) {
@@ -121,12 +124,10 @@ public class HyperseleniumService {
         executeScenario(scenario, null);
     }
 
-    public void addNewProtocol(final Scenario scenario) {
+    public Protocol addNewProtocol(Script script) {
 
         Protocol protocol = new Protocol();
-        scenario.setProtocol(protocol);
-
-        Script script = scenario.getScript();
+        protocol.setScriptName(script.getName());
 
         int lineCounter = -1;
 
@@ -135,7 +136,7 @@ public class HyperseleniumService {
             lineCounter++;
             ProtocolLine protocolLine = new ProtocolLine();
             protocolLine.setLine(line);
-            protocolLine.setLineNumber(lineCounter+1);
+            protocolLine.setLineNumber(lineCounter + 1);
 
             if (line.startsWith("    ")) {
                 protocolLine.setType("CODE");
@@ -149,6 +150,8 @@ public class HyperseleniumService {
 
             protocol.getLines().add(protocolLine);
         }
+
+        return protocol;
     }
 
     public HyperWebDriver getNewHyperWebDriver() {
@@ -161,11 +164,22 @@ public class HyperseleniumService {
         return driver;
     }
 
-    public void executeScript(Scenario scenario, Integer lineNumber) {
+    public void executeScript(Scenario scenario, Script script, ProtocolLine mainProtocolLine, Integer lineNumber) {
 
-        Script script = scenario.getScript();
         Protocol protocol = scenario.getProtocol();
-        protocol.setStatus("RUNNING");
+        boolean mainScript = true;
+
+        // Scenario delivers the main script
+        if (script == null) {
+            script = scenario.getScript();
+            protocol.setStatus("RUNNING");
+        } else {
+            // Sub-Script
+            mainScript = false;
+            protocol = addNewProtocol(script);
+            mainProtocolLine.setSubScriptProtocol(protocol);
+        }
+
         statusService.addScenarioUpdate(scenario);
 
         if (lineNumber != null) {
@@ -206,12 +220,32 @@ public class HyperseleniumService {
                     scenario.setDriver(getNewHyperWebDriver());
                 }
 
-                CommandResult result = executeCommandLine(scenario.getDriver(), line.trim(), protocolLine);
+                CommandResult result = executeCommandLine(scenario.getDriver(), line, protocolLine);
+
+                // Special commands run outside a command object or are
+                // delegated to other services
+                if (result.getSpecialCommand() != null) {
+
+                    String[] parameters = paramsUtility.getParamsFromCommandLine(line);
+
+                    if ("run".equals(result.getSpecialCommand())) {
+                        try {
+                            Scenario subScenario = dataBaseService.getScenarioByName(parameters[0]);
+                            executeScript(scenario, subScenario.getScript(), protocolLine, 0);
+                            result.setSuccess(true);
+                            result.setMessage("Script " + subScenario.getScript().getName() + " executed successfully!");
+                        } catch (Exception e) {
+                            result.setSuccess(false);
+                            result.setMessage(e.getMessage());
+                            protocolLine.setStatus("ERROR");
+                        }
+                    }
+                }
 
                 protocolLine.setResult(result.getMessage());
 
                 if ("true".equals(dataBaseService.getSetting(DataBaseService.STOP_WHEN_ERROR_OCCURS))
-                    && !result.getSuccess()) {
+                        && !result.getSuccess()) {
 
                     protocol.setStatus("STOPPED");
                     statusService.addScenarioUpdate(scenario);
@@ -264,7 +298,8 @@ public class HyperseleniumService {
 
         try {
             Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     public void stopScenario(String name) {

@@ -64,7 +64,7 @@ public class ScenarioRestAdapter {
         Scenario scenario = dataBaseService.getScenarioByName(name);
 
         if (scenario != null) {
-            hyperseleniumService.addNewProtocol(scenario);
+            scenario.setProtocol(hyperseleniumService.addNewProtocol(scenario.getScript()));
             return ResponseEntity.ok(scenario);
         } else {
             return ResponseEntity.notFound().build();

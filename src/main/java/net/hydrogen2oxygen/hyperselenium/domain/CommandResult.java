@@ -4,7 +4,16 @@ public class CommandResult {
 
     private Boolean success = false;
     private String message;
+    private String specialCommand;
     private Object value;
+
+    public String getSpecialCommand() {
+        return specialCommand;
+    }
+
+    public void setSpecialCommand(String specialCommand) {
+        this.specialCommand = specialCommand;
+    }
 
     public Boolean getSuccess() {
         return success;

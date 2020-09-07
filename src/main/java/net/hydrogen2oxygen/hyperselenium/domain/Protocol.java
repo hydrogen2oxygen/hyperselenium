@@ -5,9 +5,18 @@ import java.util.List;
 
 public class Protocol {
 
+    private String scriptName;
     private List<ProtocolLine> lines = new ArrayList<>();
     private String status = "NEW";
     private Integer currentLine;
+
+    public String getScriptName() {
+        return scriptName;
+    }
+
+    public void setScriptName(String scriptName) {
+        this.scriptName = scriptName;
+    }
 
     public List<ProtocolLine> getLines() {
         return lines;
@@ -36,7 +45,8 @@ public class Protocol {
     @Override
     public String toString() {
         return "Protocol{" +
-                "lines=" + lines +
+                "scriptName='" + scriptName + '\'' +
+                ", lines=" + lines +
                 ", status='" + status + '\'' +
                 ", currentLine=" + currentLine +
                 '}';

@@ -9,7 +9,12 @@ public class RunCommand extends BaseCommand {
 
     @Override
     public CommandResult executeCommand(HyperWebDriver driver, String[] params) {
+
         CommandResult commandResult = new CommandResult();
+
+        commandResult.setSuccess(true);
+        commandResult.setMessage("run script " + params[0]);
+        commandResult.setSpecialCommand("run");
 
         return commandResult;
     }

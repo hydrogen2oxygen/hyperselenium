@@ -6,13 +6,13 @@ import java.util.List;
 public class ParamsUtility {
 
     public String[] getParamsFromCommandLine(String line) {
-        String [] parts = line.split(" ");
+        String [] parts = line.trim().split(" ");
         return splitParams(line.replace(parts[0] + " ",""));
     }
 
     public String[] splitParams(String params) {
 
-        String parts [] = params.split(" ");
+        String parts [] = params.trim().split(" ");
 
         // if it contains "longer text in quotation marks" than this is one single string
         if (params.contains("\"")) {

@@ -7,6 +7,7 @@ public class ProtocolLine {
     private String status;
     private String line;
     private String result;
+    private Protocol subScriptProtocol;
 
     public Integer getLineNumber() {
         return lineNumber;
@@ -46,6 +47,14 @@ public class ProtocolLine {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public Protocol getSubScriptProtocol() {
+        return subScriptProtocol;
+    }
+
+    public void setSubScriptProtocol(Protocol subScriptProtocol) {
+        this.subScriptProtocol = subScriptProtocol;
     }
 
     @Override
