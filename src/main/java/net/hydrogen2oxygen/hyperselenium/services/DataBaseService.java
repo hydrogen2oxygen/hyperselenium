@@ -6,6 +6,7 @@ import net.hydrogen2oxygen.hyperselenium.domain.KeyValue;
 import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.domain.Script;
 import net.hydrogen2oxygen.hyperselenium.domain.Settings;
+import org.apache.commons.io.FileUtils;
 import org.dizitart.no2.*;
 import org.dizitart.no2.objects.ObjectFilter;
 import org.dizitart.no2.objects.ObjectRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -161,7 +163,26 @@ public class DataBaseService {
     public Scenario getScenarioByName(String name) throws IOException {
 
         Cursor cursor = scenariosCollection.find(eq("name",name));
-        return createScenarioFromDocument(cursor.firstOrDefault());
+
+        if (cursor.size() > 0) {
+            return createScenarioFromDocument(cursor.firstOrDefault());
+        }
+
+        // no script found inside db, then search inside the script folder
+        File scriptFile = new File("scripts/" + name + ".md");
+
+        if (scriptFile.exists() && scriptFile.isFile()) {
+            Script script = new Script();
+            script.setName(name);
+            script.setLines(FileUtils.readLines(scriptFile, "UTF-8"));
+
+            Scenario scenario = new Scenario();
+            scenario.setName(name);
+            scenario.setScript(script);
+            return scenario;
+        }
+
+        return null;
     }
 
     private Scenario createScenarioFromDocument(Document document) throws IOException {

@@ -229,16 +229,11 @@ public class HyperseleniumService {
                     String[] parameters = paramsUtility.getParamsFromCommandLine(line);
 
                     if ("run".equals(result.getSpecialCommand())) {
-                        try {
-                            Scenario subScenario = dataBaseService.getScenarioByName(parameters[0]);
-                            executeScript(scenario, subScenario.getScript(), protocolLine, 0);
-                            result.setSuccess(true);
-                            result.setMessage("Script " + subScenario.getScript().getName() + " executed successfully!");
-                        } catch (Exception e) {
-                            result.setSuccess(false);
-                            result.setMessage(e.getMessage());
-                            protocolLine.setStatus("ERROR");
-                        }
+                        runScript(scenario, protocolLine, result, parameters[0]);
+                    }
+
+                    if ("if".equals(result.getSpecialCommand())) {
+                        // TODO split it into first command and second command
                     }
                 }
 
@@ -264,6 +259,19 @@ public class HyperseleniumService {
         statusService.addScenarioUpdate(scenario);
         statusService.sendStatus();
         runningScenarios.remove(scenario);
+    }
+
+    private void runScript(Scenario scenario, ProtocolLine protocolLine, CommandResult result, String parameter) {
+        try {
+            Scenario subScenario = dataBaseService.getScenarioByName(parameter);
+            executeScript(scenario, subScenario.getScript(), protocolLine, 0);
+            result.setSuccess(true);
+            result.setMessage("Script " + subScenario.getScript().getName() + " executed successfully!");
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage(e.getMessage());
+            protocolLine.setStatus("ERROR");
+        }
     }
 
     private boolean isStopScenario(String name) {
