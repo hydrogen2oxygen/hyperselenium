@@ -94,9 +94,14 @@ public class ScenarioRestAdapter {
         return scenario;
     }
 
-    // TODO Delete scenarios
+    @DeleteMapping("{name}")
+    ResponseEntity<Scenario> deleteScenario(@PathVariable String name) throws IOException {
 
-    // TODO CRUD Scripts
+        final Scenario scenario = dataBaseService.getScenarioByName(name);
+        hyperseleniumService.closeScenario(scenario);
+        dataBaseService.deleteScenario(name);
+        return ResponseEntity.ok(scenario);
+    }
 
 }
 

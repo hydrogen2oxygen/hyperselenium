@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -97,6 +98,14 @@ public class HyperseleniumRestAdapter {
                 hyperseleniumService.executeScenario(scenario, lineNumber);
             }
         });
+
+        return ResponseEntity.ok(scenario);
+    }
+
+    @PostMapping("export/{name}")
+    ResponseEntity<Scenario> exportScript(@PathVariable String name) throws IOException {
+
+        final Scenario scenario = dataBaseService.exportScript(name);
 
         return ResponseEntity.ok(scenario);
     }

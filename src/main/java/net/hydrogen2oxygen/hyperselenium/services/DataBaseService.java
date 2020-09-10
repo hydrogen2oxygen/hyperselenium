@@ -230,4 +230,22 @@ public class DataBaseService {
 
         return scriptDoc;
     }
+
+    public Scenario exportScript(String name) throws IOException {
+
+        File scriptFolder = new File("scripts");
+
+        if (!scriptFolder.exists()) {
+            scriptFolder.mkdirs();
+        }
+        Scenario scenario = getScenarioByName(name);
+
+        FileUtils.writeLines(new File("scripts/" + name + ".md"),scenario.getScript().getLines(), "\n");
+        return scenario;
+    }
+
+    public void deleteScenario(String name) {
+
+        scenariosCollection.remove(eq("name", name));
+    }
 }

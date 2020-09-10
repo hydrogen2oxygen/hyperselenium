@@ -75,6 +75,10 @@ export class HyperSeleniumService {
     return this.http.post<Scenario>(`${HyperSeleniumService.url}/play/${name}`, null);
   }
 
+  export(name: string) :Observable<Scenario> {
+    return this.http.post<Scenario>(`${HyperSeleniumService.url}/export/${name}`, null);
+  }
+
   continue(name: string, lineNumber: number):Observable<Scenario> {
     return this.http.post<Scenario>(`${HyperSeleniumService.url}/play/${name}/${lineNumber}`, null);
   }
@@ -91,10 +95,15 @@ export class HyperSeleniumService {
     return this.http.put<CommandResult>(`${HyperSeleniumService.url}/closeAll`, null);
   }
 
+  delete(name: string) {
+    return this.http.delete<Scenario>(`${HyperSeleniumService.url}/scenario/${name}`);
+  }
+
   private handleError(error: any) {
     console.log(error);
     this.toastr.error(error.message);
     return undefined;
   }
+
 
 }
