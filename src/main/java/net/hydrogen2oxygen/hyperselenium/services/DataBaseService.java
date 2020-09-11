@@ -8,7 +8,6 @@ import net.hydrogen2oxygen.hyperselenium.domain.Script;
 import net.hydrogen2oxygen.hyperselenium.domain.Settings;
 import org.apache.commons.io.FileUtils;
 import org.dizitart.no2.*;
-import org.dizitart.no2.objects.ObjectFilter;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.dizitart.no2.objects.filters.ObjectFilters;
 import org.springframework.stereotype.Service;
@@ -29,6 +28,7 @@ public class DataBaseService {
     public static final String SCREENSHOTS_PATH = "screenshots-path";
     public static final String STOP_WHEN_ERROR_OCCURS = "stopWhenErrorOccurs";
     public static final String SCREENSHOTS = "screenshots";
+    public static final String BREAKPOINTS_ACTIVE = "breakpointsActive";
     private Nitrite db;
     private NitriteCollection scenariosCollection;
     private NitriteCollection scriptCollection;
@@ -72,14 +72,33 @@ public class DataBaseService {
         org.dizitart.no2.objects.Cursor<Settings> cursor = settingsObjectRepository.find(ObjectFilters.eq("name", "hyperSeleniumSettings"));
 
         for (Settings s : cursor) {
-            return s;
+            return initSettings(s);
         }
 
-        Settings settings = new Settings();
-        settings.getSettings().add(new KeyValue(SCREENSHOTS_PATH,"screenshots/","string"));
-        settings.getSettings().add(new KeyValue(SCREENSHOTS,"true","boolean"));
-        settings.getSettings().add(new KeyValue(STOP_WHEN_ERROR_OCCURS,"false","boolean"));
+        return initSettings(new Settings());
+    }
+
+    /**
+     * Init or upgrade settings for missing keys
+     * @param settings
+     */
+    private Settings initSettings(final Settings settings) {
+
+        addSetting(settings, new KeyValue(SCREENSHOTS_PATH,"screenshots/","string"));
+        addSetting(settings, new KeyValue(SCREENSHOTS,"true","boolean"));
+        addSetting(settings, new KeyValue(STOP_WHEN_ERROR_OCCURS,"false","boolean"));
+        addSetting(settings, new KeyValue(BREAKPOINTS_ACTIVE,"false","boolean"));
+
         return settings;
+    }
+
+    private void addSetting(final Settings settings, KeyValue keyValue) {
+
+        for (KeyValue k : settings.getSettings()) {
+            if (k.getKey().equals(keyValue.getKey())) return;
+        }
+
+        settings.getSettings().add(keyValue);
     }
 
     public String getSetting(String key) {

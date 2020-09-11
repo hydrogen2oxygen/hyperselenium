@@ -87,6 +87,10 @@ export class HyperSeleniumService {
     return this.http.put<Scenario>(`${HyperSeleniumService.url}/stop/${name}`, null);
   }
 
+  updateBreakpoint(name: string, lineNumber: number):Observable<Scenario> {
+    return this.http.put<Scenario>(`${HyperSeleniumService.url}/breakpoint/${name}/${lineNumber}`, null);
+  }
+
   close(name: string):Observable<Scenario> {
     return this.http.put<Scenario>(`${HyperSeleniumService.url}/close/${name}`, null);
   }
@@ -104,6 +108,5 @@ export class HyperSeleniumService {
     this.toastr.error(error.message);
     return undefined;
   }
-
 
 }

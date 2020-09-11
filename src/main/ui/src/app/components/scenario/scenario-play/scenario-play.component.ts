@@ -116,7 +116,9 @@ export class ScenarioPlayComponent implements OnInit {
   }
 
   setBreakPoint(line: ProtocolLine) {
-
+    this.hyperSeleniumService.updateBreakpoint(this.scenarioName, line.lineNumber).subscribe( scenario => {
+      this.scenario.script.breakpoints = scenario.script.breakpoints;
+    });
   }
 
 

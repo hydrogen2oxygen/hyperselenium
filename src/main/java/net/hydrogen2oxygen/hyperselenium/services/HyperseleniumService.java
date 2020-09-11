@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
@@ -43,6 +44,7 @@ public class HyperseleniumService {
     @PreDestroy
     public void shutdown() {
         closeAllDrivers();
+
     }
 
     /**
@@ -205,6 +207,14 @@ public class HyperseleniumService {
 
             ProtocolLine protocolLine = protocol.getLines().get(lineCount);
 
+            if ("true".equals(dataBaseService.getSetting("breakpointsActive")) && script.getBreakpoints().contains(lineCount + 1)) {
+                protocol.setStatus("STOPPED");
+                protocolLine.setStatus("STOPPED");
+                statusService.addScenarioUpdate(scenario);
+                statusService.sendStatus();
+                return;
+            }
+
             if (line.trim().isEmpty()) {
                 protocolLine.setStatus("PASS");
                 continue;
@@ -242,6 +252,7 @@ public class HyperseleniumService {
                 if ("true".equals(dataBaseService.getSetting(DataBaseService.STOP_WHEN_ERROR_OCCURS))
                         && !result.getSuccess()) {
 
+                    protocolLine.setStatus("STOPPED");
                     protocol.setStatus("STOPPED");
                     statusService.addScenarioUpdate(scenario);
                     statusService.sendStatus();
@@ -351,5 +362,20 @@ public class HyperseleniumService {
         });
 
         return commandList;
+    }
+
+    public Scenario updateBreakpoint(String name, Integer lineNumber) throws IOException {
+
+        Scenario scenario = statusService.getRunningScenario(name);
+
+        if (scenario == null) return null;
+
+        if (scenario.getScript().getBreakpoints().contains(lineNumber)) {
+            scenario.getScript().getBreakpoints().remove(lineNumber);
+        } else {
+            scenario.getScript().getBreakpoints().add(lineNumber);
+        }
+
+        return scenario;
     }
 }

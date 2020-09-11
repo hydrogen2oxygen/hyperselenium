@@ -118,6 +118,21 @@ public class HyperseleniumRestAdapter {
         return ResponseEntity.ok(scenario);
     }
 
+    /**
+     * Set or remove an existing breakpoint for the specified scenario
+     * TODO make one REST for the subscript too
+     * @param name
+     * @param lineNumber
+     * @return
+     * @throws IOException
+     */
+    @PutMapping("breakpoint/{name}/{lineNumber}")
+    ResponseEntity<Scenario> updateBreakpoint(@PathVariable String name, @PathVariable Integer lineNumber) throws IOException {
+
+        final Scenario scenario = hyperseleniumService.updateBreakpoint(name, lineNumber);
+        return ResponseEntity.ok(scenario);
+    }
+
     @PutMapping("close/{name}")
     ResponseEntity<Scenario> close(@PathVariable String name) throws IOException {
 
