@@ -62,8 +62,8 @@ public class HyperWebDriver {
         return this;
     }
 
-    public HyperWebDriver clickName(String id) {
-        driver.findElement(By.name(id)).click();
+    public HyperWebDriver clickName(String name) {
+        driver.findElement(By.name(name)).click();
         return this;
     }
 

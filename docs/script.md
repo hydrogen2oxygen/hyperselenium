@@ -10,8 +10,10 @@ Automatically generated from the package net.hydrogen2oxygen.hyperselenium.comma
 
 ## click
 
+    click <id>
 ## clickName
 
+    click <name>
 ## clickTagContainingText
 
 ## close

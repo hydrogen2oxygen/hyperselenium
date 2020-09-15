@@ -23,4 +23,9 @@ public class ClickNameCommand extends BaseCommand {
     public String getCommandName() {
         return "clickName";
     }
+
+    @Override
+    public String getSyntax() {
+        return "\n    click <name>";
+    }
 }

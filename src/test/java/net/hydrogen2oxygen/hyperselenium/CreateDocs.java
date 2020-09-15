@@ -45,6 +45,8 @@ public class CreateDocs {
                             str.append(line);
                             str.append("\n");
                         }
+                    } else {
+                        str.append(command.getSyntax());
                     }
 
                     str.append("\n");
