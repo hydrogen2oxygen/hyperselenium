@@ -79,3 +79,9 @@ https://stackoverflow.com/questions/38983934/cannot-get-maven-project-version-pr
 ## Docker Selenium Hub - HowTo
 
     docker run --restart unless-stopped selenium/standalone-chrome
+
+## Rendering Markdown in Angular
+https://medium.com/wizdm-genesys/rendering-markdown-in-angular-37750d124247
+
+## Syntax Highlighting In Angular
+https://medium.com/wizdm-genesys/syntax-highlighting-in-angular-b192f25d17b2
