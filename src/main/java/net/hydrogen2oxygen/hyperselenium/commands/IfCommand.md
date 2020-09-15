@@ -1,4 +1,3 @@
-#if
 The **if** is a statement, not a real command.
 
     if <commandOne> then <commandTwo ... with params>

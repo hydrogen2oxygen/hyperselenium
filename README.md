@@ -34,8 +34,12 @@ The result is a protocol, which can be edited or enhanced line by line.
 - STOP, EDIT and CONTINUE, stop the test run whenever you need and adjust the script, then just continue the test
 - SERVER, manage your tests and environments from a server application, trigger the tests, observe the results
 
+... a work in progress ...
+
+Take a look at the [new planned commands and features](NewFeaturesScript.md).
+
 ### COMMAND
-During a "scenario" we have different [commands](src/main/java/net/hydrogen2oxygen/hyperselenium/commands/).
+During a "scenario" we have different [commands](docs/script.md).
 Not all commands interacts with the browser.
 Some actions save data, runs SQL scripts, push data on a SFTP folder, delete stuff, asserts variables,
 or just print notes into the HTML/PDF protocol.
