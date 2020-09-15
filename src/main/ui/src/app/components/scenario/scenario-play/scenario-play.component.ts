@@ -7,6 +7,7 @@ import {ServiceStatus} from "../../../domain/ServiceStatus";
 import {faEdit, faPlay, faStop, faCircle, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 import {ProtocolLine} from "../../../domain/Protocol";
 import {environment} from "../../../../environments/environment";
+import {Time} from "@angular/common";
 
 @Component({
   selector: 'app-scenario-play',
@@ -26,6 +27,8 @@ export class ScenarioPlayComponent implements OnInit {
   faStop = faStop;
   faCircle = faCircle;
   faWindowClose = faWindowClose;
+
+  lastClickOnPlay = new Date();
 
   constructor(
     private hyperSeleniumService: HyperSeleniumService,
@@ -83,9 +86,14 @@ export class ScenarioPlayComponent implements OnInit {
   }
 
   play(scenario: Scenario) {
-    this.hyperSeleniumService.play(this.scenarioName).subscribe( data => {
-      this.router.navigate([`/play/${this.scenarioName}`]);
-    });
+
+    if (new Date().getTime() - this.lastClickOnPlay.getTime() > 2000) {
+      this.hyperSeleniumService.play(this.scenarioName).subscribe(data => {
+        this.router.navigate([`/play/${this.scenarioName}`]);
+      });
+    }
+
+    this.lastClickOnPlay = new Date();
   }
 
   stop(scenario: Scenario) {
