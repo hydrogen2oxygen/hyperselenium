@@ -7,6 +7,9 @@ import org.dizitart.no2.objects.Id;
 import org.dizitart.no2.objects.Index;
 import org.dizitart.no2.objects.Indices;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A scenario is an automation of a browser, the execution of one or more scripts, which results in a protocol object.
  */
@@ -20,6 +23,12 @@ public class Scenario {
      */
     @JsonIgnore
     private HyperWebDriver driver;
+
+    /**
+     * Variables during a run
+     */
+    @JsonIgnore
+    private Map<String,String> variables = new HashMap<>();
 
     /**
      * Unique name
@@ -82,6 +91,10 @@ public class Scenario {
 
     public void setProtocol(Protocol protocol) {
         this.protocol = protocol;
+    }
+
+    public Map<String, String> getVariables() {
+        return variables;
     }
 
     @Override

@@ -2,6 +2,7 @@ package net.hydrogen2oxygen.hyperselenium.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ParamsUtility {
 
@@ -47,5 +48,19 @@ public class ParamsUtility {
         }
 
         return parts;
+    }
+
+    public String[] replaceVariablesInParameters(String parameters[], Map<String, String> variables) {
+
+        for (int i=0; i<parameters.length; i++) {
+
+            String value = parameters[i];
+
+            if (variables.get(value) != null) {
+                parameters[i] = variables.get(value);
+            }
+        }
+
+        return parameters;
     }
 }

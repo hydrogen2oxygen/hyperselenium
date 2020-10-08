@@ -75,11 +75,23 @@ public class HyperseleniumService {
         }
     }
 
-    public CommandResult executeCommandLine(final HyperWebDriver driver, String line, final ProtocolLine protocolLine) {
+    public CommandResult executeCommandLine(Scenario scenario, String line, final ProtocolLine protocolLine) {
 
+        HyperWebDriver driver = scenario.getDriver();
         CommandResult result = new CommandResult();
 
         line = line.trim();
+
+        // Extract Variables
+        if (line.startsWith("#") && line.contains("=")) {
+            String variable [] = line.trim().split("=");
+            String key = variable[0].trim();
+            String value = variable[1].trim().replaceAll("\\\"","");
+            scenario.getVariables().put(key, value);
+            result.setSuccess(true);
+            result.setMessage("Variable " + line.trim() + " set successfully!");
+            return result;
+        }
 
         String commandName = line.split(" ")[0];
         ICommand command = commands.get(commandName);
@@ -97,6 +109,7 @@ public class HyperseleniumService {
         }
 
         try {
+            parameters = paramsUtility.replaceVariablesInParameters(parameters, scenario.getVariables());
             result = command.executeCommand(driver, parameters);
             protocolLine.setStatus("SUCCESS");
             return result;
@@ -230,7 +243,7 @@ public class HyperseleniumService {
                     scenario.setDriver(getNewHyperWebDriver());
                 }
 
-                CommandResult result = executeCommandLine(scenario.getDriver(), line, protocolLine);
+                CommandResult result = executeCommandLine(scenario, line, protocolLine);
 
                 // Special commands run outside a command object or are
                 // delegated to other services
