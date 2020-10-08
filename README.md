@@ -13,7 +13,8 @@ You write text, descriptions and commands in a markdown code block.
 
 Example:
 
-    open https://github.com
+    #url = https://github.com
+    open #url
     clickLink Explore
     assertText "Here's what we found based on your interests"
     screenshot
