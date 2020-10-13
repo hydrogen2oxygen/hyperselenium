@@ -3,6 +3,7 @@ package net.hydrogen2oxygen.hyperselenium.selenium;
 import net.hydrogen2oxygen.hyperselenium.exceptions.CommandExecutionException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -23,7 +24,9 @@ public class HyperWebDriver {
     private WebDriver driver;
 
     private HyperWebDriver() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(false);
+        driver = new ChromeDriver(options);
     }
 
     public static HyperWebDriver build() {

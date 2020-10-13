@@ -17,6 +17,7 @@ public class InsertTextCommand extends BaseCommand {
             throw new CommandExecutionException("ERROR for 'text', not enough params!");
         }
 
+        driver.clear(params[0]);
         driver.insertText(params[0],params[1]);
 
         commandResult.setSuccess(true);

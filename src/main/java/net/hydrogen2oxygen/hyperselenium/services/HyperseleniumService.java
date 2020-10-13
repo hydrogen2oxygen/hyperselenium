@@ -66,8 +66,8 @@ public class HyperseleniumService {
     private void registerCommand(String commandClassFullName) {
         try {
             Class objClass = Class.forName(commandClassFullName);
-            Constructor constuctor = objClass.getConstructor();
-            ICommand command = (ICommand) constuctor.newInstance();
+            Constructor constructor = objClass.getConstructor();
+            ICommand command = (ICommand) constructor.newInstance();
             commands.put(command.getCommandName(), command);
             System.out.println("Command " + command.getCommandName() + " registered");
         } catch (Exception e) {
@@ -90,6 +90,7 @@ public class HyperseleniumService {
             scenario.getVariables().put(key, value);
             result.setSuccess(true);
             result.setMessage("Variable " + line.trim() + " set successfully!");
+            protocolLine.setStatus("SUCCESS");
             return result;
         }
 
