@@ -1,13 +1,9 @@
-<p style="margin-top: 1rem">
-  <button class="btn btn-danger" (click)="closeAllDrivers()">Close all running Selenium Drivers</button>
-</p>
-
 <div *ngIf="settings">
   <form [formGroup]="reactiveForm">
     <div class="form-group" *ngFor="let setting of settings.settings">
       <label>{{setting.key}}</label>
       <input [formControlName]="setting.key" type="text" class="form-control">
     </div>
-    <button class="btn btn-primary" (click)="save()">SAVE</button>
+    <button class="btn btn-primary" (click)="save()">SAVE</button> <button style="margin-left: 1rem" class="btn btn-danger" (click)="closeAllDrivers()">Close all running Selenium Drivers</button>
   </form>
 </div>

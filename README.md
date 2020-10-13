@@ -56,6 +56,13 @@ A protocol of a scenario saves the result of each step and some additional notes
 ### SCENARIO
 A scenario is a test case or a use case. Selenium is not just used to test something, but it is also a tool to prepare something. If you scenario acts as a test case, then it will contain a series of asserts.
 
+# Selenium Grid Setup
+    docker run -d -p 4444:4444 --shm-size 2g selenium/standalone-firefox:4.0.0-alpha-7-prerelease-20201009
+    
+    
+In Settings check the seleniumGridRemoteUrl and the seleniumDriverType (REMOTE_CHROME or REMOTE_FIREFOX).
+Use multiple instances of HyperSelenium server for different types of browsers (best practice).
+
 # TODOs
 ## JGIT
 Deploy hyperselenium inside a docker or on a server, then let it load a git repository with the tests. You can use multiple instances for performance tests.

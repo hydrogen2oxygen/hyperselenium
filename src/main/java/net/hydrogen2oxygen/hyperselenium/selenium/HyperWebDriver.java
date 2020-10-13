@@ -1,9 +1,12 @@
 package net.hydrogen2oxygen.hyperselenium.selenium;
 
 import net.hydrogen2oxygen.hyperselenium.exceptions.CommandExecutionException;
+import net.hydrogen2oxygen.hyperselenium.exceptions.HyperWebDriverException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -13,6 +16,8 @@ import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -23,14 +28,40 @@ public class HyperWebDriver {
     private Boolean closed = false;
     private WebDriver driver;
 
-    private HyperWebDriver() {
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(false);
-        driver = new ChromeDriver(options);
+    public enum DriverTypes {
+        LOCAL_CHROME, REMOTE_FIREFOX
     }
 
-    public static HyperWebDriver build() {
-        return new HyperWebDriver();
+    public HyperWebDriver(String driverType) throws HyperWebDriverException {
+        init(driverType, null, null);
+    }
+
+    public HyperWebDriver(String driverType, String remoteUrl, String seleniumDriverDirectory) throws HyperWebDriverException {
+
+        init(driverType, remoteUrl, seleniumDriverDirectory);
+    }
+
+    private void init(String driverType, String remoteUrl, String seleniumDriverDirectory) throws HyperWebDriverException {
+
+        if (DriverTypes.LOCAL_CHROME.name().equals(driverType)) {
+
+            System.setProperty("webdriver.chrome.driver", seleniumDriverDirectory + "/chromedriver.exe");
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.setHeadless(false);
+            driver = new ChromeDriver(chromeOptions);
+
+        } else if (DriverTypes.REMOTE_FIREFOX.name().equals(driverType)) {
+
+            try {
+                FirefoxOptions options = new FirefoxOptions();
+                driver = new RemoteWebDriver(new URL(remoteUrl), options);
+            } catch (MalformedURLException e) {
+                throw new HyperWebDriverException("Remote connection could not be established");
+            }
+
+        } else {
+            throw new HyperWebDriverException("Unknown option for browser or remote connection");
+        }
     }
 
     public boolean isClosed() {

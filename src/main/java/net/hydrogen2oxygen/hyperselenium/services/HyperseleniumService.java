@@ -4,9 +4,9 @@ import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
 import net.hydrogen2oxygen.hyperselenium.domain.*;
+import net.hydrogen2oxygen.hyperselenium.exceptions.HyperWebDriverException;
 import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -17,9 +17,6 @@ import java.util.*;
 
 @Service
 public class HyperseleniumService {
-
-    @Value("${selenium.driver.directory}")
-    private String seleniumDriverDirectory;
 
     @Autowired
     private DataBaseService dataBaseService;
@@ -125,7 +122,11 @@ public class HyperseleniumService {
     public void executeScenario(Scenario scenario, Integer lineNumber) {
 
         if (scenario.getDriver() == null) {
-            scenario.setDriver(getNewHyperWebDriver());
+            try {
+                scenario.setDriver(getNewHyperWebDriver());
+            } catch (HyperWebDriverException e) {
+                e.printStackTrace();
+            }
         }
 
         scenario.setProtocol(addNewProtocol(scenario.getScript()));
@@ -170,11 +171,13 @@ public class HyperseleniumService {
         return protocol;
     }
 
-    public HyperWebDriver getNewHyperWebDriver() {
+    public HyperWebDriver getNewHyperWebDriver() throws HyperWebDriverException {
 
-        System.setProperty("webdriver.chrome.driver", seleniumDriverDirectory + "chromedriver.exe");
-
-        HyperWebDriver driver = HyperWebDriver.build();
+        HyperWebDriver driver = new HyperWebDriver(
+            dataBaseService.getSetting(DataBaseService.SELENIUM_DRIVER_TYPE),
+            dataBaseService.getSetting(DataBaseService.SELENIUM_GRID_REMOTE_URL),
+            dataBaseService.getSetting(DataBaseService.SELENIUM_DRIVER_DIRECTORY)
+        );
         driver.setScreenshotsPath(dataBaseService.getSetting(DataBaseService.SCREENSHOTS_PATH));
 
         return driver;
@@ -240,8 +243,13 @@ public class HyperseleniumService {
                 statusService.addScenarioUpdate(scenario);
 
                 if (line.contains("    open ") && scenario.getDriver().isClosed()) {
-                    // FIXME search for a better solution
-                    scenario.setDriver(getNewHyperWebDriver());
+
+                    try {
+                        scenario.setDriver(getNewHyperWebDriver());
+                    } catch (HyperWebDriverException e) {
+                        protocol.setStatus("STOPPED");
+                        return;
+                    }
                 }
 
                 CommandResult result = executeCommandLine(scenario, line, protocolLine);
@@ -327,6 +335,7 @@ public class HyperseleniumService {
         for (Scenario scenario : runningScenarios) {
 
             scenario.getDriver().close();
+            scenario.setDriver(null);
         }
 
         try {

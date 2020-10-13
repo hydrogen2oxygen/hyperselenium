@@ -6,6 +6,7 @@ import net.hydrogen2oxygen.hyperselenium.domain.KeyValue;
 import net.hydrogen2oxygen.hyperselenium.domain.Scenario;
 import net.hydrogen2oxygen.hyperselenium.domain.Script;
 import net.hydrogen2oxygen.hyperselenium.domain.Settings;
+import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 import org.apache.commons.io.FileUtils;
 import org.dizitart.no2.*;
 import org.dizitart.no2.objects.ObjectRepository;
@@ -29,6 +30,10 @@ public class DataBaseService {
     public static final String STOP_WHEN_ERROR_OCCURS = "stopWhenErrorOccurs";
     public static final String SCREENSHOTS = "screenshots";
     public static final String BREAKPOINTS_ACTIVE = "breakpointsActive";
+    public static final String SELENIUM_DRIVER_DIRECTORY = "seleniumDriverDirectory";
+    public static final String SELENIUM_DRIVER_TYPE = "seleniumDriverType";
+    public static final String SELENIUM_GRID_REMOTE_URL = "seleniumGridRemoteUrl";
+    private String seleniumDriverDirectory;
     private Nitrite db;
     private NitriteCollection scenariosCollection;
     private NitriteCollection scriptCollection;
@@ -84,6 +89,9 @@ public class DataBaseService {
      */
     private Settings initSettings(final Settings settings) {
 
+        addSetting(settings, new KeyValue(SELENIUM_DRIVER_TYPE, HyperWebDriver.DriverTypes.LOCAL_CHROME.name(), "option"));
+        addSetting(settings, new KeyValue(SELENIUM_DRIVER_DIRECTORY, "../SELENIUMDRIVERs", "option"));
+        addSetting(settings, new KeyValue(SELENIUM_GRID_REMOTE_URL, "http://localhost:4444/wd/hub", "string"));
         addSetting(settings, new KeyValue(SCREENSHOTS_PATH,"screenshots/","string"));
         addSetting(settings, new KeyValue(SCREENSHOTS,"true","boolean"));
         addSetting(settings, new KeyValue(STOP_WHEN_ERROR_OCCURS,"false","boolean"));

@@ -4,9 +4,7 @@ public class KeyValue {
 
     private String key;
     private String value;
-    private String type = "string";
-
-    public KeyValue() {}
+    private String type;
 
     public KeyValue(String key, String value, String type) {
         this.key = key;
