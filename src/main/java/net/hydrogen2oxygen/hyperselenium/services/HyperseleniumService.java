@@ -81,10 +81,8 @@ public class HyperseleniumService {
 
         // Extract Variables
         if (line.startsWith("#") && line.contains("=")) {
-            String variable [] = line.trim().split("=");
-            String key = variable[0].trim();
-            String value = variable[1].trim().replaceAll("\\\"","");
-            scenario.getVariables().put(key, value);
+            String keyValue[] = paramsUtility.extractKeyValue(line);
+            scenario.getVariables().put(keyValue[0], keyValue[1]);
             result.setSuccess(true);
             result.setMessage("Variable " + line.trim() + " set successfully!");
             protocolLine.setStatus("SUCCESS");
@@ -120,6 +118,9 @@ public class HyperseleniumService {
     }
 
     public void executeScenario(Scenario scenario, Integer lineNumber) {
+
+        scenario.getVariables().putAll(paramsUtility.extractVariables(scenario));
+        scenario.setMissingVariables(paramsUtility.extractMissingVariables(scenario));
 
         if (scenario.getDriver() == null) {
             try {

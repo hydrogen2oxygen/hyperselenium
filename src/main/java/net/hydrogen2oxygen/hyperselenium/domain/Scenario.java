@@ -9,6 +9,8 @@ import org.dizitart.no2.objects.Indices;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A scenario is an automation of a browser, the execution of one or more scripts, which results in a protocol object.
@@ -28,7 +30,10 @@ public class Scenario {
      * Variables during a run
      */
     @JsonIgnore
-    private Map<String,String> variables = new HashMap<>();
+    private Map<String, String> variables = new HashMap<>();
+
+    @JsonIgnore
+    private Set<String> missingVariables = new TreeSet<>();
 
     /**
      * Unique name
@@ -51,7 +56,8 @@ public class Scenario {
      */
     private Protocol protocol;
 
-    public Scenario() {}
+    public Scenario() {
+    }
 
     public HyperWebDriver getDriver() {
         return driver;
@@ -97,6 +103,14 @@ public class Scenario {
         return variables;
     }
 
+    public Set<String> getMissingVariables() {
+        return missingVariables;
+    }
+
+    public void setMissingVariables(Set<String> missingVariables) {
+        this.missingVariables = missingVariables;
+    }
+
     @Override
     public String toString() {
         String txt = "Scenario{" +
@@ -105,7 +119,8 @@ public class Scenario {
                 ", script=" + script +
                 ", protocol=" + protocol +
                 "}";
-        return txt.replaceAll("\\{","\n\t{")
-                .replaceAll("\\}","\n\t}").trim();
+        return txt.replaceAll("\\{", "\n\t{")
+                .replaceAll("\\}", "\n\t}").trim();
     }
+
 }
