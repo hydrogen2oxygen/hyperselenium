@@ -4,10 +4,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Scenario} from "../../../domain/Scenario";
 import {WebSocketService} from "../../../services/web-socket.service";
 import {ServiceStatus} from "../../../domain/ServiceStatus";
-import {faEdit, faPlay, faStop, faCircle, faWindowClose} from "@fortawesome/free-solid-svg-icons";
+import {faCircle, faEdit, faPlay, faStop, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 import {ProtocolLine} from "../../../domain/Protocol";
 import {environment} from "../../../../environments/environment";
-import {Time} from "@angular/common";
+import {FormControl, FormGroup} from "@angular/forms";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-scenario-play',
@@ -29,12 +30,15 @@ export class ScenarioPlayComponent implements OnInit {
   faWindowClose = faWindowClose;
 
   lastClickOnPlay = new Date();
+  editLineNumber: number;
+  editLineForm:FormGroup = new FormGroup({});
 
   constructor(
     private hyperSeleniumService: HyperSeleniumService,
     private webSocket: WebSocketService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr:ToastrService
   ) {
   }
 
@@ -62,19 +66,21 @@ export class ScenarioPlayComponent implements OnInit {
         let serviceStatus:ServiceStatus = <ServiceStatus> status;
 
         for (let i:number = 0; i<serviceStatus.scenarios.length; i++) {
+
           let scenario:Scenario = serviceStatus.scenarios[i];
+
           if (scenario.name == this.scenarioName) {
 
             this.scenario = scenario;
 
             if (this.runningElement) {
               this.runningElement.nativeElement
-                .scrollIntoView({behavior: "smooth", block: "start"});
+                .scrollIntoView({behavior: "smooth", block: "center"});
             }
 
             if (this.errorElement) {
               this.errorElement.nativeElement
-                .scrollIntoView({behavior: "smooth", block: "start"});
+                .scrollIntoView({behavior: "smooth", block: "center"});
             }
 
             break;
@@ -99,6 +105,7 @@ export class ScenarioPlayComponent implements OnInit {
   stop(scenario: Scenario) {
     this.hyperSeleniumService.stop(this.scenarioName).subscribe( data => {
       console.log(data);
+      this.toastr.info("All running drivers closed!","HyperSelenium Service")
     });
   }
 
@@ -110,6 +117,9 @@ export class ScenarioPlayComponent implements OnInit {
 
   editLine(line: ProtocolLine) {
     console.log(line);
+    this.createEditLineForm();
+    this.editLineForm.controls['script'].setValue(line.line);
+    this.editLineNumber = line.lineNumber;
   }
 
   playFromLine(line: ProtocolLine) {
@@ -129,5 +139,53 @@ export class ScenarioPlayComponent implements OnInit {
     });
   }
 
+  saveEditLine() {
+    console.log(this.editLineForm.getRawValue().script);
 
+
+    let oldScript:string[] = this.scenario.script.lines;
+    let newScript:string[] = [];
+
+    for (let i=0; i<oldScript.length; i++) {
+
+      if (i == this.editLineNumber - 1) {
+        let newLine:string = this.editLineForm.getRawValue().script;
+
+        // add multiple lines
+        if (newLine.includes("\n")) {
+
+          let newLines:string[] = newLine.split("\n");
+
+          for (let x=0; x<newLines.length; x++) {
+            newScript.push(newLines[x]);
+          }
+        } else {
+          // or just one single line
+          newScript.push(this.editLineForm.getRawValue().script);
+        }
+
+      } else {
+        // add all the rest
+        newScript.push(oldScript[i]);
+      }
+    }
+
+    this.editLineNumber = null;
+    console.log(newScript);
+    this.scenario.script.lines = newScript;
+
+    this.hyperSeleniumService.updateScenario(this.scenario).subscribe( result => {
+      this.loadScenario(this.scenarioName);
+    });
+  }
+
+  cancelEditLine() {
+    this.editLineNumber = null;
+  }
+
+  private createEditLineForm() {
+    this.editLineForm = new FormGroup({
+      script: new FormControl('')
+    });
+  }
 }

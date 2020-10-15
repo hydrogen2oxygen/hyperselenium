@@ -334,12 +334,20 @@ public class HyperseleniumService {
 
         for (Scenario scenario : runningScenarios) {
 
-            scenario.getDriver().close();
-            scenario.setDriver(null);
+            if (scenario.getDriver() != null) {
+                try {
+                    scenario.getDriver().close();
+                } finally {
+                    scenario.setProtocol(null);
+                    scenario.setDriver(null);
+                }
+            }
         }
 
         try {
+            // TODO check if Windows
             Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
+            // TODO check if Linux ...
         } catch (Exception e) {
         }
     }

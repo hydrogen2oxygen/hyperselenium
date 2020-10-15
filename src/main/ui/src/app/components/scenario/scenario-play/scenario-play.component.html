@@ -40,19 +40,28 @@
             {{line.line}}
           </div>
 
-          <div class="hsCode hsCode{{line.status}}" *ngSwitchCase="'CODE'" title="{{line.result}}">
-            <span class="btn badge badge-secondary " style="margin-right: 1rem">
-              <fa-icon *ngIf="scenario.script.breakpoints.includes(line.lineNumber)" style="color: red" [icon]="faCircle" (click)="setBreakPoint(line)"></fa-icon>
-              <fa-icon *ngIf="!scenario.script.breakpoints.includes(line.lineNumber)" [icon]="faCircle" (click)="setBreakPoint(line)"></fa-icon>
-              <fa-icon [icon]="faEdit" (click)="editLine(line)" style="margin-left: 0.5rem"></fa-icon>
-              <fa-icon [icon]="faPlay" (click)="playFromLine(line)" style="margin-left: 0.5rem"></fa-icon>
-              {{line.lineNumber}}
-            </span>
-            <span *ngIf="line.status == 'RUNNING'" class="badge badge-primary" #running>{{line.status}}</span>
-            <span *ngIf="line.status == 'SUCCESS'" class="badge badge-success">{{line.status}}</span>
-            <span *ngIf="line.status == 'STOPPED'" class="badge badge-warning">{{line.status}}</span>
-            <span *ngIf="line.status == 'ERROR'" class="badge badge-danger" #error>{{line.status}}</span>
-            {{line.line}}
+          <div *ngIf="editLineNumber != line.lineNumber">
+            <div class="hsCode hsCode{{line.status}}" *ngSwitchCase="'CODE'" title="{{line.result}}">
+              <span class="btn badge badge-secondary " style="margin-right: 1rem">
+                <fa-icon *ngIf="scenario.script.breakpoints.includes(line.lineNumber)" style="color: red" [icon]="faCircle" (click)="setBreakPoint(line)"></fa-icon>
+                <fa-icon *ngIf="!scenario.script.breakpoints.includes(line.lineNumber)" [icon]="faCircle" (click)="setBreakPoint(line)"></fa-icon>
+                <fa-icon [icon]="faEdit" (click)="editLine(line)" style="margin-left: 0.5rem"></fa-icon>
+                <fa-icon [icon]="faPlay" (click)="playFromLine(line)" style="margin-left: 0.5rem"></fa-icon>
+                {{line.lineNumber}}
+              </span>
+              <span *ngIf="line.status == 'RUNNING'" class="badge badge-primary" #running>{{line.status}}</span>
+              <span *ngIf="line.status == 'SUCCESS'" class="badge badge-success">{{line.status}}</span>
+              <span *ngIf="line.status == 'STOPPED'" class="badge badge-warning">{{line.status}}</span>
+              <span *ngIf="line.status == 'ERROR'" class="badge badge-danger" #error>{{line.status}}</span>
+              {{line.line}}
+            </div>
+          </div>
+          <div *ngIf="editLineNumber == line.lineNumber" class="form-group">
+            <form [formGroup]="editLineForm">
+              <textarea formControlName="script" class="form-control form-control-sm" rows="4"></textarea>
+              <button (click)="saveEditLine()" class="btn btn-success" style="margin-top: 0.5rem">SAVE</button>
+              <button (click)="cancelEditLine()" class="btn btn-primary" style="margin-top: 0.5rem;margin-left: 0.5rem">CANCEL</button>
+            </form>
           </div>
 
           <a *ngIf="line?.result?.startsWith('screenshot ')" href="{{getScreenShotUrl(line)}}" target="screenshot">
@@ -62,11 +71,6 @@
           <div class="hsCode hsCode{{line.status}} errorMessage" *ngIf="line.status == 'ERROR' && line.result">
               {{line.result.trim()}}
           </div>
-
-          <div *ngSwitchDefault>
-            {{line.line}} {{line.type}}
-          </div>
-
 
           <div *ngFor="let subLine of line?.subScriptProtocol?.lines; index as i2" style="margin-left: 2rem">
             <div [ngSwitch]="subLine.type">
@@ -83,12 +87,11 @@
               </div>
 
               <div class="hsCode hsCode{{subLine.status}}" *ngSwitchCase="'CODE'" title="{{subLine.result}}">
-            <span class="btn badge badge-secondary " style="margin-right: 1rem">
-              <fa-icon [icon]="faCircle" (click)="setBreakPoint(subLine)"></fa-icon>
-              <fa-icon [icon]="faEdit" (click)="editLine(subLine)" style="margin-left: 0.5rem"></fa-icon>
-              <fa-icon [icon]="faPlay" (click)="playFromLine(subLine)" style="margin-left: 0.5rem"></fa-icon>
-              {{subLine.lineNumber}}
-            </span>
+                <span class="btn badge badge-secondary " style="margin-right: 1rem">
+                  <fa-icon [icon]="faCircle" (click)="setBreakPoint(subLine)"></fa-icon>
+                  <fa-icon [icon]="faPlay" (click)="playFromLine(subLine)" style="margin-left: 0.5rem"></fa-icon>
+                  {{subLine.lineNumber}}
+                </span>
                 <span *ngIf="subLine.status == 'RUNNING'" class="badge badge-primary" #running>{{subLine.status}}</span>
                 <span *ngIf="subLine.status == 'SUCCESS'" class="badge badge-success">{{subLine.status}}</span>
                 <span *ngIf="subLine.status == 'STOPPED'" class="badge badge-warning">{{subLine.status}}</span>

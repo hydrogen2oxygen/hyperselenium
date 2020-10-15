@@ -57,6 +57,8 @@ public class HyperWebDriver {
                 driver = new RemoteWebDriver(new URL(remoteUrl), options);
             } catch (MalformedURLException e) {
                 throw new HyperWebDriverException("Remote connection could not be established");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
         } else {
@@ -156,7 +158,9 @@ public class HyperWebDriver {
     }
 
     public void close() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
         closed = true;
     }
 

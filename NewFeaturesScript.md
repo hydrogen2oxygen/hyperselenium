@@ -103,3 +103,16 @@ Naturally you need the possibility to reset the header:
 #### Decode
     
     #pdf = BASE64DECODE #base64Pdf
+    
+## SSH
+Using [JSch](http://www.jcraft.com/jsch/)
+    sshLogin #sshHost #sshUser #sshPassword
+    sshCD #workingDirectory
+    #contentOfSshDir = sshLS
+    #contentOfFile = sshTail #exportedFile
+
+## SFTP
+### Login
+    sftpLogin
+    
+    ... wip (similar to SSH)

@@ -72,6 +72,7 @@ public class HyperseleniumRestAdapter {
     ResponseEntity<Scenario> play(@PathVariable String name) throws IOException {
 
         if (statusService.getRunningScenario(name) != null) {
+
             return continueAtLineNumber(name, 0);
         }
 
@@ -91,6 +92,10 @@ public class HyperseleniumRestAdapter {
     ResponseEntity<Scenario> continueAtLineNumber(@PathVariable String name, @PathVariable Integer lineNumber) throws IOException {
 
         final Scenario scenario = statusService.getRunningScenario(name);
+
+        if (dataBaseService.getSetting(DataBaseService.SELENIUM_DRIVER_TYPE).startsWith("REMOTE")) {
+            scenario.setDriver(null);
+        }
 
         taskExecutor.execute(new Runnable() {
             @Override
