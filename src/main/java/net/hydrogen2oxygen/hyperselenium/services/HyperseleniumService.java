@@ -345,6 +345,17 @@ public class HyperseleniumService {
             }
         }
 
+        for (Scenario scenario : statusService.getServiceStatus().getScenarios()) {
+            if (scenario.getDriver() != null) {
+                try {
+                    scenario.getDriver().close();
+                } finally {
+                    scenario.setProtocol(null);
+                    scenario.setDriver(null);
+                }
+            }
+        }
+
         try {
             // TODO check if Windows
             Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
