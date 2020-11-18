@@ -1,4 +1,11 @@
 # New Script Features
+## AJAX and JavaScript Features
+Assert that a specific element has a class assigned. In dynamic websites like Angular elements
+may change their look with an assignment or removal of a css class. 
+
+    assertClassInElement <id> <css-class>
+    assertClassNotInElement <id> <css-class>
+   
 ## Variables
 Set a (global) variable:
 

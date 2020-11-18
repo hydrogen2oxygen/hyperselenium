@@ -88,6 +88,8 @@ https://stackoverflow.com/questions/38983934/cannot-get-maven-project-version-pr
 
     docker run --restart unless-stopped selenium/standalone-chrome
 
+TODO: https://www.baeldung.com/docker-java-api a Docker Client, for starting and stopping the Selenium Standalone Docker
+
 ## Rendering Markdown in Angular
 https://medium.com/wizdm-genesys/rendering-markdown-in-angular-37750d124247
 

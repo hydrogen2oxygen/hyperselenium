@@ -93,6 +93,16 @@ public class HyperWebDriver {
         return this;
     }
 
+    public String getAttribute(String id, String attributeKey) {
+        WebElement element = driver.findElement(By.id(id));
+
+        if (element == null) {
+            return "";
+        }
+
+        return element.getAttribute(attributeKey);
+    }
+
     public HyperWebDriver click(String id) {
         driver.findElement(By.id(id)).click();
         return this;
