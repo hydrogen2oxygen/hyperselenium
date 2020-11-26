@@ -2,6 +2,7 @@ package net.hydrogen2oxygen.hyperselenium.selenium;
 
 import net.hydrogen2oxygen.hyperselenium.exceptions.CommandExecutionException;
 import net.hydrogen2oxygen.hyperselenium.exceptions.HyperWebDriverException;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,8 +12,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -123,7 +122,7 @@ public class HyperWebDriver {
 
             String elementText = element.getText().trim();
 
-            if (StringUtils.isEmpty(elementText)) {
+            if (elementText == null || elementText.trim().length() == 0) {
                 continue;
             }
 
@@ -207,7 +206,7 @@ public class HyperWebDriver {
             }
 
             File newFile = new File(screenshotsPath + file.getName());
-            FileCopyUtils.copy(file, newFile);
+            FileUtils.copyFile(file, newFile);
             return newFile;
         }
 

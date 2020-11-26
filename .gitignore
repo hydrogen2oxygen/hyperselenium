@@ -18,3 +18,7 @@ compiler.xml
 !/.mvn/wrapper/maven-wrapper.jar
 /hyperselenium.db
 /screenshots/
+/debug.log
+/hyperselenium-server/screenshots/
+/hyperselenium-server/plugins/
+/hyperselenium-server/src/main/resources/static/
