@@ -78,6 +78,9 @@ Commands could be implemented just by loading an external library with commands 
 
 https://stackoverflow.com/questions/41148353/dynamically-add-jars-to-springboot-at-runtime
 
+### Fazit of the Evaluation
+I tried to implement OSGi / dynamic reloading of jars / ClassLoader etc, but I believe this is not the right approach for enhancing the functionality of hyperselenium. Instead I will implement a REST service for the communication between other services. For example if you need a special command for Database analysis / manipulation for your tests, then you can develop a small Spring Boot project with a REST interface communicating with hyperselenium. Registering or unregistering of services at runtime will then be possible. You can exchange the external service at runtime.
+
 ## Database
 Nitrite Database (NoSQL) looks very nice: https://www.dizitart.org/nitrite-database.html
 
