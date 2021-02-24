@@ -101,8 +101,6 @@
                     <environmentVariables>
                         <production>true</production>
                     </environmentVariables>
-                    <!--<nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
-                    <npmDownloadRoot>https://registry.npmjs.org/npm/</npmDownloadRoot>-->
                 </configuration>
                 <executions>
                     <execution>
