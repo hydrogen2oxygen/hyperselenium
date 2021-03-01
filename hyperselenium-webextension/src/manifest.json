@@ -13,5 +13,11 @@
       "64": "icon64.png"
     },
     "default_popup": "/index.html"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*","https://*/*"],
+      "js": ["hyperselenium.js"]
+    }
+  ]
 }
