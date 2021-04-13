@@ -27,6 +27,7 @@
               "src/favicon.ico",
               "src/manifest.json",
               "src/hyperselenium.js",
+              "src/background-script.js",
               "src/icon32.png",
               "src/icon48.png",
               "src/icon64.png"

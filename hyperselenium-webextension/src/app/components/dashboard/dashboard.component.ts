@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {BackgroundService} from "../services/background.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -7,12 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  messages: any[] = [];
+
+  constructor(private backgroundService:BackgroundService) {
+  }
 
   ngOnInit(): void {
-    (window as any).browser.browserAction.onClicked.addListener(e=> {
-      console.log(e)
-    })
+    window.addEventListener('message',ev => {
+      console.log(ev);
+      this.messages.push("OK");
+    }, false);
+
+    this.backgroundService.messages.subscribe( m => this.messages = m);
   }
 
 }

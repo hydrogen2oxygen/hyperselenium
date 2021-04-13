@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
   ];
 
   constructor(
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private hyperSeleniumService: HyperSeleniumService
   ) {
   }

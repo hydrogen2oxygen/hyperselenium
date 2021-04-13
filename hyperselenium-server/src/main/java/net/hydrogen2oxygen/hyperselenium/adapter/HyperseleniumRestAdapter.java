@@ -115,6 +115,13 @@ public class HyperseleniumRestAdapter {
         return ResponseEntity.ok(scenario);
     }
 
+    @PostMapping("webExtensionCommand")
+    ResponseEntity<String> handleWebExtensionCommand(@RequestBody HyperSeleniumWebExtensionData hyperSeleniumWebExtensionData) {
+
+        System.out.println(hyperSeleniumWebExtensionData.getCommand());
+        return ResponseEntity.ok("yes command acceptedt: " + hyperSeleniumWebExtensionData.getCommand());
+    }
+
     @PutMapping("stop/{name}")
     ResponseEntity<Scenario> stop(@PathVariable String name) throws IOException {
 

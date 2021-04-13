@@ -22,3 +22,4 @@ compiler.xml
 /hyperselenium-server/screenshots/
 /hyperselenium-server/plugins/
 /hyperselenium-server/src/main/resources/static/
+/hyperselenium-server/hyperselenium.db

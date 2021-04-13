@@ -16,7 +16,7 @@ import {NgbActiveModal, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
       </button>
     </div>
     <div class="modal-body">
-      <p><strong>Are you sure you want to delete <span class="text-primary">"{{scenario.name}}"</span> scenario?</strong></p>
+      <p><strong>Are you sure you want to delete <span class="text-primary">"{{scenario?.name}}"</span> scenario?</strong></p>
       <p>The scenario and associated script will be permanently deleted.
         <span class="text-danger">This operation can not be undone.</span>
       </p>
@@ -28,6 +28,7 @@ import {NgbActiveModal, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
   `
 })
 export class ModalDeleteScenarioConfirm {
+  scenario:Scenario;
   constructor(public modal: NgbActiveModal) {}
 }
 

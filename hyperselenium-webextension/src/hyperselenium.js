@@ -1,17 +1,10 @@
-document.body.style.border = "1rem solid red";
-
-document.addEventListener('click', event => {
-  console.log(event);
-});
-
-document.addEventListener('keyup', (event) => {
-  const keyName = event.key;
-
-  console.log(keyName);
-
-  // As the user releases the Ctrl key, the key is no longer active,
-  // so event.ctrlKey is false.
-  if (keyName === 'Control') {
-    console.log('Control key was released');
+function notifyExtension(e) {
+  console.log('click ' + e.target.tagName);
+  if (e.target.tagName != "A") {
+    return;
   }
-}, false);
+  console.log('sending message ...');
+  browser.runtime.sendMessage({"url": e.target.href}).then(r => console.log(r));
+}
+
+window.addEventListener("click", notifyExtension);
