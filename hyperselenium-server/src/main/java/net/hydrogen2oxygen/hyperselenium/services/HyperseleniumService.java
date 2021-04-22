@@ -288,6 +288,11 @@ public class HyperseleniumService {
             }
         }
 
+        // Remote drivers will always stop the current driver, else the remote selenium crash
+        if (scenario.getDriver().getDriverType().name().startsWith("REMOTE")) {
+            scenario.getDriver().close();
+        }
+
         protocol.setStatus("FINISHED");
 
         statusService.addScenarioUpdate(scenario);

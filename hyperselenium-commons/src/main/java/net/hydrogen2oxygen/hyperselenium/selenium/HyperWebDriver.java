@@ -26,9 +26,10 @@ public class HyperWebDriver {
     private String screenshotsPath;
     private Boolean closed = false;
     private WebDriver driver;
+    private DriverTypes driverType;
 
     public enum DriverTypes {
-        LOCAL_CHROME, REMOTE_FIREFOX
+        LOCAL_CHROME, REMOTE_FIREFOX, REMOTE_CHROME
     }
 
     public HyperWebDriver(String driverType) throws HyperWebDriverException {
@@ -41,6 +42,8 @@ public class HyperWebDriver {
     }
 
     private void init(String driverType, String remoteUrl, String seleniumDriverDirectory) throws HyperWebDriverException {
+
+        this.driverType = DriverTypes.valueOf(driverType);
 
         if (DriverTypes.LOCAL_CHROME.name().equals(driverType)) {
 
@@ -55,7 +58,19 @@ public class HyperWebDriver {
                 FirefoxOptions options = new FirefoxOptions();
                 driver = new RemoteWebDriver(new URL(remoteUrl), options);
             } catch (MalformedURLException e) {
-                throw new HyperWebDriverException("Remote connection could not be established");
+                throw new HyperWebDriverException("Remote firefox connection could not be established");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else if (DriverTypes.REMOTE_CHROME.name().equals(driverType)) {
+
+            try {
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--window-size=1400,600");
+                driver = new RemoteWebDriver(new URL(remoteUrl), options);
+            } catch (MalformedURLException e) {
+                throw new HyperWebDriverException("Remote chrome connection could not be established");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -63,6 +78,10 @@ public class HyperWebDriver {
         } else {
             throw new HyperWebDriverException("Unknown option for browser or remote connection");
         }
+    }
+
+    public DriverTypes getDriverType() {
+        return driverType;
     }
 
     public boolean isClosed() {

@@ -38,6 +38,10 @@ export class HyperSeleniumService {
     return this.http.get<Settings>(`${HyperSeleniumService.url}/settings`);
   }
 
+  getDriverTypes():Observable<string[]> {
+    return this.http.get<string[]>(`${HyperSeleniumService.url}/driverTypes`);
+  }
+
   getAllScenarios() {
     return this.http.get<Scenario[]>(`${HyperSeleniumService.url}/scenario`)
   }

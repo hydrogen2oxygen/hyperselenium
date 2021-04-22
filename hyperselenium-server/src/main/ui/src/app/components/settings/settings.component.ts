@@ -13,6 +13,7 @@ import {ToastrService} from "ngx-toastr";
 export class SettingsComponent implements OnInit {
 
   settings:Settings;
+  driverTypes:string[] = [];
   reactiveForm: FormGroup;
 
   constructor(
@@ -21,9 +22,10 @@ export class SettingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.hyperSeleniumService.getSettings().subscribe( settings => {
 
-console.log(settings);
+    this.hyperSeleniumService.getDriverTypes().subscribe( d => this.driverTypes = d );
+
+    this.hyperSeleniumService.getSettings().subscribe( settings => {
 
       this.settings = settings;
 

@@ -1,6 +1,7 @@
 package net.hydrogen2oxygen.hyperselenium.adapter;
 
 import net.hydrogen2oxygen.hyperselenium.domain.*;
+import net.hydrogen2oxygen.hyperselenium.selenium.HyperWebDriver;
 import net.hydrogen2oxygen.hyperselenium.services.DataBaseService;
 import net.hydrogen2oxygen.hyperselenium.services.HyperseleniumService;
 import net.hydrogen2oxygen.hyperselenium.services.StatusService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -66,6 +68,18 @@ public class HyperseleniumRestAdapter {
     @GetMapping("commands")
     ResponseEntity<List<Command>> getCommands() {
         return ResponseEntity.ok(hyperseleniumService.getCommands());
+    }
+
+    @GetMapping("driverTypes")
+    ResponseEntity<List<String>> getDriverTypes() {
+
+        List<String> driverTypes = new ArrayList<>();
+
+        for (HyperWebDriver.DriverTypes value : HyperWebDriver.DriverTypes.values()) {
+            driverTypes.add(value.name());
+        }
+
+        return ResponseEntity.ok(driverTypes);
     }
 
     @PostMapping("play/{name}")

@@ -58,6 +58,8 @@ A scenario is a test case or a use case. Selenium is not just used to test somet
 
 # Selenium Grid Setup
     docker run -d -p 4444:4444 --shm-size 2g selenium/standalone-firefox:4.0.0-alpha-7-prerelease-20201009
+    or
+    docker run -d --restart always -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome:4.0.0-beta-3-prerelease-20210402
     
     
 In Settings check the seleniumGridRemoteUrl and the seleniumDriverType (REMOTE_CHROME or REMOTE_FIREFOX).
