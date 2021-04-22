@@ -275,6 +275,10 @@ public class HyperseleniumService {
                 if ("true".equals(dataBaseService.getSetting(DataBaseService.STOP_WHEN_ERROR_OCCURS))
                         && !result.getSuccess()) {
 
+                    if (scenario.getDriver().getDriverType().name().startsWith("REMOTE")) {
+                        scenario.getDriver().close();
+                    }
+
                     protocolLine.setStatus("STOPPED");
                     protocol.setStatus("STOPPED");
                     statusService.addScenarioUpdate(scenario);
